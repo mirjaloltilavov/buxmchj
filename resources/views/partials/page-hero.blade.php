@@ -1,5 +1,5 @@
 <section class="page-hero">
-    <div class="hero-deco" aria-hidden="true">{{ icon('hero-deco') }}</div>
+    <div class="hero-clip" aria-hidden="true"><div class="hero-deco">{{ icon('hero-deco') }}</div></div>
     <div class="container">
         <nav class="crumbs" aria-label="breadcrumb">
             <a href="{{ lroute('home') }}">{{ __('Asosiy') }}</a>

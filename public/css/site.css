@@ -1538,3 +1538,13 @@ a:hover > .arrow-btn .icon,.arrow-btn:hover .icon{transform:rotate(0)}
 .hero-arrows button:active,.car-arrows button:active{transform:scale(.95)}
 .btn-pill:hover .arrow{transform:none}
 .btn-pill:hover .arrow .icon{transform:translateX(2px) rotate(0)}
+/* Ichki hero'lar: soya kesilmasin — faqat dekor qatlami qirqiladi */
+.p-hero,.c-hero{overflow:visible}
+.hero-clip{position:absolute;inset:0;overflow:hidden;z-index:-2;pointer-events:none}
+.hero-clip .hero-deco{z-index:0}
+.p-hero{isolation:isolate}
+.c-hero .hero-clip{bottom:80px}
+@media (max-width:810px){.c-hero .hero-clip{bottom:56px}}
+/* Gorizontal karusellar: kartalar soyasi qirqilmasin */
+.grads-track{padding-block:24px 40px;margin-block:-24px -40px}
+@media (max-width:810px){[data-snap]{padding-block:16px 32px;margin-block:-16px -32px}}

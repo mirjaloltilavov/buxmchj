@@ -16,7 +16,7 @@
     },
     "body": {
       "uz": "<p>Yakka tartibdagi tadbirkor sifatida ish boshlaganingizda buxgalteriya murakkab tuyulishi mumkin. Aslida asosiy qoidalar oddiy: hujjatlarni tartibda saqlash, to‘lovlarni hisobga olish va hisobotlarni o‘z vaqtida topshirish.</p><h2>YaTT buxgalteriyasi nimadan iborat</h2><p>YaTT buxgalteriyasi — bu daromad va xarajatlarni hisobga olish, birlamchi hujjatlarni saqlash va soliq hisobotlarini tayyorlashdir. Korxonaga nisbatan soddaroq bo‘lsa-da, tartib baribir muhim: tekshiruvda har bir operatsiya hujjat bilan tasdiqlanishi kerak.</p><h2>Qaysi hujjatlarni yuritish kerak</h2><p>Boshlash uchun quyidagi hujjatlar to‘plamini doimiy yuritib boring:</p><ul><li>Shartnomalar va hisob-fakturalar</li><li>Bank ko‘chirmalari va to‘lov topshiriqnomalari</li><li>Kassa hujjatlari va cheklar</li><li>Xodimlar bo‘lsa — mehnat shartnomalari va ish haqi hisob-kitobi</li></ul><p><strong>Muhim:</strong> hujjatlarni elektron shaklda ham saqlang: skanerlangan nusxalar hisobni tiklash va tekshiruvlarda vaqtni tejaydi.</p><h2>Hisobotlar va muddatlar</h2><p>Hisobot turlari va topshirish muddatlari soliq rejimiga bog‘liq. Aniq sanalarni my.soliq.uz dagi soliq kalendaridan tekshirib boring va har oy uchun eslatma qo‘ying.</p><figure><img src=\"/img/articles/hisobni-tiklash.jpg\" alt=\"\"><figcaption>Hujjatlarni oy bo‘yicha papkalarga ajratish hisobotni tayyorlashni ancha osonlashtiradi.</figcaption></figure><h2>Bank va to‘lovlar</h2><p>Shaxsiy va biznes to‘lovlarini aralashtirmang: tadbirkorlik uchun alohida hisob raqami ishlating. Internet-banking ko‘chirmalarini har oy yuklab oling va hujjatlar bilan solishtiring.</p><blockquote><p>Tartibli hujjatlar — xotirjam tekshiruv. Buxgalteriyani oxirgi kunga qoldirmang.</p></blockquote><h2>Qachon mutaxassisga murojaat qilish kerak</h2><p>Agar operatsiyalar soni ko‘paygan, xodimlar ishga olingan yoki o‘tgan davrlar hisobi chalkash bo‘lsa — mutaxassisga murojaat qilgan ma’qul. Bepul konsultatsiyada holatingizni ko‘rib chiqamiz va mos yechimni taklif qilamiz.</p>",
-      "ru": null
+      "ru": "<p>Когда вы только начинаете работать как индивидуальный предприниматель, бухгалтерия может показаться сложной. На самом деле основные правила простые: хранить документы в порядке, учитывать платежи и вовремя сдавать отчёты.</p><h2>Из чего состоит бухгалтерия ИП</h2><p>Бухгалтерия ИП — это учёт доходов и расходов, хранение первичных документов и подготовка налоговой отчётности. Она проще, чем у предприятия, но порядок всё равно важен: при проверке каждая операция должна быть подтверждена документом.</p><h2>Какие документы нужно вести</h2><p>Для начала постоянно ведите следующий набор документов:</p><ul><li>Договоры и счета-фактуры</li><li>Банковские выписки и платёжные поручения</li><li>Кассовые документы и чеки</li><li>Если есть сотрудники — трудовые договоры и расчёт заработной платы</li></ul><p><strong>Важно:</strong> храните документы и в электронном виде: сканы экономят время при восстановлении учёта и проверках.</p><h2>Отчёты и сроки</h2><p>Виды отчётов и сроки их сдачи зависят от налогового режима. Проверяйте точные даты в налоговом календаре на my.soliq.uz и ставьте напоминание на каждый месяц.</p><figure><img src=\"/img/articles/hisobni-tiklash.jpg\" alt=\"\"><figcaption>Если раскладывать документы по папкам по месяцам, готовить отчёты становится намного проще.</figcaption></figure><h2>Банк и платежи</h2><p>Не смешивайте личные и бизнес-платежи: используйте для предпринимательской деятельности отдельный счёт. Каждый месяц выгружайте выписки из интернет-банкинга и сверяйте их с документами.</p><blockquote><p>Порядок в документах — спокойная проверка. Не откладывайте бухгалтерию на последний день.</p></blockquote><h2>Когда стоит обратиться к специалисту</h2><p>Если операций стало больше, вы наняли сотрудников или учёт за прошлые периоды запутан — лучше обратиться к специалисту. На бесплатной консультации разберём вашу ситуацию и предложим подходящее решение.</p>"
     },
     "tags": {
       "uz": [
@@ -54,7 +54,7 @@
     },
     "body": {
       "uz": "<p>1C dasturini birinchi marta ochgan odamga interfeys murakkab ko‘rinadi. Lekin dasturni bosqichma-bosqich o‘rgansangiz, bir necha haftada birlamchi hujjatlar bilan ishlay boshlaysiz.</p><h2>Birinchi hafta: sozlash va tushunchalar</h2><p>Tashkilot ma’lumotlarini kiriting, hisob siyosatini sozlang va asosiy spravochniklar (kontragentlar, nomenklatura) bilan tanishing.</p><h2>Keyingi qadamlar</h2><p>Kirim-chiqim hujjatlarini kiritish, kassa va bank operatsiyalari, so‘ng ish haqi va soliq hisobotlariga o‘ting. Har bir mavzuni real misol bilan mustahkamlang.</p>",
-      "ru": null
+      "ru": "<p>Тому, кто впервые открывает 1С, интерфейс кажется сложным. Но если изучать программу поэтапно, уже через несколько недель вы начнёте работать с первичными документами.</p><h2>Первая неделя: настройка и основные понятия</h2><p>Введите данные организации, настройте учётную политику и познакомьтесь с основными справочниками (контрагенты, номенклатура).</p><h2>Следующие шаги</h2><p>Переходите к вводу приходных и расходных документов, кассовым и банковским операциям, а затем к зарплате и налоговой отчётности. Закрепляйте каждую тему на реальном примере.</p>"
     },
     "tags": {
       "uz": [
@@ -90,7 +90,7 @@
     },
     "body": {
       "uz": "<p>Hisobni tiklash o‘tgan davrlardagi hujjatlar yo‘qolgan, noto‘g‘ri yuritilgan yoki umuman yuritilmagan hollarda kerak bo‘ladi.</p><h2>Qachon tiklash zarur</h2><p>Soliq tekshiruvi oldidan, yangi hamkor yoki bank talabi bo‘yicha, shuningdek biznesni sotish yoki qayta ro‘yxatdan o‘tkazishda.</p><h2>Nimadan boshlash kerak</h2><p>Bank ko‘chirmalari, shartnomalar va mavjud birlamchi hujjatlarni yig‘ing. Mutaxassis ular asosida davrlar bo‘yicha hisobni qayta shakllantiradi.</p>",
-      "ru": null
+      "ru": "<p>Восстановление учёта нужно, когда документы за прошлые периоды утеряны, велись неправильно или не велись вовсе.</p><h2>Когда восстановление необходимо</h2><p>Перед налоговой проверкой, по требованию нового партнёра или банка, а также при продаже бизнеса или перерегистрации.</p><h2>С чего начать</h2><p>Соберите банковские выписки, договоры и имеющиеся первичные документы. На их основе специалист заново сформирует учёт по периодам.</p>"
     },
     "tags": {
       "uz": [
@@ -125,8 +125,8 @@
       "ru": "Теория, 1С, налоги и практика — на что смотрят работодатели."
     },
     "body": {
-      "uz": "<p>Yaxshi buxgalter faqat raqamlar bilan ishlamaydi: u hujjatlarni tushunadi, dasturda ishlay oladi va soliq qoidalarini biladi.</p><h2>Asosiy ko‘nikmalar</h2><p>Buxgalteriya hisobi asoslari va provodkalar</p><p>1C dasturida ishlash</p><p>Soliq hisobotlarini topshirish</p><p>Diqqat va mas’uliyat</p><p>Ish beruvchilar eng avval amaliy tajribaga qaraydi, shuning uchun kurs davomida real hujjatlar bilan ishlash muhim.</p>",
-      "ru": null
+      "uz": "<p>Yaxshi buxgalter faqat raqamlar bilan ishlamaydi: u hujjatlarni tushunadi, dasturda ishlay oladi va soliq qoidalarini biladi.</p><h2>Asosiy ko‘nikmalar</h2><ul><li>Buxgalteriya hisobi asoslari va provodkalar</li><li>1C dasturida ishlash</li><li>Soliq hisobotlarini topshirish</li><li>Diqqat va mas’uliyat</li></ul><p>Ish beruvchilar eng avval amaliy tajribaga qaraydi, shuning uchun kurs davomida real hujjatlar bilan ishlash muhim.</p>",
+      "ru": "<p>Хороший бухгалтер работает не только с цифрами: он разбирается в документах, умеет работать в программе и знает налоговые правила.</p><h2>Основные навыки</h2><ul><li>Основы бухгалтерского учёта и проводки</li><li>Работа в программе 1С</li><li>Сдача налоговой отчётности</li><li>Внимательность и ответственность</li></ul><p>Работодатели в первую очередь смотрят на практический опыт, поэтому во время курса важно работать с реальными документами.</p>"
     },
     "tags": {
       "uz": [
@@ -162,7 +162,7 @@
     },
     "body": {
       "uz": "<p>Kichik va o‘rta biznes uchun doimiy buxgalter ushlash qimmat bo‘lishi mumkin. Tashqi jamoa esa belgilangan narxda barcha hisobotlarni yuritadi.</p><h2>Asosiy afzalliklar</h2><ul><li>Xarajat oldindan ma’lum</li><li>Hisobotlar muddatida topshiriladi</li><li>Mutaxassislar jamoasi bir joyda</li></ul><p>Qaror qabul qilishdan oldin operatsiyalar soni va xodimlar sonini hisoblab ko‘ring.</p>",
-      "ru": null
+      "ru": "<p>Для малого и среднего бизнеса держать штатного бухгалтера может быть дорого. Внешняя команда ведёт всю отчётность за фиксированную цену.</p><h2>Основные преимущества</h2><ul><li>Расходы известны заранее</li><li>Отчёты сдаются в срок</li><li>Команда специалистов в одном месте</li></ul><p>Прежде чем принять решение, посчитайте количество операций и сотрудников.</p>"
     },
     "tags": {
       "uz": [
@@ -198,7 +198,7 @@
     },
     "body": {
       "uz": "<p>Kursni tugatgach, birinchi ishni topish eng qiyin bosqich. Yaxshi tayyorgarlik bu yo‘lni ancha osonlashtiradi.</p><h2>Rezyume va suhbat</h2><p>Rezyumeda amaliyotda bajargan ishlaringizni aniq yozing: qaysi hujjatlar, qaysi dastur, qaysi hisobotlar.</p><h2>Birinchi oylar</h2><p>Savol berishdan tortinmang va har bir topshiriqni ish daftaringizga yozib boring — bu tajriba tez o‘sishga yordam beradi.</p>",
-      "ru": null
+      "ru": "<p>После окончания курса найти первую работу — самый сложный этап. Хорошая подготовка заметно облегчает этот путь.</p><h2>Резюме и собеседование</h2><p>В резюме чётко опишите, что вы делали на практике: какие документы, в какой программе, какие отчёты.</p><h2>Первые месяцы</h2><p>Не стесняйтесь задавать вопросы и записывайте каждое задание в рабочий блокнот — так опыт растёт быстрее.</p>"
     },
     "tags": {
       "uz": [
@@ -234,7 +234,7 @@
     },
     "body": {
       "uz": "<p>Hisobotni kechiktirish jarimaga olib keladi. Quyidagi oddiy odatlar muddatlarni nazorat qilishga yordam beradi.</p><ol><li>Soliq kalendariga eslatma qo‘ying</li><li>Hujjatlarni oy bo‘yicha papkalarga ajrating</li><li>Bank ko‘chirmalarini har oy solishtiring</li><li>Hisobotni oxirgi kunga qoldirmang</li><li>Murakkab holatda mutaxassisga murojaat qiling</li></ol><p>Tartibli hujjatlar oqimi hisobotni tayyorlash vaqtini sezilarcha qisqartiradi.</p>",
-      "ru": null
+      "ru": "<p>Задержка отчёта ведёт к штрафу. Эти простые привычки помогут контролировать сроки.</p><ol><li>Поставьте напоминания по налоговому календарю</li><li>Раскладывайте документы по папкам по месяцам</li><li>Каждый месяц сверяйте банковские выписки</li><li>Не откладывайте отчёт на последний день</li><li>В сложной ситуации обращайтесь к специалисту</li></ol><p>Упорядоченный документооборот заметно сокращает время подготовки отчётов.</p>"
     },
     "tags": {
       "uz": [

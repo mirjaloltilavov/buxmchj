@@ -235,6 +235,16 @@ class ContentSeeder extends Seeder
                     'tags' => json_encode($a['tags'] ?? null, JSON_UNESCAPED_UNICODE),
                     'author' => json_encode($a['author'] ?? null, JSON_UNESCAPED_UNICODE),
                 ]);
+                // Ruscha matn bo'sh bo'lsa — tarjima qo'shiladi (o'zbekcha matnga tegilmaydi)
+                $article = Article::where('slug', $a['slug'])->first();
+                if ($article && empty($article->body['ru']) && ! empty($a['body']['ru'])) {
+                    $article->update(['body' => array_merge($article->body ?? [], ['ru' => $a['body']['ru']])]);
+                }
+                foreach (['title', 'excerpt'] as $f) {
+                    if ($article && empty($article->{$f}['ru']) && ! empty($a[$f]['ru'])) {
+                        $article->update([$f => array_merge($article->{$f} ?? [], ['ru' => $a[$f]['ru']])]);
+                    }
+                }
             }
 
             return;

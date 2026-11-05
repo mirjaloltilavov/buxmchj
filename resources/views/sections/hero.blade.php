@@ -1,7 +1,7 @@
 {{-- Hero slider (Figma: Hero slider — 1/2). Slaydlar admin paneldan boshqariladi. --}}
 @if($slides->isNotEmpty())
 <section class="hero" data-hero data-delay="{{ (int) setting('hero_autoplay', 6) * 1000 }}" style="--hero-delay: {{ (int) setting('hero_autoplay', 6) }}s">
-    <div class="hero-deco" aria-hidden="true">{{ icon('hero-deco') }}</div>
+    <div class="hero-clip" aria-hidden="true"><div class="hero-deco">{{ icon('hero-deco') }}</div></div>
     <div class="hero-glow" aria-hidden="true"></div>
 
     @foreach($slides as $i => $slide)

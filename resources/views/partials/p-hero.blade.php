@@ -1,6 +1,6 @@
 {{-- Figma: ichki sahifa Hero (sariq gradient, breadcrumbs, sarlavha, tugmalar, stat'lar, rasm + info kartalar) --}}
 <section class="p-hero" data-page-hero>
-    <div class="hero-deco" aria-hidden="true">{{ icon('hero-deco') }}</div>
+    <div class="hero-clip" aria-hidden="true"><div class="hero-deco">{{ icon('hero-deco') }}</div></div>
     <div class="container p-hero__body">
         <div class="p-hero__left">
             <nav class="crumbs" aria-label="breadcrumb">

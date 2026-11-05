@@ -27,7 +27,7 @@
 @section('content')
     {{-- Figma: Aloqa — Hero + Contacts --}}
     <section class="c-hero" data-c-hero>
-        <div class="hero-deco" aria-hidden="true">{{ icon('hero-deco') }}</div>
+        <div class="hero-clip" aria-hidden="true"><div class="hero-deco">{{ icon('hero-deco') }}</div></div>
         <div class="container c-hero__body">
             <nav class="crumbs" aria-label="breadcrumb"><a href="{{ lroute('home') }}">{{ __('Asosiy') }}</a>{{ icon('arrow-right') }}<b>{{ __('Aloqa') }}</b></nav>
             <h1>{{ hs('contact.title', 'Biz bilan bog‘laning') }}</h1>

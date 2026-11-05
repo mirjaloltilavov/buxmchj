@@ -14,7 +14,7 @@
 @section('content')
     {{-- Figma: Maqolalar — Hero (qidiruv o‘ng tomonda) --}}
     <section class="p-hero p-hero--blog" data-page-hero>
-        <div class="hero-deco" aria-hidden="true">{{ icon('hero-deco') }}</div>
+        <div class="hero-clip" aria-hidden="true"><div class="hero-deco">{{ icon('hero-deco') }}</div></div>
         <div class="container p-hero__body p-hero__body--end">
             <div class="p-hero__left">
                 <nav class="crumbs" aria-label="breadcrumb">
