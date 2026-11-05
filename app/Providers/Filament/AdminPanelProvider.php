@@ -59,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
                 \App\Filament\Widgets\LeadsChart::class,
                 \App\Filament\Widgets\LatestLeads::class,
             ])
+            ->renderHook(\Filament\View\PanelsRenderHook::HEAD_END, fn () => view('filament.admin-styles'))
             ->darkMode(true)
             ->globalSearch()
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
