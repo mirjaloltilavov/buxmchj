@@ -1566,3 +1566,17 @@ html[lang="ru"] .services-ov .left .h2{font-size:clamp(32px,3.1vw,44px)}
 @view-transition{navigation:auto}
 ::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation-duration:0s}
 @keyframes pageIn{from{opacity:0}}
+
+/* Butun karta bosiladigan: asosiy havola kartaning ustini to'liq qoplaydi (tugma bosish shart emas) */
+.ccard,.course-card,.direction,.acard,.bfeat{position:relative;cursor:pointer}
+.ccard__foot .btn-pill::after,.course-card .card-foot .btn::after,.direction-foot a::after,.acard .read-link::after,.bfeat .read-link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit}
+.ccard__foot .btn-pill,.course-card .card-foot .btn,.direction-foot a,.acard .read-link,.bfeat .read-link{position:static}
+.ccard:hover h3 a,.course-card:hover h3 a,.direction:hover h3 a{background-size:100% 2px}
+.article-feature{position:relative;cursor:pointer}
+.article-feature .read-link::after{content:"";position:absolute;inset:0;z-index:1}
+.article-feature .read-link{position:static}
+.grad{cursor:pointer}
+/* Kartani qoplovchi havola transform olmasin (aks holda qoplam tugma o'lchamiga qisqaradi) */
+.ccard__foot .btn-pill,.ccard__foot .btn-pill:hover,.ccard__foot .btn-pill:active,
+.course-card .card-foot .btn,.course-card .card-foot .btn:hover,.course-card .card-foot .btn:active,
+.direction-foot a,.direction-foot a:hover,.direction-foot a:active{transform:none!important}

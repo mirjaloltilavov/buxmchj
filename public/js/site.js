@@ -916,6 +916,14 @@
     });
   }
 
+  // Bitiruvchi kartasi: butun karta bosilganda video ochiladi
+  document.addEventListener('click', function (e) {
+    var card = e.target.closest('.grad');
+    if (!card || e.target.closest('a,button')) return;
+    var v = $('[data-video]', card);
+    if (v) v.click();
+  });
+
   /* =====================================================================
      16. Promo popuplar (Figma Motion notes — Popups):
      - Trigger: N s dan keyin yoki exit-intent, sessiyada 1 marta
