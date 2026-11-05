@@ -30,6 +30,8 @@ class BranchResource extends Resource
                 Tr::text('hours', 'Ish vaqti'),
                 Forms\Components\TextInput::make('phone')->label('Telefon'),
                 Forms\Components\TextInput::make('map_url')->label('Xarita havolasi (Yandex/Google)')->url(),
+                Forms\Components\TextInput::make('lat')->label('Kenglik (lat)')->numeric()->placeholder('41.2756')->helperText('Google Maps’da joyni o‘ng tugma bilan bosing — birinchi raqam shu.'),
+                Forms\Components\TextInput::make('lng')->label('Uzunlik (lng)')->numeric()->placeholder('69.2037')->helperText('Shu yerdagi ikkinchi raqam. Xaritadagi nuqta shu koordinataga biriktiriladi.'),
             ]),
             Forms\Components\Section::make()->columns(2)->schema([
                 Forms\Components\TextInput::make('sort')->label('Tartib')->numeric()->default(0),

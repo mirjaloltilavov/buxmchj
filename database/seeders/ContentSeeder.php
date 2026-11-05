@@ -331,6 +331,9 @@ class ContentSeeder extends Seeder
     private function branches(): void
     {
         if (Branch::exists()) {
+            // Avvalgi o'rnatishda koordinata yo'q edi — bo'sh bo'lsa standart nuqta qo'yiladi (admin'da o'zgartiriladi)
+            Branch::whereNull('lat')->update(['lat' => 41.2756, 'lng' => 69.2037]);
+
             return;
         }
         Branch::create([
@@ -339,6 +342,7 @@ class ContentSeeder extends Seeder
             'hours' => $this->t('Dushanba–Shanba, 9:00–18:00', 'Понедельник–суббота, 9:00–18:00'),
             'phone' => '+998 55 500 37 37',
             'map_url' => 'https://yandex.uz/maps/?text=Toshkent%2C%20Chilonzor%2C%209-kvartal%2C%2014%2F1',
+            'lat' => 41.2756, 'lng' => 69.2037,
         ]);
     }
 }

@@ -852,6 +852,46 @@
     var list = [];
     try { list = JSON.parse(br.getAttribute('data-branches') || '[]'); } catch (e) {}
     var frame = $('[data-map-frame]', br), body = $('[data-branch-body]', br), pin = $('[data-pin]', br);
+    var canvas = $('[data-leaflet]', br), lmap = null, lmark = null;
+    var loadLeaflet = function (cb) {
+      if (window.L) return cb();
+      var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css'; document.head.appendChild(css);
+      var sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js'; sc.onload = cb;
+      sc.onerror = function () { // Leaflet yuklanmasa — oddiy Google xaritasi (pinsiz emas, o'zining belgisi bilan)
+        var b0 = list[0]; if (!b0 || !canvas) return;
+        canvas.outerHTML = '<iframe class="c-map__frame" src="' + b0.map + '" loading="lazy" title="Map"></iframe><span class="c-pin" aria-hidden="true" data-pin><i></i></span>';
+        canvas = null;
+      };
+      document.head.appendChild(sc);
+    };
+    // Karta kartasi chapda turgani uchun nuqta ko'rinadigan (o'ng) qismning o'rtasiga qo'yiladi
+    var offsetX = function () { return isMobile() ? 0 : Math.round(br.querySelector('.c-branch').offsetWidth / 2 + 16); };
+    var focusAt = function (lat, lng, animate) {
+      var z = 16, pt = lmap.project([lat, lng], z).subtract([offsetX(), 0]);
+      lmap.setView(lmap.unproject(pt, z), z, { animate: !!animate && !reduce });
+    };
+    var initMap = function () {
+      if (lmap || !canvas) return;
+      loadLeaflet(function () {
+        var lat = +canvas.getAttribute('data-lat'), lng = +canvas.getAttribute('data-lng');
+        lmap = L.map(canvas, { zoomControl: true, scrollWheelZoom: false, attributionControl: true });
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd', attribution: '© OpenStreetMap © CARTO' }).addTo(lmap);
+        var icon = L.divIcon({ className: 'c-marker', html: '<span class="c-pin"><i></i>' + (document.querySelector('template.c-pin-src') || { innerHTML: '' }).innerHTML + '</span>', iconSize: [60, 60], iconAnchor: [30, 60] });
+        lmark = L.marker([lat, lng], { icon: icon, keyboard: false }).addTo(lmap);
+        focusAt(lat, lng, false);
+        // sichqoncha g'ildiragi faqat xaritaga bosilgandan keyin yaqinlashtiradi (sahifa scrolli buzilmasin)
+        lmap.on('click focus', function () { lmap.scrollWheelZoom.enable(); });
+        lmap.on('mouseout', function () { lmap.scrollWheelZoom.disable(); });
+        canvas.closest('.c-map').classList.add('is-in');
+        window.addEventListener('resize', function () { lmap.invalidateSize(); });
+      });
+    };
+    if (canvas) {
+      if ('IntersectionObserver' in window) {
+        var mio = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { mio.disconnect(); initMap(); } }, { rootMargin: '300px' });
+        mio.observe(canvas);
+      } else initMap();
+    }
     $$('[data-branch-tab]', br).forEach(function (tab) {
       tab.addEventListener('click', function () {
         var b = list[+tab.getAttribute('data-branch-tab')];
@@ -869,6 +909,7 @@
         if (t) t.href = b.tel;
         body.classList.remove('is-swap'); void body.offsetWidth; body.classList.add('is-swap');
         if (frame) frame.src = b.map;
+        if (lmap && b.lat && b.lng) { lmark.setLatLng([b.lat, b.lng]); focusAt(b.lat, b.lng, true); }
         if (pin && !reduce) {
           var m = pin.closest('.c-map');
           m.classList.remove('is-in'); void m.offsetWidth; m.classList.add('is-in');

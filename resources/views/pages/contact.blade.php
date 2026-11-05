@@ -19,6 +19,8 @@
         'phone' => $b->phone ?: $phone,
         'tel' => $tel($b->phone ?: $phone),
         'map' => $mapSrc($b),
+        'lat' => $b->lat ? (float) $b->lat : null,
+        'lng' => $b->lng ? (float) $b->lng : null,
         'route' => $b->map_url ?: 'https://maps.google.com/maps?daddr='.urlencode($b->tr('address')),
     ])->values();
     $first = $branchData->first();
@@ -83,8 +85,13 @@
                     <p data-reveal style="--d:120ms">{{ hs('contact.branches_lead', 'Offline kurslar Toshkentdagi o‘quv markazimizda o‘tadi.') }}</p>
                 </div>
                 <div class="c-map" data-reveal="card">
-                    <iframe class="c-map__frame" src="{{ $first['map'] }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="{{ __('Xarita') }}" data-map-frame></iframe>
-                    <span class="c-pin" aria-hidden="true" data-pin><i></i>{{ icon('location', 28) }}</span>
+                    @if($first['lat'] && $first['lng'])
+                        <div class="c-map__canvas" data-leaflet data-lat="{{ $first['lat'] }}" data-lng="{{ $first['lng'] }}" role="application" aria-label="{{ __('Xarita') }}"></div>
+                    @else
+                        <iframe class="c-map__frame" src="{{ $first['map'] }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="{{ __('Xarita') }}" data-map-frame></iframe>
+                        <span class="c-pin" aria-hidden="true" data-pin><i></i>{{ icon('location', 28) }}</span>
+                    @endif
+                    <template class="c-pin-src">{{ icon('location', 28) }}</template>
                     <div class="c-branch">
                         @if($branchData->count() > 1)
                             <div class="c-branch__tabs" role="tablist">
