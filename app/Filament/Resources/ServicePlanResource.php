@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ServicePlanResource\Pages;
 use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
+use App\Filament\Forms\CardsField;
+use App\Filament\Forms\IconPicker;
 use App\Models\ServicePlan;
 use Filament\Forms;
 use Filament\Infolists\Infolist;
@@ -32,7 +34,7 @@ class ServicePlanResource extends Resource
                 Tr::text('subtitle', 'Kimlar uchun'),
                 Forms\Components\TextInput::make('price')->label('Oylik narx (so‘m)')->numeric(),
                 Forms\Components\Toggle::make('is_highlighted')->label('Ajratib ko‘rsatish (qora kartochka)'),
-                Forms\Components\Repeater::make('features')->label('Nimalar kiradi')->schema([Tr::text('text', 'Band')])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null),
+                CardsField::make('features')->label('Nimalar kiradi')->kind('feature')->cols(2)->itemName('band')->addLabel('Band qo‘shish')->drawerWidth('md')->itemSchema(fn () => [Tr::text('text', 'Band', true)]),
             ]),
             Forms\Components\Section::make()->columns(2)->schema([
                 Forms\Components\TextInput::make('sort')->label('Tartib')->numeric()->default(0),
@@ -62,7 +64,7 @@ class ServicePlanResource extends Resource
                     Info::bool('is_highlighted', 'Ajratib ko‘rsatilgan (qora kartochka)'),
                 ]),
             ]),
-            I\Section::make('Nimalar kiradi')->schema([Info::list('features', 'Bandlar', [Info::tr('text', 'Band')])]),
+            I\Section::make('Nimalar kiradi')->schema([Info::cards('features', 'Bandlar', 'feature', 2)]),
             Info::status(),
         ]);
     }

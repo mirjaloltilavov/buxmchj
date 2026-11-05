@@ -44,6 +44,7 @@ class ContentSeeder extends Seeder
 
     public function run(): void
     {
+        (new IconSeeder)->run();
         $this->settings();
         $this->heroSlides();
         $this->courses();

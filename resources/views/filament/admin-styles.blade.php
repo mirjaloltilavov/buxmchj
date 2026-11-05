@@ -9,3 +9,67 @@
     *::-webkit-scrollbar-thumb{background:rgba(120,120,130,.35);border-radius:6px}
     *::-webkit-scrollbar-thumb:hover{background:rgba(120,120,130,.6)}
 </style>
+<style>
+    .bx-ic{display:inline-block;width:1.4rem;height:1.4rem;line-height:0;color:inherit}
+    .bx-ic svg{width:100%;height:100%;display:block}
+    .bx-picker{position:relative}
+    .bx-picker__btn{display:flex;align-items:center;gap:.6rem;width:100%;padding:.5rem .75rem;border-radius:.5rem;border:1px solid rgba(120,120,130,.35);background:transparent;text-align:left;cursor:pointer;color:inherit}
+    .bx-picker__btn:hover{border-color:#f5a524}
+    .bx-picker__cur{color:#f5a524;width:1.5rem;height:1.5rem}
+    .bx-picker__name{flex:1;font-size:.875rem}
+    .bx-picker__chev{width:1rem;height:1rem;opacity:.6}
+    .bx-picker__panel{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 6px);min-width:340px;max-width:520px;background:#fff;border:1px solid rgba(120,120,130,.3);border-radius:.75rem;box-shadow:0 16px 40px rgba(0,0,0,.18);padding:.75rem}
+    .dark .bx-picker__panel{background:#18181b}
+    .bx-picker__top{display:flex;gap:.5rem;align-items:center;margin-bottom:.6rem}
+    .bx-picker__search{flex:1;padding:.45rem .7rem;border-radius:.5rem;border:1px solid rgba(120,120,130,.35);background:transparent;color:inherit;font-size:.875rem}
+    .bx-picker__add{font-size:.75rem;font-weight:600;color:#f5a524;white-space:nowrap}
+    .bx-picker__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:.35rem;max-height:260px;overflow:auto}
+    .bx-picker__item{display:grid;place-items:center;height:44px;border-radius:.5rem;border:1px solid transparent;background:rgba(120,120,130,.08);cursor:pointer;color:inherit}
+    .bx-picker__item:hover{background:rgba(245,165,36,.18)}
+    .bx-picker__item.is-on{border-color:#f5a524;background:rgba(245,165,36,.25);color:#f5a524}
+    .bx-picker__empty{grid-column:1/-1;font-size:.8rem;opacity:.7;padding:.5rem}
+</style>
+<style>
+    /* Kartochkalar konstruktori — sayt ko'rinishiga yaqin */
+    .bx-cards{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:.9rem}
+    @media (max-width:1100px){.bx-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:700px){.bx-cards{grid-template-columns:1fr}}
+    .bx-cards--outcome,.bx-cards--feature{--cols:2!important}
+    .bx-cards--tag{display:flex;flex-wrap:wrap}
+    .bx-cards__empty{grid-column:1/-1;padding:1.25rem;border:1px dashed rgba(120,120,130,.4);border-radius:.75rem;text-align:center;font-size:.875rem;opacity:.7}
+    .bx-card{border:1px solid rgba(120,120,130,.25);border-radius:1rem;background:rgba(120,120,130,.05);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s}
+    .bx-card:hover{border-color:#f5a524;box-shadow:0 6px 18px rgba(245,165,36,.15)}
+    .bx-card__prev{padding:.75rem;flex:1}
+    .bx-card__bar{display:flex;align-items:center;justify-content:space-between;padding:.25rem .5rem;border-top:1px solid rgba(120,120,130,.2);background:rgba(120,120,130,.06)}
+    .bx-card__n{display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:999px;background:#16171a;color:#ffd877;font-size:.7rem;font-weight:700}
+    .dark .bx-card__n{background:#ffd877;color:#16171a}
+    .bx-card__ctl{display:flex;gap:.1rem}
+    .bx-tile{display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:.8rem;background:linear-gradient(180deg,#ffd877,#f5a524);color:#16171a;flex:none;--s:1.3rem}
+    .bx-tile .icon,.bx-tile .icon svg{width:1.3rem;height:1.3rem;display:block}
+    .bx-tile--s{width:2rem;height:2rem;border-radius:.6rem}.bx-tile--s .icon,.bx-tile--s .icon svg{width:1rem;height:1rem}
+    .bx-ic--s{display:inline-block;width:1rem;height:1rem;vertical-align:-.15rem}
+    .bx-ic--s .icon,.bx-ic--s .icon svg{width:1rem;height:1rem;display:block}
+    .bx-aud{display:flex;flex-direction:column;gap:.6rem;padding:.9rem;border-radius:.9rem;border:1px solid rgba(120,120,130,.25);background:#fff;min-height:9rem;color:#16171a}
+    .bx-aud b{font-size:.95rem;line-height:1.25}.bx-aud p{font-size:.8rem;opacity:.75;line-height:1.35}
+    .bx-aud.is-acc{background:linear-gradient(180deg,#ffd877,#f5a524);border-color:transparent}
+    .bx-aud.is-acc .bx-tile{background:#fff}
+    .bx-aud.is-dark{background:#16171a;color:#fff}.bx-aud.is-dark .bx-tile{background:linear-gradient(180deg,#8dbbff,#2f6fe4);color:#fff}
+    .bx-mod{display:flex;flex-direction:column;gap:.6rem;color:inherit}
+    .bx-thumb{width:100%;height:7rem;object-fit:cover;border-radius:.8rem;display:block}
+    .bx-thumb--empty{display:grid;place-items:center;background:rgba(120,120,130,.15);font-size:.75rem;opacity:.7}
+    .bx-mod__top{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;opacity:.9}
+    .bx-mod__b{display:flex;flex-direction:column;gap:.4rem}.bx-mod__b b{font-size:.95rem}.bx-mod__b p{font-size:.8rem;opacity:.7}
+    .bx-stat{display:flex;flex-direction:column;gap:.15rem}.bx-stat b{font-size:1.5rem;line-height:1.1}.bx-stat span{font-size:.8rem;opacity:.7}
+    .bx-out{display:flex;gap:.6rem;align-items:flex-start;font-size:.9rem}
+    .bx-tick{display:grid;place-items:center;flex:none;width:1.4rem;height:1.4rem;border-radius:.4rem;background:linear-gradient(180deg,#7fddaa,#1f9d5c);color:#fff}
+    .bx-tick .icon,.bx-tick .icon svg{width:.9rem;height:.9rem;display:block}
+    .bx-tag{display:inline-flex;gap:.3rem;align-items:center;padding:.3rem .7rem;border-radius:999px;background:rgba(120,120,130,.18);font-size:.8rem;font-weight:600}
+    .bx-tag.is-acc{background:linear-gradient(90deg,#ffe08a,#f8b34d);color:#16171a}
+    .bx-plan{display:flex;flex-direction:column;gap:.35rem;padding:.9rem;border-radius:.9rem;border:1px solid rgba(120,120,130,.25);background:#fff;color:#16171a}
+    .bx-plan.is-hl{background:#16171a;color:#fff}
+    .bx-plan b{font-size:1rem}.bx-plan small{font-size:.75rem;opacity:.7}
+    .bx-plan__price{font-size:1.15rem;font-weight:700;margin:.2rem 0}.bx-plan__price s{font-size:.75rem;opacity:.6;font-weight:500}
+    .bx-plan ul{display:flex;flex-direction:column;gap:.3rem;font-size:.78rem;list-style:none;padding:0;margin:0}
+    .bx-plan li{display:flex;gap:.4rem;align-items:center}
+    .bx-plan .bx-tick{width:1.1rem;height:1.1rem;border-radius:.3rem}.bx-plan .bx-tick .icon,.bx-plan .bx-tick .icon svg{width:.7rem;height:.7rem}
+</style>

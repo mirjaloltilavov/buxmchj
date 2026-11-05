@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CourseResource\Pages;
+use App\Filament\Forms\CardsField;
+use App\Filament\Forms\IconPicker;
 use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
 use App\Models\Course;
@@ -38,50 +40,50 @@ class CourseResource extends Resource
                         Forms\Components\Toggle::make('is_featured')->label('Bosh sahifada katta kartochka')->inline(false),
                     ]),
                     Tr::text('price_note', 'Narx o‘rniga izoh', false),
-                    Forms\Components\Repeater::make('tags')->label('Teglar (kartochkadagi)')->schema([
-                        Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options()),
+                    CardsField::make('tags')->label('Teglar (kartochkadagi)')->kind('tag')->cols(4)->itemName('teg')->addLabel('Teg qo‘shish')->drawerWidth('md')->itemSchema(fn () => [
+                        IconPicker::make('icon')->label('Ikonka'),
                         Tr::text('text', 'Matn', true),
                         Forms\Components\Toggle::make('accent')->label('Sariq fon'),
-                    ])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null),
+                    ]),
                 ]),
                 Forms\Components\Tabs\Tab::make('Hero')->schema([
                     Tr::text('meta.badge', 'Yuqoridagi belgi (masalan: Offline · onlayn · 4 oydan 1 yilgacha)'),
-                    Forms\Components\Repeater::make('meta.stats')->label('Raqamlar (hero pastida)')->schema([
-                        Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options()),
+                    CardsField::make('meta.stats')->label('Raqamlar (hero pastida)')->kind('stat')->cols(4)->max(4)->itemName('raqam')->addLabel('Raqam qo‘shish')->drawerWidth('md')->itemSchema(fn () => [
+                        IconPicker::make('icon')->label('Ikonka'),
                         Tr::text('value', 'Qiymat (26–40, 1C, Diplom...)'),
                         Tr::text('label', 'Izoh'),
-                    ])->defaultItems(0)->maxItems(4)->collapsible()->itemLabel(fn (array $state) => $state['value']['uz'] ?? null),
+                    ]),
                     Tr::text('meta.price_caption', 'Narx kartochkasidagi izoh (bir martada to‘lansa)'),
                     Tr::text('meta.dark_card_sub', 'Qora kartochka: kichik matn (bo‘sh — “Toshkent · onlayn”)'),
                     Tr::text('meta.dark_card_title', 'Qora kartochka: sarlavha (bo‘sh — “Yangi guruhga qabul ochiq”)'),
                 ]),
                 Forms\Components\Tabs\Tab::make('Kimlar uchun')->schema([
                     Tr::textarea('meta.audience_lead', 'Blok izohi', false, 2),
-                    Forms\Components\Repeater::make('audience')->label('Kartochkalar (1-si sariq, oxirgisi qora)')->schema([
-                        Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options()),
-                        Tr::text('title', 'Sarlavha'),
-                        Tr::textarea('text', 'Matn', false, 2),
-                    ])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['title']['uz'] ?? null),
+                    CardsField::make('audience')->label('Kartochkalar (1-si sariq, oxirgisi qora)')->kind('audience')->cols(4)->itemName('kartochka')->addLabel('Kartochka qo‘shish')->drawerWidth('lg')->itemSchema(fn () => [
+                        IconPicker::make('icon')->label('Ikonka'),
+                        Tr::text('title', 'Sarlavha', true),
+                        Tr::textarea('text', 'Matn', false, 3),
+                    ]),
                 ]),
                 Forms\Components\Tabs\Tab::make('Dastur')->schema([
                     Tr::textarea('meta.program_lead', 'Dastur izohi', false, 2),
-                    Forms\Components\Repeater::make('program')->label('Modullar')->schema([
-                        Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options()),
+                    CardsField::make('program')->label('Modullar')->kind('program')->cols(3)->itemName('modul')->addLabel('Modul qo‘shish')->drawerWidth('xl')->itemSchema(fn () => [
+                        IconPicker::make('icon')->label('Ikonka'),
                         Forms\Components\FileUpload::make('image')->label('Rasm')->image()->disk('public')->directory('courses')->imageEditor(),
                         Tr::text('title', 'Modul nomi', true),
-                        Tr::textarea('text', 'Izoh', false, 2),
-                    ])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['title']['uz'] ?? null),
+                        Tr::textarea('text', 'Izoh', false, 3),
+                    ]),
                 ]),
                 Forms\Components\Tabs\Tab::make('Natijalar')->schema([
                     Tr::textarea('meta.outcomes_lead', '“Kurs yakunida siz” izohi', false, 2),
                     Forms\Components\FileUpload::make('meta.outcomes_image')->label('Rasm')->image()->disk('public')->directory('courses')->imageEditor(),
-                    Forms\Components\Repeater::make('outcomes')->label('Natijalar')->schema([Tr::text('text', 'Band')])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null),
+                    CardsField::make('outcomes')->label('Natijalar')->kind('outcome')->cols(2)->itemName('band')->addLabel('Natija qo‘shish')->drawerWidth('md')->itemSchema(fn () => [Tr::text('text', 'Band', true)]),
                     Tr::rich('description', 'Qo‘shimcha matn (ixtiyoriy)', 'courses'),
                 ]),
                 Forms\Components\Tabs\Tab::make('Tariflar')->schema([
                     Forms\Components\Toggle::make('meta.plans_on_request')->label('Tariflar o‘rniga “Narxi so‘rov bo‘yicha” blokini ko‘rsatish'),
                     Tr::text('meta.plans_lead', 'Izoh (masalan: bir martada to‘lasangiz — 20% chegirma)'),
-                    Forms\Components\Repeater::make('plans')->label('Kurs tariflari')->schema([
+                    CardsField::make('plans')->label('Kurs tariflari')->kind('plan')->cols(3)->itemName('tarif')->addLabel('Tarif qo‘shish')->drawerWidth('xl')->itemSchema(fn () => [
                         Tr::text('name', 'Nomi', true),
                         Tr::text('subtitle', 'Izoh'),
                         Forms\Components\Grid::make(2)->schema([
@@ -89,8 +91,8 @@ class CourseResource extends Resource
                             Forms\Components\TextInput::make('price_split')->label('Bo‘lib to‘lansa (so‘m)')->numeric(),
                         ]),
                         Forms\Components\Toggle::make('highlight')->label('Ajratib ko‘rsatish (sariq)'),
-                        Forms\Components\Repeater::make('features')->label('Imkoniyatlar')->schema([Tr::text('text', 'Band')])->defaultItems(0)->collapsible(),
-                    ])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['name']['uz'] ?? null),
+                        Forms\Components\Repeater::make('features')->label('Imkoniyatlar')->schema([Tr::text('text', 'Band')])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null),
+                    ]),
                     Tr::text('meta.plans_note', 'Pastdagi izoh (* ...)'),
                 ]),
                 Forms\Components\Tabs\Tab::make('SEO')->schema([
@@ -131,17 +133,13 @@ class CourseResource extends Resource
                     ]),
                 ])->columnSpan(['lg' => 2]),
             ]),
-            I\Section::make('Hero raqamlari')->collapsible()->schema([Info::list('meta.stats', 'Raqamlar', [Info::tr('value', 'Qiymat'), Info::tr('label', 'Izoh')], 2)]),
-            I\Section::make('Kimlar uchun')->collapsible()->collapsed()->schema([Info::list('audience', 'Kartochkalar', [Info::tr('title', 'Sarlavha'), Info::tr('text', 'Matn')], 2)]),
-            I\Section::make('Dasturi (modullar)')->collapsible()->collapsed()->schema([Info::list('program', 'Modullar', [Info::tr('title', 'Modul'), Info::tr('text', 'Izoh')], 2)]),
-            I\Section::make('Natijalar')->collapsible()->collapsed()->schema([Info::list('outcomes', 'Natijalar', [Info::tr('text', 'Band')])]),
+            I\Section::make('Hero raqamlari')->collapsible()->schema([Info::cards('meta.stats', 'Raqamlar', 'stat', 4)]),
+            I\Section::make('Kimlar uchun')->collapsible()->collapsed()->schema([Info::cards('audience', 'Kartochkalar', 'audience', 4)]),
+            I\Section::make('Dasturi (modullar)')->collapsible()->collapsed()->schema([Info::cards('program', 'Modullar', 'program', 3)]),
+            I\Section::make('Natijalar')->collapsible()->collapsed()->schema([Info::cards('outcomes', 'Natijalar', 'outcome', 2)]),
             I\Section::make('Tariflar')->collapsible()->schema([
                 Info::bool('meta.plans_on_request', 'Tariflar o‘rniga “Narxi so‘rov bo‘yicha” ko‘rsatiladi'),
-                Info::list('plans', 'Kurs tariflari', [
-                    Info::tr('name', 'Nomi'),
-                    I\TextEntry::make('price_once')->label('Bir martada')->formatStateUsing(fn ($state) => number_format((int) $state, 0, '', ' ').' so‘m'),
-                    I\TextEntry::make('price_split')->label('Bo‘lib to‘lansa')->formatStateUsing(fn ($state) => $state ? number_format((int) $state, 0, '', ' ').' so‘m' : '—'),
-                ], 2),
+                Info::cards('plans', 'Kurs tariflari', 'plan', 3),
             ]),
             Info::status(),
         ]);

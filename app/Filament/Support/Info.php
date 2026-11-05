@@ -56,4 +56,10 @@ class Info
     {
         return RepeatableEntry::make($name)->label($label)->columns($cols)->schema($schema)->placeholder('Kiritilmagan');
     }
+
+    /** Kartochkalar saytdagiday ko'rinadi (CardPreview) */
+    public static function cards(string $name, string $label, string $kind, int $cols = 3): \Filament\Infolists\Components\ViewEntry
+    {
+        return \Filament\Infolists\Components\ViewEntry::make($name)->label($label)->view('filament.infolists.cards')->viewData(['kind' => $kind, 'cols' => $cols]);
+    }
 }

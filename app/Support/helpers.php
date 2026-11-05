@@ -64,7 +64,7 @@ if (! function_exists('icon')) {
     function icon(string $name, int|string|null $size = null, string $class = ''): \Illuminate\Support\HtmlString
     {
         static $cache = [];
-        $svg = $cache[$name] ??= (is_file($f = resource_path("icons/{$name}.svg")) ? file_get_contents($f) : '');
+        $svg = $cache[$name] ??= (\App\Models\Icon::map()[$name] ?? (is_file($f = resource_path("icons/{$name}.svg")) ? file_get_contents($f) : ''));
         $style = $size ? ' style="--s:'.(is_numeric($size) ? $size.'px' : $size).'"' : '';
 
         return new \Illuminate\Support\HtmlString('<span class="icon '.e($class).'"'.$style.' aria-hidden="true">'.$svg.'</span>');

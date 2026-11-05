@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
+use App\Filament\Forms\CardsField;
+use App\Filament\Forms\IconPicker;
 use App\Models\Service;
 use Filament\Forms;
 use Filament\Infolists\Infolist;
@@ -28,7 +30,7 @@ class ServiceResource extends Resource
     {
         return $form->schema([
             Forms\Components\Section::make()->schema([
-                Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options())->required()->default('calculator'),
+                IconPicker::make('icon')->label('Ikonka')->required()->default('calculator'),
                 Tr::text('title', 'Nomi', true),
                 Tr::textarea('description', 'Tavsif', false, 2),
                 Forms\Components\Toggle::make('on_home')->label('Bosh sahifada ko‘rsatish')->default(true),

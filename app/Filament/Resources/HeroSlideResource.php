@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\HeroSlideResource\Pages;
 use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
+use App\Filament\Forms\CardsField;
+use App\Filament\Forms\IconPicker;
 use App\Models\HeroSlide;
 use Filament\Forms;
 use Filament\Infolists\Infolist;
@@ -43,14 +45,14 @@ class HeroSlideResource extends Resource
             ]),
             Forms\Components\Section::make('Suzuvchi kartochkalar')->collapsible()->schema([
                 Forms\Components\Fieldset::make('Oq kartochka (yuqorida)')->schema([
-                    Forms\Components\Select::make('cards.badge_icon')->label('Ikonka')->options(Icons::options())->default('monitor'),
+                    IconPicker::make('cards.badge_icon')->label('Ikonka')->default('monitor'),
                     Tr::text('cards.badge_title', 'Sarlavha'),
                     Tr::text('cards.badge_sub', 'Izoh'),
                 ])->columns(1),
                 Forms\Components\Fieldset::make('Ro‘yxatli kartochka')->schema([
                     Tr::text('cards.list_title', 'Sarlavha'),
                     Tr::text('cards.list_counter', 'Hisoblagich (masalan 2 / 4)'),
-                    Forms\Components\Repeater::make('cards.list_items')->label('Bandlar (oxirgisi kulrang ko‘rinadi)')->schema([Tr::text('text', 'Band')])->defaultItems(0)->collapsible(),
+                    CardsField::make('cards.list_items')->label('Bandlar (oxirgisi kulrang ko‘rinadi)')->kind('feature')->cols(1)->itemName('band')->addLabel('Band qo‘shish')->drawerWidth('md')->itemSchema(fn () => [Tr::text('text', 'Band', true)]),
                 ])->columns(1),
                 Forms\Components\Fieldset::make('Qora kartochka (pastda)')->schema([
                     Tr::text('cards.dark_sub', 'Kichik matn'),
