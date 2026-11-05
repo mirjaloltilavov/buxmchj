@@ -152,7 +152,7 @@ ul{margin:0;padding:0;list-style:none}
 .hero-copy{position:relative;z-index:2;max-width:800px;display:flex;flex-direction:column;gap:32px;align-items:flex-start}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px 8px 12px;border-radius:100px;background:rgba(255,255,255,.55);font-size:14px;font-weight:600;line-height:1.4}
 .chip .dot{width:8px;height:8px;border-radius:50%;background:#1f9d5c;box-shadow:0 0 0 3px rgba(31,157,92,.18)}
-.hero h1{font-size:clamp(44px,4.6vw,88px);font-weight:700;line-height:1.1;letter-spacing:-.035em}
+.hero h1,.hero .hero-h{font-size:clamp(44px,4.6vw,88px);font-weight:700;line-height:1.1;letter-spacing:-.035em}
 .hero-lead{max-width:620px;font-size:20px;color:var(--ink-2)}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
 .hero-media{position:absolute;inset:0;pointer-events:none}
@@ -540,7 +540,7 @@ ul{margin:0;padding:0;list-style:none}
 }
 @media (max-width:640px){
   :root{--gutter:16px}
-  .hero h1{font-size:40px}
+  .hero h1,.hero .hero-h{font-size:40px}
   .hero-lead{font-size:17px}
   .hero-media{height:440px}
   .hero-arrows{display:none}
@@ -1614,3 +1614,7 @@ html[lang="ru"] .services-ov .left .h2{font-size:clamp(32px,3.1vw,44px)}
   .calc__row:nth-child(4){display:flex}
   .calc__res{padding:22px 18px}
 }
+/* Hero sarlavhalari so'zni bo'g'inga bo'lmasin; ruscha uzun so'zlar uchun shrift biroz kichikroq */
+.hero h1,.hero .hero-h{hyphens:manual;-webkit-hyphens:manual;overflow-wrap:normal}
+html[lang="ru"] .hero h1,html[lang="ru"] .hero .hero-h{font-size:clamp(40px,3.9vw,76px)}
+@media (max-width:810px){html[lang="ru"] .hero h1,html[lang="ru"] .hero .hero-h{font-size:34px}}
