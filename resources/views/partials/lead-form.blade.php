@@ -1,3 +1,37 @@
+@if(($variant ?? '') === 'contact')
+{{-- Figma: Aloqa — Ariza kartasi --}}
+<form class="lead-form lead-form--contact" method="post" action="{{ route('lead.store') }}" data-lead-form novalidate>
+    @csrf
+    <h3>{{ __('Ariza') }}</h3>
+    <div class="form-fields">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true">
+        <input type="hidden" name="source" value="{{ request()->path() }}">
+        <input type="hidden" name="locale" value="{{ app()->getLocale() }}">
+        <div class="segmented">
+            <label><input type="radio" name="interest" value="course" @checked(($interest ?? 'course') === 'course')><span>{{ __('Kurslar') }}</span></label>
+            <label><input type="radio" name="interest" value="service" @checked(($interest ?? '') === 'service')><span>{{ __('Buxgalteriya xizmati') }}</span></label>
+        </div>
+        <div class="lead-row">
+            <label class="field">
+                <span>{{ __('Ismingiz') }}</span>
+                <span class="input">{{ icon('user') }}<input type="text" name="name" required maxlength="120" placeholder="{{ __('Ismingizni kiriting') }}" autocomplete="name"></span>
+            </label>
+            <label class="field">
+                <span>{{ __('Telefon raqam') }}</span>
+                <span class="input">{{ icon('call') }}<input type="tel" name="phone" required placeholder="+998 __ ___ __ __" autocomplete="tel" inputmode="tel" data-phone></span>
+            </label>
+        </div>
+        <label class="field field--area">
+            <span>{{ __('Xabaringiz (ixtiyoriy)') }}</span>
+            <span class="input input--area"><textarea name="message" maxlength="2000" rows="4" placeholder="{{ __('Masalan: MChJ uchun oylik buxgalteriya xizmati narxi qancha?') }}"></textarea></span>
+        </label>
+        <p class="form-error" data-form-error hidden></p>
+        <button type="submit" class="btn-pill btn-pill--ink btn-pill--l btn-pill--block"><span class="label">{{ __('Arizani yuborish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></button>
+        <p class="form-note">{{ __('Yuborish tugmasini bosish orqali shaxsiy ma’lumotlarni qayta ishlashga rozilik bildirasiz.') }}</p>
+    </div>
+    <div class="form-success" role="status" aria-live="polite"><span class="ok">{{ icon('tick-circle') }}</span><b>{{ __('Rahmat, tez orada qo‘ng‘iroq qilamiz') }}</b><span class="fc-sub">{{ __('Arizangiz qabul qilindi. Ish vaqtida 15 daqiqa ichida bog‘lanamiz.') }}</span></div>
+</form>
+@else
 <form class="lead-form" method="post" action="{{ route('lead.store') }}" data-lead-form novalidate>
     @csrf
     <h3>{{ __('Ariza') }}</h3>
@@ -32,3 +66,4 @@
     </div>
     <div class="form-success" role="status" aria-live="polite"><span class="ok">{{ icon('tick-circle') }}</span><b>{{ __('Rahmat, tez orada qo‘ng‘iroq qilamiz') }}</b><span class="fc-sub">{{ __('Arizangiz qabul qilindi. Ish vaqtida 15 daqiqa ichida bog‘lanamiz.') }}</span></div>
 </form>
+@endif

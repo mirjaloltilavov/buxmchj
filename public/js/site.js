@@ -784,6 +784,43 @@
   });
 
   /* =====================================================================
+     15. Aloqa (Figma Motion notes):
+     - Sarlavha 120 ms stagger; 4 ta kontakt plitkasi 80 ms stagger (y 24 → 0, scale .98 → 1)
+     - Xarita: pin yuqoridan tushadi (bounce) + to'lqin halqa; filial almashganda karta matni x 16 → 0
+  ===================================================================== */
+  $$('[data-c-hero]').forEach(function (h) { raf(function () { h.classList.add('is-entered'); }); });
+
+  var br = $('[data-branches]');
+  if (br) {
+    var list = [];
+    try { list = JSON.parse(br.getAttribute('data-branches') || '[]'); } catch (e) {}
+    var frame = $('[data-map-frame]', br), body = $('[data-branch-body]', br), pin = $('[data-pin]', br);
+    $$('[data-branch-tab]', br).forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var b = list[+tab.getAttribute('data-branch-tab')];
+        if (!b || tab.classList.contains('is-active')) return;
+        $$('[data-branch-tab]', br).forEach(function (t) { t.classList.toggle('is-active', t === tab); });
+        ['name', 'address', 'hours', 'phone'].forEach(function (k) {
+          var el = $('[data-b="' + k + '"]', body);
+          if (!el) return;
+          el.textContent = b[k] || '';
+          var line = el.closest('.c-line');
+          if (line) line.hidden = !b[k];
+        });
+        var r = $('[data-b-href="route"]', body), t = $('[data-b-href="tel"]', body);
+        if (r) r.href = b.route;
+        if (t) t.href = b.tel;
+        body.classList.remove('is-swap'); void body.offsetWidth; body.classList.add('is-swap');
+        if (frame) frame.src = b.map;
+        if (pin && !reduce) {
+          var m = pin.closest('.c-map');
+          m.classList.remove('is-in'); void m.offsetWidth; m.classList.add('is-in');
+        }
+      });
+    });
+  }
+
+  /* =====================================================================
      12. Sahifa o'tishi: fade 300 ms
   ===================================================================== */
   document.addEventListener('click', function (e) {
