@@ -139,7 +139,7 @@ ul{margin:0;padding:0;list-style:none}
 .mobile-menu{display:none}
 
 /* ---------- Hero slider ---------- */
-.hero{position:relative;min-height:max(760px,min(1080px,100vh));overflow:hidden;isolation:isolate}
+.hero{position:relative;height:100vh;min-height:960px;max-height:1200px;overflow:hidden;isolation:isolate}
 .hero-slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .7s ease,visibility .7s}
 .hero-slide.is-active{opacity:1;visibility:visible;position:relative;min-height:inherit}
 .hero{background:linear-gradient(144.9deg,#fff1c2 0%,#ffd877 33.3%,#f5a524 74%)}
@@ -523,7 +523,7 @@ ul{margin:0;padding:0;list-style:none}
   .mm-cta{justify-content:space-between;width:100%}
   .mm-socials{display:flex;justify-content:center;gap:8px;padding-top:8px}
   .mm-socials .icon-btn{width:48px;height:48px;--s:20px}
-  .hero{min-height:auto}
+  .hero{height:auto;min-height:auto;max-height:none}
   .hero-inner{padding-top:120px;padding-bottom:0;display:flex;flex-direction:column}
   .hero-media{position:relative;inset:auto;height:560px;margin-top:40px}
   .hero-portrait{left:50%;right:auto;transform:translateX(-50%);width:min(440px,90%);height:100%}

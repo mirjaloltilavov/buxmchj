@@ -19,13 +19,13 @@ class ListLeads extends ListRecords
         return [
             'all' => Tab::make('Hammasi')->badge(Lead::count()),
             'new' => Tab::make('Yangi')->icon('heroicon-o-bell-alert')->badge($count('new') ?: null)->badgeColor('warning')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', 'new')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'new')),
             'contacted' => Tab::make('Bog‘lanildi')->icon('heroicon-o-phone-arrow-up-right')->badge($count('contacted') ?: null)->badgeColor('info')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', 'contacted')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'contacted')),
             'done' => Tab::make('Yakunlandi')->icon('heroicon-o-check-circle')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', 'done')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'done')),
             'spam' => Tab::make('Spam')->icon('heroicon-o-no-symbol')
-                ->modifyQueryUsing(fn (Builder $q) => $q->where('status', 'spam')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'spam')),
         ];
     }
 }
