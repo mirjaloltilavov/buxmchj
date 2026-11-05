@@ -22,7 +22,7 @@ class LatestLeads extends TableWidget
         return $table->query(Lead::query()->latest()->limit(6))->paginated(false)
             ->emptyStateHeading('Hozircha arizalar yo‘q')->emptyStateIcon('heroicon-o-inbox')
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label('Ism')->weight('bold')->description(fn ($record) => $record->created_at?->diffForHumans()),
+                Tables\Columns\TextColumn::make('name')->label('Ism')->weight('bold')->description(fn ($record) => ago($record->created_at)),
                 Tables\Columns\TextColumn::make('phone')->label('Telefon')->icon('heroicon-o-phone')->copyable(),
                 Tables\Columns\TextColumn::make('status')->label('Holat')->badge()->formatStateUsing(fn ($state) => Lead::STATUSES[$state] ?? $state)->color(fn ($state) => $color[$state] ?? 'gray'),
             ])

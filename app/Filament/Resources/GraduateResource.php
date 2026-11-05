@@ -6,6 +6,9 @@ use App\Filament\Resources\GraduateResource\Pages;
 use App\Filament\Support\Tr;
 use App\Models\Graduate;
 use Filament\Forms;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components as I;
+use App\Filament\Support\Info;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -46,6 +49,17 @@ class GraduateResource extends Resource
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
         ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
             Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            I\Section::make('Bitiruvchi')->columns(['default' => 1, 'lg' => 3])->schema([
+                Info::img('photo', 'Rasm', 260),
+                I\Group::make([Info::tr('name', 'Ism familiya'), Info::tr('subtitle', 'Guruh va ish joyi'), Info::link('video_url', 'Video havolasi')])->columnSpan(['lg' => 2]),
+            ]),
+            Info::status(),
+        ]);
     }
 
     public static function getPages(): array

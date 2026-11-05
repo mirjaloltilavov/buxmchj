@@ -44,7 +44,7 @@ class LeadResource extends Resource
             Infolists\Components\Section::make('Ariza')->icon('heroicon-o-chat-bubble-left-ellipsis')->columns(3)->schema([
                 Infolists\Components\TextEntry::make('interest')->label('Qiziqish')->badge()->formatStateUsing(fn ($state) => Lead::INTERESTS[$state] ?? '—'),
                 Infolists\Components\TextEntry::make('created_at')->label('Yuborilgan')->dateTime('d.m.Y H:i')->icon('heroicon-o-clock')
-                    ->helperText(fn ($record) => $record->created_at?->diffForHumans()),
+                    ->helperText(fn ($record) => ago($record->created_at)),
                 Infolists\Components\TextEntry::make('source')->label('Qaysi sahifadan')->placeholder('—')->icon('heroicon-o-globe-alt'),
                 Infolists\Components\TextEntry::make('message')->label('Xabar')->placeholder('Xabar qoldirilmagan')->columnSpanFull()->prose(),
             ]),

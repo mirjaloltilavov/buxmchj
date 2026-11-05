@@ -7,6 +7,9 @@ use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
 use App\Models\HeroSlide;
 use Filament\Forms;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components as I;
+use App\Filament\Support\Info;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -71,6 +74,24 @@ class HeroSlideResource extends Resource
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
         ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
             Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            I\Section::make('Slayd')->columns(['default' => 1, 'lg' => 3])->schema([
+                Info::img('image', 'Portret rasm', 260),
+                I\Group::make([
+                    Info::text('theme', 'Mavzu'), Info::tr('tab_label', 'Pastdagi tab nomi'), Info::tr('chip', 'Yuqoridagi belgi'),
+                    Info::tr('title', 'Sarlavha', true), Info::tr('lead', 'Qisqa matn', true),
+                ])->columnSpan(['lg' => 2]),
+            ]),
+            I\Section::make('Tugmalar')->columns(2)->schema([
+                Info::tr('primary_label', 'Asosiy tugma'), Info::link('primary_url', 'Asosiy havola'),
+                Info::tr('secondary_label', 'Ikkinchi tugma'), Info::link('secondary_url', 'Ikkinchi havola'),
+            ]),
+            Info::status(),
+        ]);
     }
 
     public static function getPages(): array

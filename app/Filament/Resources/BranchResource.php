@@ -7,6 +7,9 @@ use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
 use App\Models\Branch;
 use Filament\Forms;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components as I;
+use App\Filament\Support\Info;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -48,6 +51,18 @@ class BranchResource extends Resource
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
         ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
             Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            I\Section::make('Filial')->schema([
+                Info::tr('name', 'Nomi'), Info::tr('address', 'Manzil'), Info::tr('hours', 'Ish vaqti'),
+                I\Grid::make(3)->schema([Info::text('phone', 'Telefon', 'heroicon-o-phone'), Info::text('lat', 'Kenglik (lat)'), Info::text('lng', 'Uzunlik (lng)')]),
+                Info::link('map_url', 'Xarita havolasi'),
+            ]),
+            Info::status(),
+        ]);
     }
 
     public static function getPages(): array

@@ -7,6 +7,9 @@ use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
 use App\Models\Course;
 use Filament\Forms;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components as I;
+use App\Filament\Support\Info;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -112,6 +115,36 @@ class CourseResource extends Resource
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
         ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
             Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            I\Section::make('Kurs')->columns(['default' => 1, 'lg' => 3])->schema([
+                Info::img('image', 'Rasm', 220),
+                I\Group::make([
+                    Info::tr('title', 'Nomi'), Info::tr('excerpt', 'Qisqa tavsif', true),
+                    I\Grid::make(3)->schema([
+                        I\TextEntry::make('price')->label('Narxi')->formatStateUsing(fn ($state) => $state ? number_format((int) $state, 0, '', ' ').' so‘mdan' : '—'),
+                        Info::text('slug', 'URL (slug)', 'heroicon-o-link'),
+                        Info::bool('is_featured', 'Bosh sahifada katta karta'),
+                    ]),
+                ])->columnSpan(['lg' => 2]),
+            ]),
+            I\Section::make('Hero raqamlari')->collapsible()->schema([Info::list('meta.stats', 'Raqamlar', [Info::tr('value', 'Qiymat'), Info::tr('label', 'Izoh')], 2)]),
+            I\Section::make('Kimlar uchun')->collapsible()->collapsed()->schema([Info::list('audience', 'Kartochkalar', [Info::tr('title', 'Sarlavha'), Info::tr('text', 'Matn')], 2)]),
+            I\Section::make('Dasturi (modullar)')->collapsible()->collapsed()->schema([Info::list('program', 'Modullar', [Info::tr('title', 'Modul'), Info::tr('text', 'Izoh')], 2)]),
+            I\Section::make('Natijalar')->collapsible()->collapsed()->schema([Info::list('outcomes', 'Natijalar', [Info::tr('text', 'Band')])]),
+            I\Section::make('Tariflar')->collapsible()->schema([
+                Info::bool('meta.plans_on_request', 'Tariflar o‘rniga “Narxi so‘rov bo‘yicha” ko‘rsatiladi'),
+                Info::list('plans', 'Kurs tariflari', [
+                    Info::tr('name', 'Nomi'),
+                    I\TextEntry::make('price_once')->label('Bir martada')->formatStateUsing(fn ($state) => number_format((int) $state, 0, '', ' ').' so‘m'),
+                    I\TextEntry::make('price_split')->label('Bo‘lib to‘lansa')->formatStateUsing(fn ($state) => $state ? number_format((int) $state, 0, '', ' ').' so‘m' : '—'),
+                ], 2),
+            ]),
+            Info::status(),
+        ]);
     }
 
     public static function getPages(): array

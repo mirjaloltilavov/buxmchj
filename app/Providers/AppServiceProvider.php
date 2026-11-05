@@ -11,17 +11,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // "5 soat avval" kabi vaqtlar lotin alifbosida chiqsin (admin va sayt)
+        // "5 soat avval" kabi vaqtlar lotin alifbosida chiqsin: til o'zgargan har safar qayta o'rnatiladi
+        \Illuminate\Support\Facades\Event::listen(\Illuminate\Foundation\Events\LocaleUpdated::class, function ($e) {
+            if ($e->locale === 'uz') {
+                \Illuminate\Support\Carbon::setLocale('uz_Latn');
+            }
+        });
         if (app()->getLocale() === 'uz') {
             \Illuminate\Support\Carbon::setLocale('uz_Latn');
         }
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        //
     }
 }

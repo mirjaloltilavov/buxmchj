@@ -7,6 +7,9 @@ use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
 use App\Models\ServicePlan;
 use Filament\Forms;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components as I;
+use App\Filament\Support\Info;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -47,6 +50,21 @@ class ServicePlanResource extends Resource
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
         ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
             Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            I\Section::make('Tarif')->schema([
+                Info::tr('name', 'Nomi'), Info::tr('subtitle', 'Kimlar uchun'),
+                I\Grid::make(2)->schema([
+                    I\TextEntry::make('price')->label('Oylik narx')->money('UZS', locale: 'uz')->formatStateUsing(fn ($state) => number_format((int) $state, 0, '', ' ').' so‘m'),
+                    Info::bool('is_highlighted', 'Ajratib ko‘rsatilgan (qora kartochka)'),
+                ]),
+            ]),
+            I\Section::make('Nimalar kiradi')->schema([Info::list('features', 'Bandlar', [Info::tr('text', 'Band')])]),
+            Info::status(),
+        ]);
     }
 
     public static function getPages(): array

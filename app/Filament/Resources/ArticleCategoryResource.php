@@ -6,6 +6,9 @@ use App\Filament\Resources\ArticleCategoryResource\Pages;
 use App\Filament\Support\Tr;
 use App\Models\ArticleCategory;
 use Filament\Forms;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components as I;
+use App\Filament\Support\Info;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -39,6 +42,16 @@ class ArticleCategoryResource extends Resource
             Tables\Columns\TextColumn::make('articles_count')->label('Maqolalar')->counts('articles'),
         ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
             Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            I\Section::make('Kategoriya')->schema([
+                Info::tr('name', 'Nomi'), Info::text('slug', 'URL (slug)', 'heroicon-o-link'),
+            ]),
+            Info::status(false),
+        ]);
     }
 
     public static function getPages(): array

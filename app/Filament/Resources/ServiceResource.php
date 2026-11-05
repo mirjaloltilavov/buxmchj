@@ -7,6 +7,9 @@ use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
 use App\Models\Service;
 use Filament\Forms;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components as I;
+use App\Filament\Support\Info;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -45,6 +48,17 @@ class ServiceResource extends Resource
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
         ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
             Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            I\Section::make('Xizmat')->schema([
+                Info::tr('title', 'Nomi'), Info::tr('description', 'Tavsif', true),
+                I\Grid::make(2)->schema([Info::text('icon', 'Ikonka'), Info::bool('on_home', 'Bosh sahifada ko‘rsatiladi')]),
+            ]),
+            Info::status(),
+        ]);
     }
 
     public static function getPages(): array

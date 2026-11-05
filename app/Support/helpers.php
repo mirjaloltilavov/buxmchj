@@ -143,3 +143,16 @@ if (! function_exists('article_html')) {
         return $html;
     }
 }
+
+if (! function_exists('ago')) {
+    /** "5 soat avval" — o'zbekcha lotin yozuvida (Carbon'ning "uz" tili kirilcha) */
+    function ago($date): ?string
+    {
+        if (! $date) {
+            return null;
+        }
+        $loc = app()->getLocale();
+
+        return \Illuminate\Support\Carbon::parse($date)->locale($loc === 'uz' ? 'uz_Latn' : $loc)->diffForHumans();
+    }
+}

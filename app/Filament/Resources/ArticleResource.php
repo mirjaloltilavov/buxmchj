@@ -6,6 +6,9 @@ use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Support\Tr;
 use App\Models\Article;
 use Filament\Forms;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components as I;
+use App\Filament\Support\Info;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -75,6 +78,28 @@ class ArticleResource extends Resource
             Tables\Actions\ViewAction::make()->label('Ko‘rish'),
             Tables\Actions\EditAction::make()->label('Tahrirlash'),
             Tables\Actions\DeleteAction::make(),
+        ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            I\Section::make('Maqola')->columns(['default' => 1, 'lg' => 3])->schema([
+                Info::img('cover', 'Muqova', 220),
+                I\Group::make([Info::tr('title', 'Sarlavha'), Info::tr('excerpt', 'Qisqa tavsif', true), Info::text('slug', 'URL (slug)', 'heroicon-o-link')])->columnSpan(['lg' => 2]),
+            ]),
+            I\Section::make('Ma’lumotlar')->columns(4)->schema([
+                I\TextEntry::make('category.name.uz')->label('Kategoriya')->badge()->placeholder('—'),
+                I\TextEntry::make('published_at')->label('Chop etilgan')->dateTime('d.m.Y H:i')->placeholder('—'),
+                Info::text('read_minutes', 'O‘qish vaqti (daqiqa)', 'heroicon-o-clock'),
+                I\TextEntry::make('author.uz')->label('Muallif')->placeholder('—'),
+                I\TextEntry::make('tags.uz')->label('Teglar')->badge()->placeholder('—')->columnSpan(2),
+                Info::bool('is_featured', 'Tanlangan maqola'), Info::bool('is_active', 'Saytda ko‘rinadi'),
+            ]),
+            I\Section::make('Maqola matni')->collapsible()->schema([
+                I\TextEntry::make('body.uz')->label('O‘zbekcha')->html()->prose(),
+                I\TextEntry::make('body.ru')->label('Ruscha')->html()->prose()->placeholder('Tarjima kiritilmagan'),
+            ]),
         ]);
     }
 
