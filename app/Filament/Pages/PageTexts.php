@@ -2,40 +2,42 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Forms\CardsField;
+use App\Filament\Pages\Concerns\HasSettingBlocks;
 use App\Filament\Support\Tr;
-use App\Models\Setting;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms;
-use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 
 /**
- * Sahifalardagi sarlavha va matnlar. Bo'sh qoldirilgan maydon o'rniga standart (dizayndagi) matn chiqadi.
+ * Sahifalardagi sarlavha va matnlar (kartochkalar ko'rinishida, tahrirlash drawer'da).
+ * Bo'sh qoldirilgan maydon o'rniga standart (dizayndagi) matn chiqadi.
  */
-class PageTexts extends Page implements HasForms
+class PageTexts extends Page implements HasForms, HasActions
 {
-    use InteractsWithForms;
+    use HasSettingBlocks;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationGroup = 'Bosh sahifa';
     protected static ?string $navigationLabel = 'Sahifa matnlari';
     protected static ?string $title = 'Sahifa matnlari';
     protected static ?int $navigationSort = 3;
-    protected static string $view = 'filament.pages.settings-form';
 
-    public ?array $data = [];
-
-    public function mount(): void
+    protected function hint(): ?string
     {
-        $this->form->fill(['texts' => Setting::get('texts', [])]);
+        return 'Bo‘sh qoldirilgan maydonlarda dizayndagi standart matn ko‘rinadi. Tahrirlash uchun blok yonidagi tugmani bosing.';
     }
 
-    private static function list(string $name, string $label): Forms\Components\Repeater
+    protected function emptyLabel(): string
     {
-        return Forms\Components\Repeater::make($name)->label($label)->schema([Tr::text('text', 'Band')])
-            ->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null);
+        return '— standart matn';
+    }
+
+    private static function list(string $name, string $label): CardsField
+    {
+        return CardsField::make($name)->label($label)->kind('feature')->cols(2)->itemName('band')->addLabel('Band qo‘shish')->drawerWidth('md')
+            ->itemSchema(fn () => [Tr::text('text', 'Band', true)]);
     }
 
     private static function image(string $name, string $label): Forms\Components\FileUpload
@@ -43,14 +45,11 @@ class PageTexts extends Page implements HasForms
         return Forms\Components\FileUpload::make($name)->label($label)->image()->disk('public')->directory('pages')->imageEditor();
     }
 
-    public function form(Form $form): Form
+    protected function blocks(): array
     {
-        $hint = 'Bo‘sh qoldirsangiz, dizayndagi standart matn ko‘rinadi.';
-
-        return $form->statePath('data')->schema([
-            Forms\Components\Placeholder::make('hint')->label('')->content($hint),
-            Forms\Components\Tabs::make()->tabs([
-                Forms\Components\Tabs\Tab::make('Yo‘nalishlar')->schema([
+        return [
+            'Bosh sahifa' => [
+                'directions' => ['title' => 'Yo‘nalishlar', 'icon' => 'heroicon-o-squares-2x2', 'paths' => ['texts.directions'], 'schema' => fn () => [
                     Tr::text('texts.directions.title', 'Sarlavha'),
                     Tr::textarea('texts.directions.lead', 'Izoh', false, 2),
                     Forms\Components\Fieldset::make('Kurslar kartochkasi')->columns(1)->schema([
@@ -67,8 +66,8 @@ class PageTexts extends Page implements HasForms
                         self::list('texts.directions.services_checks', 'Belgilar'),
                         Tr::text('texts.directions.services_price', 'Narx matni'),
                     ]),
-                ]),
-                Forms\Components\Tabs\Tab::make('Nega biz')->schema([
+                ]],
+                'why' => ['title' => 'Nega biz', 'icon' => 'heroicon-o-star', 'paths' => ['texts.why'], 'schema' => fn () => [
                     Tr::text('texts.why.title', 'Sarlavha'),
                     Tr::textarea('texts.why.lead', 'Izoh', false, 2),
                     self::image('texts.why.image', 'Katta rasm'),
@@ -82,8 +81,8 @@ class PageTexts extends Page implements HasForms
                         Tr::textarea("texts.why.t{$i}_text", "Blok {$i} matni", false, 2),
                     ])->all(),
                     self::list('texts.why.t5_chips', 'Qora blokdagi teglar'),
-                ]),
-                Forms\Components\Tabs\Tab::make('Kurslar / Xizmat bloklari')->schema([
+                ]],
+                'blocks' => ['title' => 'Kurslar va xizmat bloklari', 'icon' => 'heroicon-o-rectangle-group', 'paths' => ['texts.courses', 'texts.services'], 'schema' => fn () => [
                     Tr::text('texts.courses.title', 'Kurslar bloki sarlavhasi'),
                     Tr::textarea('texts.courses.lead', 'Kurslar bloki izohi', false, 2),
                     Tr::text('texts.services.title', 'Xizmat bloki sarlavhasi'),
@@ -93,8 +92,8 @@ class PageTexts extends Page implements HasForms
                     Tr::text('texts.services.price_text', 'Narx (qatorda)'),
                     Tr::text('texts.services.price_big', 'Narx (rasm ustida)'),
                     Tr::text('texts.services.for_long', 'Rasm ustidagi izoh'),
-                ]),
-                Forms\Components\Tabs\Tab::make('FAQ / Maqolalar / Ariza')->schema([
+                ]],
+                'faq' => ['title' => 'FAQ, maqolalar va ariza bloklari', 'icon' => 'heroicon-o-chat-bubble-left-right', 'paths' => ['texts.faq', 'texts.articles', 'texts.consult'], 'schema' => fn () => [
                     Tr::text('texts.faq.title', 'FAQ sarlavhasi'),
                     Tr::textarea('texts.faq.lead', 'FAQ izohi', false, 2),
                     Tr::text('texts.articles.title', 'Maqolalar bloki sarlavhasi'),
@@ -105,8 +104,10 @@ class PageTexts extends Page implements HasForms
                         Tr::text("texts.consult.step{$i}_title", "{$i}-qadam"),
                         Tr::text("texts.consult.step{$i}_text", "{$i}-qadam izohi"),
                     ])->all(),
-                ]),
-                Forms\Components\Tabs\Tab::make('Ichki sahifalar')->schema([
+                ]],
+            ],
+            'Ichki sahifalar' => [
+                'pages' => ['title' => 'Sahifa sarlavhalari va izohlari', 'icon' => 'heroicon-o-document-duplicate', 'paths' => ['texts.courses_page', 'texts.services_page', 'texts.blog', 'texts.contact'], 'schema' => fn () => [
                     Tr::text('texts.courses_page.title', 'Kurslar sahifasi sarlavhasi'),
                     Tr::textarea('texts.courses_page.lead', 'Kurslar sahifasi izohi', false, 2),
                     Forms\Components\Grid::make(3)->schema([
@@ -117,14 +118,8 @@ class PageTexts extends Page implements HasForms
                     Tr::textarea('texts.services_page.lead', 'Xizmat sahifasi izohi', false, 2),
                     Tr::textarea('texts.blog.lead', 'Maqolalar sahifasi izohi', false, 2),
                     Tr::textarea('texts.contact.lead', 'Aloqa sahifasi izohi', false, 2),
-                ]),
-            ])->persistTabInQueryString(),
-        ]);
-    }
-
-    public function save(): void
-    {
-        Setting::put('texts', $this->form->getState()['texts'] ?? []);
-        Notification::make()->title('Saqlandi')->success()->send();
+                ]],
+            ],
+        ];
     }
 }

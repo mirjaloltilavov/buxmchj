@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\HeroSlideResource\Pages;
-use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
 use App\Filament\Forms\CardsField;
 use App\Filament\Forms\IconPicker;

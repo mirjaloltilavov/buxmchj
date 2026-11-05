@@ -361,7 +361,7 @@ ul{margin:0;padding:0;list-style:none}
 .insta{background:linear-gradient(180deg,#fff 0%,#fff 31.7%,#3a3b3d 74.5%,#16171a 100%);padding-block:var(--section-y);overflow:hidden}
 .insta-head{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-bottom:48px}
 .insta-track{display:flex;gap:16px;width:max-content;animation:marquee 60s linear infinite}
-.insta:hover .insta-track{animation-play-state:paused}
+
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .insta-post{position:relative;width:320px;height:320px;border-radius:20px;overflow:hidden;flex:none}
 .insta-post img{width:100%;height:100%;object-fit:cover}

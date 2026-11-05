@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CourseResource\Pages;
 use App\Filament\Forms\CardsField;
 use App\Filament\Forms\IconPicker;
-use App\Filament\Support\Icons;
 use App\Filament\Support\Tr;
 use App\Models\Course;
 use Filament\Forms;
@@ -91,7 +90,7 @@ class CourseResource extends Resource
                             Forms\Components\TextInput::make('price_split')->label('Bo‘lib to‘lansa (so‘m)')->numeric(),
                         ]),
                         Forms\Components\Toggle::make('highlight')->label('Ajratib ko‘rsatish (sariq)'),
-                        Forms\Components\Repeater::make('features')->label('Imkoniyatlar')->schema([Tr::text('text', 'Band')])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null),
+                        CardsField::make('features')->label('Imkoniyatlar')->kind('feature')->cols(1)->itemName('band')->addLabel('Imkoniyat qo‘shish')->drawerWidth('md')->itemSchema(fn () => [Tr::text('text', 'Band', true)]),
                     ]),
                     Tr::text('meta.plans_note', 'Pastdagi izoh (* ...)'),
                 ]),

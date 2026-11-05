@@ -73,3 +73,31 @@
     .bx-plan li{display:flex;gap:.4rem;align-items:center}
     .bx-plan .bx-tick{width:1.1rem;height:1.1rem;border-radius:.3rem}.bx-plan .bx-tick .icon,.bx-plan .bx-tick .icon svg{width:.7rem;height:.7rem}
 </style>
+<style>
+    /* Sozlamalar — ko'rish kartochkalari */
+    .bx-set{margin-bottom:1.75rem}
+    .bx-set__group{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin-bottom:.75rem}
+    .bx-set__grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr))}
+    .bx-set__card{border:1px solid rgba(120,120,130,.25);border-radius:1rem;background:#fff;overflow:hidden}
+    .dark .bx-set__card{background:rgba(255,255,255,.04)}
+    .bx-set__head{display:flex;align-items:center;gap:.75rem;padding:.85rem 1rem;border-bottom:1px solid rgba(120,120,130,.2);flex-wrap:wrap}
+    .bx-set__ico{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:.65rem;background:linear-gradient(180deg,#ffd877,#f5a524);color:#16171a;flex:none}
+    .bx-set__ttl{flex:1;min-width:8rem;display:flex;flex-direction:column;line-height:1.25}
+    .bx-set__ttl b{font-size:.95rem}.bx-set__ttl small{font-size:.75rem;opacity:.6}
+    .bx-set__rows{display:grid;grid-template-columns:1fr 1fr;gap:.85rem 1.25rem;padding:1rem;margin:0}
+    .bx-set__rows.is-off{opacity:.45}
+    .bx-set__row{min-width:0}.bx-set__row.is-wide{grid-column:1/-1}
+    .bx-set__row dt{font-size:.72rem;font-weight:600;opacity:.6;margin-bottom:.2rem}
+    .bx-set__row dd{margin:0;font-size:.88rem;line-height:1.4;overflow-wrap:anywhere}
+    .bx-set__txt{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .bx-set__empty{opacity:.45;font-size:.82rem}
+    .bx-set__img{max-height:5.5rem;border-radius:.6rem;display:block}
+    .bx-set__chips{display:flex;flex-wrap:wrap;gap:.3rem}
+    .bx-pill{display:inline-block;padding:.15rem .6rem;border-radius:999px;background:rgba(120,120,130,.18);font-size:.75rem;font-weight:600}
+    .bx-pill.is-yes{background:rgba(31,157,92,.15);color:#1f9d5c}
+    .bx-sw{display:inline-flex;align-items:center;gap:.5rem;padding:.2rem .6rem .2rem .25rem;border-radius:999px;border:1px solid rgba(120,120,130,.3);background:transparent;cursor:pointer;font-size:.75rem;font-weight:600;color:inherit}
+    .bx-sw i{width:2rem;height:1.15rem;border-radius:999px;background:rgba(120,120,130,.4);position:relative;transition:background .2s}
+    .bx-sw i::after{content:"";position:absolute;left:.15rem;top:.15rem;width:.85rem;height:.85rem;border-radius:50%;background:#fff;transition:transform .2s}
+    .bx-sw.is-on i{background:#f5a524}.bx-sw.is-on i::after{transform:translateX(.85rem)}
+    @media (max-width:700px){.bx-set__rows{grid-template-columns:1fr}}
+</style>
