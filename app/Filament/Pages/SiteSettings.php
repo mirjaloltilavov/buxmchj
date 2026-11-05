@@ -35,7 +35,15 @@ class SiteSettings extends Page implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill(collect(self::KEYS)->mapWithKeys(fn ($k) => [$k => Setting::get($k)])->all());
+        $data = collect(self::KEYS)->mapWithKeys(fn ($k) => [$k => Setting::get($k)])->all();
+        // Popuplar birinchi marta ochilganda — yoqilgan holatda ko'rsatiladi (saytdagi standart bilan bir xil)
+        $popups = is_array($data['popups'] ?? null) ? $data['popups'] : [];
+        $popups['delay'] ??= 15;
+        foreach (['course', 'service', 'guide'] as $type) {
+            $popups[$type]['enabled'] ??= true;
+        }
+        $data['popups'] = $popups;
+        $this->form->fill($data);
     }
 
     public function form(Form $form): Form

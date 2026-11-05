@@ -364,9 +364,10 @@
     var showError = function (t) { if (err) { err.textContent = t; err.hidden = !t; } };
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var name = form.elements.name.value.trim();
+      var nameEl = form.querySelector('[name="name"]');
+      var name = nameEl ? nameEl.value.trim() : '-';
       var phone = form.elements.phone.value.replace(/\D/g, '');
-      if (!name) { showError(msg.name); shake(form.elements.name); form.elements.name.focus(); return; }
+      if (!name) { showError(msg.name); shake(nameEl); nameEl.focus(); return; }
       if (phone.length < 12) { showError(msg.phone); shake(form.elements.phone); form.elements.phone.focus(); return; }
       showError('');
       var btn = $('button[type="submit"]', form);
