@@ -23,7 +23,7 @@ class PageController extends Controller
         return view('pages.home', [
             'slides' => HeroSlide::active()->get(),
             'courses' => Course::active()->get(),
-            'services' => Service::active()->take(6)->get(),
+            'services' => Service::active()->where('on_home', true)->take(6)->get(),
             'faqs' => Faq::for('home')->get(),
             'featured' => $articles->firstWhere('is_featured', true) ?? $articles->first(),
             'articles' => $articles,

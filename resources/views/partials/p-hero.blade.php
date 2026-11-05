@@ -10,7 +10,7 @@
                     @if($url)<a href="{{ $url }}">{{ $label }}</a>@else<b>{{ $label }}</b>@endif
                 @endforeach
             </nav>
-            @if(! empty($badge))<span class="chip chip--light"><i class="dot"></i>{{ $badge }}</span>@endif
+            @if(! empty($badge))<span @class(['chip', 'chip--light', 'chip--blue' => $badgeBlue ?? false])><i class="dot"></i>{{ $badge }}</span>@endif
             <div class="p-hero__text">
                 <h1>{{ $title }}</h1>
                 @if(! empty($lead))<p class="p-hero__lead">{{ $lead }}</p>@endif
@@ -19,7 +19,7 @@
         </div>
         @if(! empty($image))
             <div class="p-hero__media">
-                <div class="p-hero__img"><img src="{{ media_url($image) }}" alt="" fetchpriority="high"></div>
+                <div @class(['p-hero__img', 'p-hero__img--tall' => $imgTall ?? false])><img src="{{ media_url($image) }}" alt="" fetchpriority="high"></div>
                 {{ $cards ?? '' }}
             </div>
         @endif

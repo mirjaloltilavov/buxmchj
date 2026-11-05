@@ -495,6 +495,74 @@
     $$('.pcard__full').forEach(function (el) { sio.observe(el); });
   }
 
+  /* Narx kalkulyatori: baza narxlar tariflardan, slayder qo'shimchasi taxminiy.
+     Natija raqam aylanishi bilan yangilanadi (400 ms), o'zgargan qator sariq yonib o'chadi (300 ms). */
+  $$('[data-calc]').forEach(function (calc) {
+    var base = {};
+    try { base = JSON.parse(calc.getAttribute('data-base')); } catch (e) {}
+    // Qo'shimcha: 10 kishidan ortiq har bir xodim va 150 dan ortiq har 10 operatsiya uchun (taxminiy)
+    var EMP_FREE = 10, EMP_STEP = 60000, OPS_FREE = 150, OPS_STEP = 60000;
+    var T = ru
+      ? { yatt: 'ИП', llc: 'ООО', yes: 'Да', no: 'Нет', vat: 'плательщик НДС', novat: 'без НДС', local: 'Внутренняя торговля и услуги', imp: 'Импорт-экспорт', ppl: 'чел.', ops: 'в мес.' }
+      : { yatt: 'YaTT', llc: 'MChJ', yes: 'Ha', no: 'Yo‘q', vat: 'QQS to‘lovchisi', novat: 'QQSsiz', local: 'Ichki savdo va xizmat', imp: 'Import-eksport', ppl: 'kishi', ops: 'ta / oy' };
+    var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
+    var val = function (n) { var i = $('input[name="' + n + '"]:checked', calc) || $('input[name="' + n + '"]', calc); return i ? i.value : ''; };
+    var res = function (k) { return $('[data-res="' + k + '"]', calc); };
+    var last = {}, first = true;
+    var flash = function (k) { var row = $('[data-row="' + k + '"]', calc); if (!row || first) return; row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash'); setTimeout(function () { row.classList.remove('flash'); }, 300); };
+    var setText = function (k, t) { var el = res(k); if (el && el.textContent !== t) { el.textContent = t; flash(k); } };
+    var upd = function () {
+      var org = val('org'), vat = val('vat') === '1', kind = val('kind');
+      var emp = parseInt(val('emp'), 10) || 0, ops = parseInt(val('ops'), 10) || 0;
+      var sum = kind === 'import' ? base.import : (org === 'yatt' ? base.yatt : (vat ? base.llc_vat : base.llc));
+      if (org === 'yatt' && vat) sum = Math.max(sum, base.llc); // QQS to'lovchi YaTT
+      sum += Math.max(0, emp - EMP_FREE) * EMP_STEP + Math.ceil(Math.max(0, ops - OPS_FREE) / 10) * OPS_STEP;
+      sum = Math.round(sum / 100000) * 100000;
+      // slayder to'ldirilishi va qiymatlari
+      $$('input[type="range"]', calc).forEach(function (r) { r.style.setProperty('--p', ((r.value - r.min) / (r.max - r.min) * 100) + '%'); });
+      var empTxt = emp + (emp >= 50 ? '+' : '') + ' ' + T.ppl, opsTxt = '~' + ops + (ops >= 500 ? '+' : '') + ' ' + (ru ? 'шт' : 'ta');
+      var oe = $('[data-out="emp"]', calc), oo = $('[data-out="ops"]', calc);
+      if (oe) oe.textContent = empTxt; if (oo) oo.textContent = opsTxt;
+      setText('org', org === 'yatt' ? T.yatt : T.llc);
+      setText('vat', vat ? T.yes : T.no);
+      setText('kind', kind === 'import' ? T.imp : T.local);
+      setText('emp', empTxt);
+      setText('ops', '~' + ops + ' ' + T.ops);
+      var badge = res('badge'); if (badge) badge.textContent = (org === 'yatt' ? T.yatt : T.llc) + ' · ' + (vat ? T.vat : T.novat);
+      var s = res('sum');
+      if (s && last.sum !== sum) {
+        var box = s.parentNode;
+        if (first) s.textContent = fmt(sum);
+        else { box.classList.add('is-rolling'); setTimeout(function () { s.textContent = fmt(sum); box.classList.remove('is-rolling'); }, 200); }
+        last.sum = sum;
+      }
+      first = false;
+    };
+    $$('input', calc).forEach(function (i) {
+      i.addEventListener('input', upd);
+      i.addEventListener('change', upd);
+      if (i.type === 'range') i.addEventListener('input', function () { var o = $('[data-out="' + i.name + '"]', calc); if (o) { o.classList.add('pop'); clearTimeout(o._t); o._t = setTimeout(function () { o.classList.remove('pop'); }, 200); } });
+    });
+    upd();
+  });
+
+  /* Ishni qanday boshlaymiz — sticky: progress chizig'i scroll bilan to'ladi, aktiv qadam scale 1.02 + sariq, o'tganlari ✓ */
+  $$('[data-steps]').forEach(function (box) {
+    var steps = $$('[data-step]', box), line = $('.steps-line i', box);
+    var upd = function () {
+      var mid = window.innerHeight * 0.5, cur = -1;
+      steps.forEach(function (s, k) { if (s.getBoundingClientRect().top < mid) cur = k; });
+      steps.forEach(function (s, k) { s.classList.toggle('is-active', k === cur); s.classList.toggle('is-done', k < cur); });
+      if (line) {
+        var wrap = line.parentNode.getBoundingClientRect();
+        var p = Math.min(1, Math.max(0, (mid - wrap.top) / wrap.height));
+        line.style.height = (p * 100) + '%';
+      }
+    };
+    window.addEventListener('scroll', function () { raf(upd); }, { passive: true });
+    upd();
+  });
+
   /* =====================================================================
      11. Video modal (bitiruvchilar)
   ===================================================================== */

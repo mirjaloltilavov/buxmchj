@@ -28,6 +28,7 @@ class ServiceResource extends Resource
                 Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options())->required()->default('calculator'),
                 Tr::text('title', 'Nomi', true),
                 Tr::textarea('description', 'Tavsif', false, 2),
+                Forms\Components\Toggle::make('on_home')->label('Bosh sahifada ko‘rsatish')->default(true),
             ]),
             Forms\Components\Section::make()->columns(2)->schema([
                 Forms\Components\TextInput::make('sort')->label('Tartib')->numeric()->default(0),

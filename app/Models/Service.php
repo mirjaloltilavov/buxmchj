@@ -13,7 +13,7 @@ class Service extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'title' => 'array', 'description' => 'array', 'is_active' => 'boolean',
+        'title' => 'array', 'description' => 'array', 'on_home' => 'boolean', 'is_active' => 'boolean',
     ];
 
     public function scopeActive(Builder $q): Builder

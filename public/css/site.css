@@ -943,3 +943,119 @@ body.is-leaving{opacity:0;transition:opacity .2s}
   .on-request{padding:28px 24px}
   .on-request b{font-size:26px}
 }
+
+/* ---------- Xizmat sahifasi (Figma: Buxgalteriya xizmati) ---------- */
+.chip--blue .dot{background:#2f6fe4;box-shadow:none}
+.p-hero__img--tall{height:520px}
+.checks--blue li{font-size:17px}
+.checks.checks--blue li .icon{color:#2f6fe4}
+
+/* Bento: 12 ustunli grid (Figma: katta 712 | 348 348 / keng 712 ; pastda 3 ta teng) */
+.sbento{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:320px 320px 300px;gap:16px}
+.sb{display:flex;flex-direction:column;justify-content:space-between;gap:24px;padding:32px;border-radius:28px;background:#fff;border:1px solid var(--line);transition:transform .45s var(--ease)}
+.sb:hover{transform:translateY(-4px)}
+.sb .icon-tile{transition:transform .35s var(--spring)}
+.sb:hover .icon-tile{transform:rotate(6deg)}
+.sb h3{font-size:24px;font-weight:700;line-height:1.1;letter-spacing:-.01em;margin-bottom:8px}
+.sb p{font-size:16px;color:var(--text)}
+.sb--n1{grid-column:1/7;grid-row:1/3}
+.sb--n2{grid-column:7/10;grid-row:1}
+.sb--n3{grid-column:10/13;grid-row:1}
+.sb--n4{grid-column:7/13;grid-row:2}
+.sb--n5{grid-column:1/5;grid-row:3}
+.sb--n6{grid-column:5/9;grid-row:3}
+.sb--n7{grid-column:9/13;grid-row:3}
+.sb--big{background:var(--ink);border:0;padding:12px 12px 32px;color:#fff}
+.sb__img{flex:1;min-height:0;border-radius:16px;overflow:hidden}
+.sb__img img{width:100%;height:100%;object-fit:cover;transform:scale(1);transition:transform 12s linear}
+.sb--big.is-in .sb__img img{transform:scale(1.06)}
+.sb__body{display:flex;flex-direction:column;gap:16px;padding:8px 20px 0}
+.sb__head{display:flex;align-items:center;gap:16px}
+.sb__head h3{font-size:32px;margin:0;color:#fff}
+.sb--big p,.sb--dark p{color:var(--muted-2)}
+.sb--acc{border:0;background:linear-gradient(140.3deg,#ffe59e 0%,#f8b34d 71.4%)}
+.sb--acc p{color:var(--ink-2)}
+.sb--blue{border:0;background:linear-gradient(153.7deg,#eaf2ff 0%,#c5daff 71.4%)}
+.sb--blue p{color:#33415c}
+.sb--dark{border:0;background:var(--ink);color:#fff}
+
+/* Tariflar (4 ustun) */
+.pcards--4{grid-template-columns:repeat(4,1fr);gap:16px}
+.pcard--sm{padding:24px}
+.pcard--sm .pcard__price b{font-size:32px}
+
+/* Kalkulyator */
+.calc{display:flex;gap:24px;align-items:stretch}
+.calc__q{flex:1;padding:8px 40px;border-radius:28px;background:#fff;border:1px solid var(--line)}
+.calc__row{display:flex;flex-direction:column;gap:16px;padding:32px 0}
+.calc__row + .calc__row{border-top:1px solid var(--line)}
+.calc__lbl{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:600}
+.calc__lbl i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--y1);font-size:13px;font-weight:700;font-style:normal}
+.calc .segmented{background:#f0f1f3}
+.calc .segmented span{font-size:14px}
+.range{display:flex;flex-direction:column;gap:16px}
+.range + .range{margin-top:8px}
+.range__top{display:flex;justify-content:space-between;align-items:center}
+.range__top b{font-size:16px;font-weight:600}
+.range__top em{font-style:normal;font-size:14px;font-weight:700;padding:4px 12px;border-radius:100px;border:1px solid var(--line);background:#fff;transition:transform .3s var(--spring)}
+.range__top em.pop{transform:scale(1.08)}
+.range__minmax{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.range input{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer;--p:20%}
+.range input::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--y1),var(--y2)) 0/var(--p) 100% no-repeat,rgba(22,23,26,.1)}
+.range input::-moz-range-track{height:6px;border-radius:3px;background:rgba(22,23,26,.1)}
+.range input::-moz-range-progress{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--y1),var(--y2))}
+.range input::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-11px;border-radius:50%;background:#fff;border:6px solid var(--y2);box-shadow:0 4px 12px rgba(245,165,36,.35);transition:transform .3s var(--spring)}
+.range input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:6px solid var(--y2)}
+.range input:active::-webkit-slider-thumb{transform:scale(1.15)}
+.calc__res{width:520px;flex:none;display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:40px;border-radius:28px;background:var(--ink);color:#fff}
+.calc__top{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.badge-n{padding:8px 16px;border-radius:100px;background:#f0f1f3;color:var(--ink);font-size:13px;font-weight:600}
+.calc__cap{font-size:16px;font-weight:500;color:var(--muted-2)}
+.calc__sum{font-size:clamp(36px,3.6vw,56px);font-weight:700;line-height:1.1;letter-spacing:-.03em;color:var(--y1);white-space:nowrap}
+.calc__sum span{display:inline-block;transition:transform .4s var(--ease),opacity .4s}
+.calc__sum.is-rolling span{transform:translateY(-30%);opacity:0}
+.calc__hint{font-size:15px;color:var(--muted-2)}
+.calc__sum-list{width:100%;margin:0;padding-top:16px}
+.calc__sum-list div{display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-top:1px solid rgba(255,255,255,.1);font-size:15px;transition:background-color .3s}
+.calc__sum-list dt{color:var(--muted-2)}
+.calc__sum-list dd{margin:0;font-weight:600}
+.calc__sum-list div.flash{background:rgba(255,216,119,.18)}
+.calc__btn{width:100%;justify-content:space-between}
+
+/* Ishni qanday boshlaymiz — sticky */
+.sticky2{display:grid;grid-template-columns:520px 1fr;gap:64px;align-items:start}
+.sticky2__left{position:sticky;top:120px;display:flex;flex-direction:column;gap:32px;align-items:flex-start}
+.sticky2__steps{position:relative;display:flex;flex-direction:column;gap:16px}
+.steps-line{position:absolute;left:-32px;top:0;bottom:0;width:2px;background:rgba(22,23,26,.08);border-radius:2px}
+.steps-line i{display:block;width:100%;height:0;background:var(--g-yellow);border-radius:2px}
+.sstep{display:flex;flex-direction:column;gap:32px;min-height:200px;padding:32px;border-radius:28px;background:#fff;border:1px solid var(--line);transition:transform .4s var(--ease),border-color .3s}
+.sstep.is-active{transform:scale(1.02);border-color:var(--y2)}
+.sstep__top{display:flex;align-items:center;gap:8px}
+.sstep__top .n{flex:1;font-size:15px;font-weight:600;color:var(--muted)}
+.sstep__done{color:#1f9d5c;--s:22px;opacity:0;transform:scale(.6);transition:opacity .3s,transform .4s var(--spring)}
+.sstep.is-done .sstep__done{opacity:1;transform:none}
+.sstep h3{font-size:22px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.sstep p{font-size:15px;color:var(--text)}
+
+@media (max-width:1280px){
+  .sbento{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .sbento .sb{grid-column:auto!important;grid-row:auto!important;min-height:240px}
+  .sbento .sb--n1{grid-column:1/-1!important;min-height:520px}
+  .pcards--4{grid-template-columns:1fr 1fr}
+  .calc{flex-direction:column}
+  .calc__res{width:auto}
+  .sticky2{grid-template-columns:1fr}
+  .sticky2__left{position:static}
+  .steps-line{display:none}
+}
+@media (max-width:810px){
+  .sbento{grid-template-columns:1fr}
+  .sbento .sb--n1{min-height:440px}
+  .sb__head h3{font-size:24px}
+  .pcards--4{grid-template-columns:1fr}
+  .calc__q{padding:0 20px}
+  .calc__row{padding:24px 0}
+  .calc__res{padding:28px 24px}
+  .calc .segmented{flex-direction:row;border-radius:100px}
+  .calc .segmented span{padding:10px 8px;font-size:13px;white-space:normal;text-align:center}
+}

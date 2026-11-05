@@ -205,6 +205,12 @@ class ContentSeeder extends Seeder
             }
         }
 
+        // Figma bento: 7-xizmat (faqat Xizmat sahifasida)
+        if (! Service::where('icon', 'user')->exists()) {
+            Service::where('sort', '>=', 4)->increment('sort');
+            Service::create(['icon' => 'user', 'title' => $this->t('Biriktirilgan bosh buxgalter', 'Закреплённый главный бухгалтер'), 'description' => $this->t('Korxonangiz hisobini bitta mas’ul mutaxassis yuritadi va shartnoma asosida javob beradi.', 'Учёт вашей компании ведёт один ответственный специалист, который отвечает по договору.'), 'sort' => 4, 'on_home' => false]);
+        }
+
         if (! ServicePlan::exists()) {
             $f = fn (array $list) => array_map(fn ($p) => ['text' => $this->t($p[0], $p[1])], $list);
             $base = [['Buxgalteriya hisobi va 1C bazasi', 'Бухучёт и база 1С'], ['Soliq va statistika hisobotlari', 'Налоговая и статистическая отчётность'], ['Bank-klient va to‘lovlar', 'Банк-клиент и платежи']];
