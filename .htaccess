@@ -1,0 +1,8 @@
+# Agar Plesk'da "Document root" /public ga o'zgartirilmagan bo'lsa ham sayt ishlashi uchun.
+# Barcha so'rovlar public/ papkasiga yo'naltiriladi; .env, vendor va boshqa fayllar tashqaridan ochilmaydi.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(\.env|\.git|composer\.(json|lock)|artisan)$ - [F,L,NC]
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

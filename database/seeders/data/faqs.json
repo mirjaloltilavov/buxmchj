@@ -1,0 +1,201 @@
+[
+ {
+  "question": {
+   "uz": "Buxgalteriyani umuman bilmasam ham o‘qiy olamanmi?",
+   "ru": "Смогу ли я учиться, если совсем не знаю бухгалтерию?"
+  },
+  "answer": {
+   "uz": "Ha. Dastur noldan boshlanadi: asosiy tushunchalardan 1C’da ishlash va hisobot topshirishgacha bosqichma-bosqich o‘rganasiz.",
+   "ru": "Да. Программа начинается с нуля: шаг за шагом вы пройдёте путь от базовых понятий до работы в 1С и сдачи отчётности."
+  },
+  "pages": [
+   "courses",
+   "home"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Offline va onlayn kursning farqi nimada?",
+   "ru": "Чем отличается офлайн-курс от онлайн-курса?"
+  },
+  "answer": {
+   "uz": "Offline kurs Toshkentdagi o‘quv markazimizda ustoz bilan yuzma-yuz o‘tadi. Onlayn kursda esa darslarni o‘zingizga qulay vaqtda, istalgan joydan o‘rganasiz.",
+   "ru": "Офлайн-курс проходит очно с преподавателем в нашем учебном центре в Ташкенте. На онлайн-курсе вы занимаетесь в удобное для вас время и из любого места."
+  },
+  "pages": [
+   "courses",
+   "home"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Tariflar o‘rtasidagi asosiy farq nima?",
+   "ru": "В чём основное отличие тарифов?"
+  },
+  "answer": {
+   "uz": "Tariflar kirish muddati, amaliy mashg‘ulotlar hajmi va ustoz qo‘llab-quvvatlashi bilan farq qiladi. Sizga mosini konsultatsiyada tanlab beramiz.",
+   "ru": "Тарифы различаются сроком доступа, объёмом практических занятий и поддержкой преподавателя. Подходящий вариант подберём для вас на консультации."
+  },
+  "pages": [
+   "courses"
+  ]
+ },
+ {
+  "question": {
+   "uz": "To‘lovni bo‘lib to‘lash mumkinmi?",
+   "ru": "Можно ли оплатить частями?"
+  },
+  "answer": {
+   "uz": "To‘lov shartlarini konsultatsiyada aniqlashtiring: mutaxassis sizga qulay variantni aytib beradi.",
+   "ru": "Условия оплаты уточните на консультации: специалист подскажет удобный для вас вариант."
+  },
+  "pages": [
+   "courses"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Kurs oxirida qanday hujjat beriladi?",
+   "ru": "Какой документ выдаётся в конце курса?"
+  },
+  "answer": {
+   "uz": "Kursni muvaffaqiyatli tugatganlarga diplom va sertifikat beriladi.",
+   "ru": "Успешно окончившим курс выдаются диплом и сертификат."
+  },
+  "pages": [
+   "courses",
+   "home"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Konsultatsiya pullikmi?",
+   "ru": "Консультация платная?"
+  },
+  "answer": {
+   "uz": "Yo‘q, birinchi konsultatsiya bepul. Mutaxassis holatingizni eshitib, mos kurs yoki xizmatni taklif qiladi.",
+   "ru": "Нет, первая консультация бесплатна. Специалист выслушает вашу ситуацию и предложит подходящий курс или услугу."
+  },
+  "pages": [
+   "contact"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Ofisga oldindan yozilish kerakmi?",
+   "ru": "Нужно ли записываться в офис заранее?"
+  },
+  "answer": {
+   "uz": "Ha, kutib qolmasligingiz uchun qo‘ng‘iroq qilib yoki ariza qoldirib vaqtni kelishib oling.",
+   "ru": "Да, чтобы вам не пришлось ждать, согласуйте время по телефону или оставьте заявку."
+  },
+  "pages": [
+   "contact"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Onlayn kursga qanday yoziladi?",
+   "ru": "Как записаться на онлайн-курс?"
+  },
+  "answer": {
+   "uz": "Ariza qoldiring yoki Telegram orqali yozing — to‘lov va platformaga kirish tartibini yuboramiz.",
+   "ru": "Оставьте заявку или напишите в Telegram — пришлём порядок оплаты и доступа к платформе."
+  },
+  "pages": [
+   "contact"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Shartnoma tuziladimi?",
+   "ru": "Заключается ли договор?"
+  },
+  "answer": {
+   "uz": "Ha, kurslar ham, buxgalteriya xizmati ham rasmiy shartnoma asosida amalga oshiriladi.",
+   "ru": "Да, и курсы, и бухгалтерские услуги оказываются на основании официального договора."
+  },
+  "pages": [
+   "contact",
+   "services"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Xizmat narxi nimaga bog‘liq?",
+   "ru": "От чего зависит цена услуги?"
+  },
+  "answer": {
+   "uz": "Narx tashkilot shakli, QQS to‘lovchisi ekanligingiz, faoliyat turi va oylik operatsiyalar hajmiga bog‘liq. Aniq narxni bepul konsultatsiyada aytamiz.",
+   "ru": "Цена зависит от организационной формы, того, являетесь ли вы плательщиком НДС, вида деятельности и объёма операций в месяц. Точную цену назовём на бесплатной консультации."
+  },
+  "pages": [
+   "services"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Hisobim chalkash bo‘lsa, tiklab berasizlarmi?",
+   "ru": "Если мой учёт запутан, вы его восстановите?"
+  },
+  "answer": {
+   "uz": "Ha, avval hisobingizni tekshiramiz, so‘ng xato va kamchiliklarni tuzatib, hisobni tartibga keltiramiz.",
+   "ru": "Да, сначала проверим ваш учёт, затем исправим ошибки и недочёты и приведём учёт в порядок."
+  },
+  "pages": [
+   "services"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Hujjatlarni qanday topshiraman?",
+   "ru": "Как мне передавать документы?"
+  },
+  "answer": {
+   "uz": "Hujjatlarni Telegram orqali yuborishingiz yoki ofisimizga olib kelishingiz mumkin.",
+   "ru": "Документы можно отправить через Telegram или привезти к нам в офис."
+  },
+  "pages": [
+   "services"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Xizmatni qachondan boshlash mumkin?",
+   "ru": "Когда можно начать обслуживание?"
+  },
+  "answer": {
+   "uz": "Konsultatsiya va shartnomadan so‘ng xizmatni boshlaymiz. Aniq sanani mutaxassis bilan kelishib olasiz.",
+   "ru": "Начинаем работу после консультации и заключения договора. Точную дату вы согласуете со специалистом."
+  },
+  "pages": [
+   "services"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Kursdan keyin ishga joylashishga yordam berasizmi?",
+   "ru": "Помогаете ли вы с трудоустройством после курса?"
+  },
+  "answer": {
+   "uz": "Kurs oxirida rezyume va suhbatga tayyorgarlik bo‘yicha tavsiya beramiz. Batafsil shartlarni konsultatsiyada aytamiz.",
+   "ru": "В конце курса дадим рекомендации по резюме и подготовке к собеседованию. Подробные условия расскажем на консультации."
+  },
+  "pages": [
+   "home"
+  ]
+ },
+ {
+  "question": {
+   "uz": "Buxgalteriya xizmati narxi nimaga bog‘liq?",
+   "ru": "От чего зависит стоимость бухгалтерских услуг?"
+  },
+  "answer": {
+   "uz": "Narx tashkilot shakli, QQS to‘lovchisi ekanligingiz, faoliyat turi va oylik operatsiyalar hajmiga bog‘liq. Aniq narxni bepul konsultatsiyada aytamiz.",
+   "ru": "Цена зависит от организационной формы, того, являетесь ли вы плательщиком НДС, вида деятельности и объёма операций в месяц. Точную цену назовём на бесплатной консультации."
+  },
+  "pages": [
+   "home"
+  ]
+ }
+]

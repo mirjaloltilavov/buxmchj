@@ -1,0 +1,142 @@
+[
+ {
+  "slug": "yatt-uchun-buxgalteriya-nimadan-boshlash-kerak",
+  "category": "soliq",
+  "published_at": "2026-10-18 10:00:00",
+  "read_minutes": 6,
+  "cover": "articles/yatt.png",
+  "is_featured": true,
+  "title": {
+   "uz": "YaTT uchun buxgalteriya: nimadan boshlash kerak",
+   "ru": "Бухгалтерия для ИП: с чего начать"
+  },
+  "excerpt": {
+   "uz": "Yakka tartibdagi tadbirkor sifatida qanday hujjatlar yuritiladi va hisobotlar qachon topshiriladi — qisqa qo‘llanma.",
+   "ru": "Какие документы ведёт индивидуальный предприниматель и когда сдаются отчёты — краткое руководство."
+  },
+  "body": {
+   "uz": "<p>Yakka tartibdagi tadbirkor sifatida ish boshlaganingizda buxgalteriya murakkab tuyulishi mumkin. Aslida asosiy qoidalar oddiy: hujjatlarni tartibda saqlash, to‘lovlarni hisobga olish va hisobotlarni o‘z vaqtida topshirish.</p><h2>YaTT buxgalteriyasi nimadan iborat</h2><p>YaTT buxgalteriyasi — bu daromad va xarajatlarni hisobga olish, birlamchi hujjatlarni saqlash va soliq hisobotlarini tayyorlashdir. Korxonaga nisbatan soddaroq bo‘lsa-da, tartib baribir muhim: tekshiruvda har bir operatsiya hujjat bilan tasdiqlanishi kerak.</p><h2>Qaysi hujjatlarni yuritish kerak</h2><p>Boshlash uchun quyidagi hujjatlar to‘plamini doimiy yuritib boring:</p><ul><li>Shartnomalar va hisob-fakturalar</li><li>Bank ko‘chirmalari va to‘lov topshiriqnomalari</li><li>Kassa hujjatlari va cheklar</li><li>Xodimlar bo‘lsa — mehnat shartnomalari va ish haqi hisob-kitobi</li></ul><p>Muhim: hujjatlarni elektron shaklda ham saqlang. Skanerlangan nusxalar hisobni tiklash va tekshiruvlarda vaqtni tejaydi.</p><h2>Hisobotlar va muddatlar</h2><p>Hisobot turlari va topshirish muddatlari soliq rejimiga bog‘liq. Aniq sanalarni my.soliq.uz dagi soliq kalendaridan tekshirib boring va har oy uchun eslatma qo‘ying. Hujjatlarni oy bo‘yicha papkalarga ajratish hisobotni tayyorlashni ancha osonlashtiradi.</p><h2>Bank va to‘lovlar</h2><p>Shaxsiy va biznes to‘lovlarini aralashtirmang: tadbirkorlik uchun alohida hisob raqami ishlating. Internet-banking ko‘chirmalarini har oy yuklab oling va hujjatlar bilan solishtiring.</p><blockquote><p>Tartibli hujjatlar — xotirjam tekshiruv. Buxgalteriyani oxirgi kunga qoldirmang.</p></blockquote><h2>Qachon mutaxassisga murojaat qilish kerak</h2><p>Agar operatsiyalar soni ko‘paygan, xodimlar ishga olingan yoki o‘tgan davrlar hisobi chalkash bo‘lsa — mutaxassisga murojaat qilgan ma’qul. Bepul konsultatsiyada holatingizni ko‘rib chiqamiz va mos yechimni taklif qilamiz.</p>",
+   "ru": null
+  }
+ },
+ {
+  "slug": "1c-dasturini-organish-yangi-boshlovchilar-uchun-reja",
+  "category": "1c",
+  "published_at": "2026-10-14 10:00:00",
+  "read_minutes": 7,
+  "cover": "articles/1c-reja.jpg",
+  "is_featured": false,
+  "title": {
+   "uz": "1C dasturini o‘rganish: yangi boshlovchilar uchun reja",
+   "ru": "Изучение 1С: план для начинающих"
+  },
+  "excerpt": {
+   "uz": "Dasturda birinchi hujjatdan oylik hisobotgacha — qaysi tartibda o‘rganish oson.",
+   "ru": "От первого документа до месячного отчёта — в каком порядке проще изучать программу."
+  },
+  "body": {
+   "uz": "<p>1C dasturini birinchi marta ochgan odamga interfeys murakkab ko‘rinadi. Lekin dasturni bosqichma-bosqich o‘rgansangiz, bir necha haftada birlamchi hujjatlar bilan ishlay boshlaysiz.</p><h2>Birinchi hafta: sozlash va tushunchalar</h2><p>Tashkilot ma’lumotlarini kiriting, hisob siyosatini sozlang va asosiy spravochniklar (kontragentlar, nomenklatura) bilan tanishing.</p><h2>Keyingi qadamlar</h2><p>Kirim-chiqim hujjatlarini kiritish, kassa va bank operatsiyalari, so‘ng ish haqi va soliq hisobotlariga o‘ting. Har bir mavzuni real misol bilan mustahkamlang.</p>",
+   "ru": null
+  }
+ },
+ {
+  "slug": "hisobni-tiklash-qachon-kerak-boladi",
+  "category": "buxgalteriya",
+  "published_at": "2026-10-10 10:00:00",
+  "read_minutes": 5,
+  "cover": "articles/hisobni-tiklash.jpg",
+  "is_featured": false,
+  "title": {
+   "uz": "Hisobni tiklash qachon kerak bo‘ladi",
+   "ru": "Когда нужно восстановление учёта"
+  },
+  "excerpt": {
+   "uz": "O‘tgan davrlar hisobi chalkash bo‘lsa, nimadan boshlash va qanday hujjatlar kerak.",
+   "ru": "Если учёт прошлых периодов запутан — с чего начать и какие документы понадобятся."
+  },
+  "body": {
+   "uz": "<p>Hisobni tiklash o‘tgan davrlardagi hujjatlar yo‘qolgan, noto‘g‘ri yuritilgan yoki umuman yuritilmagan hollarda kerak bo‘ladi.</p><h2>Qachon tiklash zarur</h2><p>Soliq tekshiruvi oldidan, yangi hamkor yoki bank talabi bo‘yicha, shuningdek biznesni sotish yoki qayta ro‘yxatdan o‘tkazishda.</p><h2>Nimadan boshlash kerak</h2><p>Bank ko‘chirmalari, shartnomalar va mavjud birlamchi hujjatlarni yig‘ing. Mutaxassis ular asosida davrlar bo‘yicha hisobni qayta shakllantiradi.</p>",
+   "ru": null
+  }
+ },
+ {
+  "slug": "buxgalter-bolish-uchun-qaysi-konikmalar-kerak",
+  "category": "kasb",
+  "published_at": "2026-10-06 10:00:00",
+  "read_minutes": 6,
+  "cover": "articles/konikmalar.jpg",
+  "is_featured": false,
+  "title": {
+   "uz": "Buxgalter bo‘lish uchun qaysi ko‘nikmalar kerak",
+   "ru": "Какие навыки нужны, чтобы стать бухгалтером"
+  },
+  "excerpt": {
+   "uz": "Nazariya, 1C, soliq va amaliyot — ish beruvchilar nimaga qaraydi.",
+   "ru": "Теория, 1С, налоги и практика — на что смотрят работодатели."
+  },
+  "body": {
+   "uz": "<p>Yaxshi buxgalter faqat raqamlar bilan ishlamaydi: u hujjatlarni tushunadi, dasturda ishlay oladi va soliq qoidalarini biladi.</p><h2>Asosiy ko‘nikmalar</h2><p>Buxgalteriya hisobi asoslari va provodkalar</p><p>1C dasturida ishlash</p><p>Soliq hisobotlarini topshirish</p><p>Diqqat va mas’uliyat</p><p>Ish beruvchilar eng avval amaliy tajribaga qaraydi, shuning uchun kurs davomida real hujjatlar bilan ishlash muhim.</p>",
+   "ru": null
+  }
+ },
+ {
+  "slug": "buxgalteriyani-tashqi-jamoaga-topshirish-afzalliklari",
+  "category": "biznes",
+  "published_at": "2026-10-02 10:00:00",
+  "read_minutes": 5,
+  "cover": "articles/tashqi-jamoa.jpg",
+  "is_featured": false,
+  "title": {
+   "uz": "Buxgalteriyani tashqi jamoaga topshirish: afzalliklari",
+   "ru": "Передача бухгалтерии на аутсорсинг: преимущества"
+  },
+  "excerpt": {
+   "uz": "Qachon o‘z buxgalteringiz o‘rniga xizmatdan foydalanish qulayroq.",
+   "ru": "Когда выгоднее пользоваться услугой, чем держать своего бухгалтера."
+  },
+  "body": {
+   "uz": "<p>Kichik va o‘rta biznes uchun doimiy buxgalter ushlash qimmat bo‘lishi mumkin. Tashqi jamoa esa belgilangan narxda barcha hisobotlarni yuritadi.</p><h2>Asosiy afzalliklar</h2><ul><li>Xarajat oldindan ma’lum</li><li>Hisobotlar muddatida topshiriladi</li><li>Mutaxassislar jamoasi bir joyda</li></ul><p>Qaror qabul qilishdan oldin operatsiyalar soni va xodimlar sonini hisoblab ko‘ring.</p>",
+   "ru": null
+  }
+ },
+ {
+  "slug": "kursni-tugatgandan-keyin-birinchi-ish-nimaga-tayyorlanish-kerak",
+  "category": "kasb",
+  "published_at": "2026-09-28 10:00:00",
+  "read_minutes": 6,
+  "cover": "articles/birinchi-ish.jpg",
+  "is_featured": false,
+  "title": {
+   "uz": "Kursni tugatgandan keyin birinchi ish: nimaga tayyorlanish kerak",
+   "ru": "Первая работа после курса: к чему готовиться"
+  },
+  "excerpt": {
+   "uz": "Suhbatga tayyorgarlik, rezyume va amaliyotda olgan tajribani to‘g‘ri ko‘rsatish.",
+   "ru": "Подготовка к собеседованию, резюме и как правильно показать практический опыт."
+  },
+  "body": {
+   "uz": "<p>Kursni tugatgach, birinchi ishni topish eng qiyin bosqich. Yaxshi tayyorgarlik bu yo‘lni ancha osonlashtiradi.</p><h2>Rezyume va suhbat</h2><p>Rezyumeda amaliyotda bajargan ishlaringizni aniq yozing: qaysi hujjatlar, qaysi dastur, qaysi hisobotlar.</p><h2>Birinchi oylar</h2><p>Savol berishdan tortinmang va har bir topshiriqni ish daftaringizga yozib boring — bu tajriba tez o‘sishga yordam beradi.</p>",
+   "ru": null
+  }
+ },
+ {
+  "slug": "oylik-hisobotlarni-kechiktirmaslik-uchun-5-maslahat",
+  "category": "soliq",
+  "published_at": "2026-09-24 10:00:00",
+  "read_minutes": 4,
+  "cover": "articles/oylik-hisobot.jpg",
+  "is_featured": false,
+  "title": {
+   "uz": "Oylik hisobotlarni kechiktirmaslik uchun 5 maslahat",
+   "ru": "5 советов, чтобы не опаздывать с ежемесячной отчётностью"
+  },
+  "excerpt": {
+   "uz": "Hujjatlar oqimini tartibga solish va muddatlarni nazorat qilishning oddiy usullari.",
+   "ru": "Простые способы упорядочить документооборот и контролировать сроки."
+  },
+  "body": {
+   "uz": "<p>Hisobotni kechiktirish jarimaga olib keladi. Quyidagi oddiy odatlar muddatlarni nazorat qilishga yordam beradi.</p><ol><li>Soliq kalendariga eslatma qo‘ying</li><li>Hujjatlarni oy bo‘yicha papkalarga ajrating</li><li>Bank ko‘chirmalarini har oy solishtiring</li><li>Hisobotni oxirgi kunga qoldirmang</li><li>Murakkab holatda mutaxassisga murojaat qiling</li></ol><p>Tartibli hujjatlar oqimi hisobotni tayyorlash vaqtini sezilarcha qisqartiradi.</p>",
+   "ru": null
+  }
+ }
+]

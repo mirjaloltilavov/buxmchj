@@ -1,0 +1,130 @@
+<?php
+
+namespace App\Filament\Pages;
+
+use App\Filament\Support\Tr;
+use App\Models\Setting;
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+
+/**
+ * Sahifalardagi sarlavha va matnlar. Bo'sh qoldirilgan maydon o'rniga standart (dizayndagi) matn chiqadi.
+ */
+class PageTexts extends Page implements HasForms
+{
+    use InteractsWithForms;
+
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationGroup = 'Bosh sahifa';
+    protected static ?string $navigationLabel = 'Sahifa matnlari';
+    protected static ?string $title = 'Sahifa matnlari';
+    protected static ?int $navigationSort = 3;
+    protected static string $view = 'filament.pages.settings-form';
+
+    public ?array $data = [];
+
+    public function mount(): void
+    {
+        $this->form->fill(['texts' => Setting::get('texts', [])]);
+    }
+
+    private static function list(string $name, string $label): Forms\Components\Repeater
+    {
+        return Forms\Components\Repeater::make($name)->label($label)->schema([Tr::text('text', 'Band')])
+            ->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null);
+    }
+
+    private static function image(string $name, string $label): Forms\Components\FileUpload
+    {
+        return Forms\Components\FileUpload::make($name)->label($label)->image()->disk('public')->directory('pages')->imageEditor();
+    }
+
+    public function form(Form $form): Form
+    {
+        $hint = 'Bo‘sh qoldirsangiz, dizayndagi standart matn ko‘rinadi.';
+
+        return $form->statePath('data')->schema([
+            Forms\Components\Placeholder::make('hint')->label('')->content($hint),
+            Forms\Components\Tabs::make()->tabs([
+                Forms\Components\Tabs\Tab::make('Yo‘nalishlar')->schema([
+                    Tr::text('texts.directions.title', 'Sarlavha'),
+                    Tr::textarea('texts.directions.lead', 'Izoh', false, 2),
+                    Forms\Components\Fieldset::make('Kurslar kartochkasi')->columns(1)->schema([
+                        self::image('texts.directions.courses_image', 'Rasm'),
+                        Tr::text('texts.directions.courses_title', 'Sarlavha'),
+                        Tr::textarea('texts.directions.courses_text', 'Matn', false, 2),
+                        self::list('texts.directions.courses_checks', 'Belgilar'),
+                        Tr::text('texts.directions.courses_price', 'Narx matni'),
+                    ]),
+                    Forms\Components\Fieldset::make('Xizmat kartochkasi')->columns(1)->schema([
+                        self::image('texts.directions.services_image', 'Rasm'),
+                        Tr::text('texts.directions.services_title', 'Sarlavha'),
+                        Tr::textarea('texts.directions.services_text', 'Matn', false, 2),
+                        self::list('texts.directions.services_checks', 'Belgilar'),
+                        Tr::text('texts.directions.services_price', 'Narx matni'),
+                    ]),
+                ]),
+                Forms\Components\Tabs\Tab::make('Nega biz')->schema([
+                    Tr::text('texts.why.title', 'Sarlavha'),
+                    Tr::textarea('texts.why.lead', 'Izoh', false, 2),
+                    self::image('texts.why.image', 'Katta rasm'),
+                    Tr::text('texts.why.place_title', 'Rasm ustidagi yozuv'),
+                    Tr::text('texts.why.place_sub', 'Rasm ustidagi izoh'),
+                    Tr::text('texts.why.big', 'Katta raqam (1 yil)'),
+                    Tr::text('texts.why.big_title', 'Sariq blok sarlavhasi'),
+                    Tr::textarea('texts.why.big_text', 'Sariq blok matni', false, 2),
+                    ...collect(range(1, 5))->flatMap(fn ($i) => [
+                        Tr::text("texts.why.t{$i}_title", "Blok {$i} sarlavhasi"),
+                        Tr::textarea("texts.why.t{$i}_text", "Blok {$i} matni", false, 2),
+                    ])->all(),
+                    self::list('texts.why.t5_chips', 'Qora blokdagi teglar'),
+                ]),
+                Forms\Components\Tabs\Tab::make('Kurslar / Xizmat bloklari')->schema([
+                    Tr::text('texts.courses.title', 'Kurslar bloki sarlavhasi'),
+                    Tr::textarea('texts.courses.lead', 'Kurslar bloki izohi', false, 2),
+                    Tr::text('texts.services.title', 'Xizmat bloki sarlavhasi'),
+                    Tr::textarea('texts.services.lead', 'Xizmat bloki izohi', false, 3),
+                    self::image('texts.services.image', 'Xizmat bloki rasmi'),
+                    Tr::text('texts.services.for', 'Kimlar uchun'),
+                    Tr::text('texts.services.price_text', 'Narx (qatorda)'),
+                    Tr::text('texts.services.price_big', 'Narx (rasm ustida)'),
+                    Tr::text('texts.services.for_long', 'Rasm ustidagi izoh'),
+                ]),
+                Forms\Components\Tabs\Tab::make('FAQ / Maqolalar / Ariza')->schema([
+                    Tr::text('texts.faq.title', 'FAQ sarlavhasi'),
+                    Tr::textarea('texts.faq.lead', 'FAQ izohi', false, 2),
+                    Tr::text('texts.articles.title', 'Maqolalar bloki sarlavhasi'),
+                    Tr::textarea('texts.articles.lead', 'Maqolalar bloki izohi', false, 2),
+                    Tr::text('texts.consult.title', 'Ariza bloki sarlavhasi'),
+                    Tr::textarea('texts.consult.lead', 'Ariza bloki izohi', false, 2),
+                    ...collect(range(1, 3))->flatMap(fn ($i) => [
+                        Tr::text("texts.consult.step{$i}_title", "{$i}-qadam"),
+                        Tr::text("texts.consult.step{$i}_text", "{$i}-qadam izohi"),
+                    ])->all(),
+                ]),
+                Forms\Components\Tabs\Tab::make('Ichki sahifalar')->schema([
+                    Tr::text('texts.courses_page.title', 'Kurslar sahifasi sarlavhasi'),
+                    Tr::textarea('texts.courses_page.lead', 'Kurslar sahifasi izohi', false, 2),
+                    Forms\Components\Grid::make(3)->schema([
+                        Tr::text('texts.courses_page.stat1', 'Raqam 1'), Tr::text('texts.courses_page.stat1_label', 'Raqam 1 izohi'),
+                        Tr::text('texts.courses_page.stat2', 'Raqam 2'), Tr::text('texts.courses_page.stat2_label', 'Raqam 2 izohi'),
+                        Tr::text('texts.courses_page.stat3', 'Raqam 3'), Tr::text('texts.courses_page.stat3_label', 'Raqam 3 izohi'),
+                    ]),
+                    Tr::textarea('texts.services_page.lead', 'Xizmat sahifasi izohi', false, 2),
+                    Tr::textarea('texts.blog.lead', 'Maqolalar sahifasi izohi', false, 2),
+                    Tr::textarea('texts.contact.lead', 'Aloqa sahifasi izohi', false, 2),
+                ]),
+            ])->persistTabInQueryString(),
+        ]);
+    }
+
+    public function save(): void
+    {
+        Setting::put('texts', $this->form->getState()['texts'] ?? []);
+        Notification::make()->title('Saqlandi')->success()->send();
+    }
+}
