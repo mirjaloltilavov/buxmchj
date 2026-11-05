@@ -15,7 +15,7 @@ class Course extends Model
     protected $casts = [
         'title' => 'array', 'excerpt' => 'array', 'description' => 'array', 'price_note' => 'array',
         'tags' => 'array', 'audience' => 'array', 'program' => 'array', 'outcomes' => 'array', 'plans' => 'array',
-        'seo_title' => 'array', 'seo_description' => 'array', 'is_featured' => 'boolean', 'is_active' => 'boolean',
+        'meta' => 'array', 'seo_title' => 'array', 'seo_description' => 'array', 'is_featured' => 'boolean', 'is_active' => 'boolean',
     ];
 
     public function scopeActive(Builder $q): Builder

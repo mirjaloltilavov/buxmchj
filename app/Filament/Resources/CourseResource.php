@@ -41,30 +41,54 @@ class CourseResource extends Resource
                         Forms\Components\Toggle::make('accent')->label('Sariq fon'),
                     ])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null),
                 ]),
-                Forms\Components\Tabs\Tab::make('Sahifa matni')->schema([
-                    Tr::rich('description', 'Kurs haqida batafsil', 'courses'),
-                    Forms\Components\Repeater::make('audience')->label('Kurs kimlar uchun')->schema([
+                Forms\Components\Tabs\Tab::make('Hero')->schema([
+                    Tr::text('meta.badge', 'Yuqoridagi belgi (masalan: Offline · onlayn · 4 oydan 1 yilgacha)'),
+                    Forms\Components\Repeater::make('meta.stats')->label('Raqamlar (hero pastida)')->schema([
+                        Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options()),
+                        Tr::text('value', 'Qiymat (26–40, 1C, Diplom...)'),
+                        Tr::text('label', 'Izoh'),
+                    ])->defaultItems(0)->maxItems(4)->collapsible()->itemLabel(fn (array $state) => $state['value']['uz'] ?? null),
+                    Tr::text('meta.price_caption', 'Narx kartochkasidagi izoh (bir martada to‘lansa)'),
+                    Tr::text('meta.dark_card_sub', 'Qora kartochka: kichik matn (bo‘sh — “Toshkent · onlayn”)'),
+                    Tr::text('meta.dark_card_title', 'Qora kartochka: sarlavha (bo‘sh — “Yangi guruhga qabul ochiq”)'),
+                ]),
+                Forms\Components\Tabs\Tab::make('Kimlar uchun')->schema([
+                    Tr::textarea('meta.audience_lead', 'Blok izohi', false, 2),
+                    Forms\Components\Repeater::make('audience')->label('Kartochkalar (1-si sariq, oxirgisi qora)')->schema([
                         Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options()),
                         Tr::text('title', 'Sarlavha'),
                         Tr::textarea('text', 'Matn', false, 2),
                     ])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['title']['uz'] ?? null),
                 ]),
                 Forms\Components\Tabs\Tab::make('Dastur')->schema([
+                    Tr::textarea('meta.program_lead', 'Dastur izohi', false, 2),
                     Forms\Components\Repeater::make('program')->label('Modullar')->schema([
+                        Forms\Components\Select::make('icon')->label('Ikonka')->options(Icons::options()),
+                        Forms\Components\FileUpload::make('image')->label('Rasm')->image()->disk('public')->directory('courses')->imageEditor(),
                         Tr::text('title', 'Modul nomi', true),
                         Tr::textarea('text', 'Izoh', false, 2),
-                        Forms\Components\Repeater::make('topics')->label('Mavzular')->schema([Tr::text('text', 'Mavzu')])->defaultItems(0)->collapsible(),
                     ])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['title']['uz'] ?? null),
                 ]),
+                Forms\Components\Tabs\Tab::make('Natijalar')->schema([
+                    Tr::textarea('meta.outcomes_lead', '“Kurs yakunida siz” izohi', false, 2),
+                    Forms\Components\FileUpload::make('meta.outcomes_image')->label('Rasm')->image()->disk('public')->directory('courses')->imageEditor(),
+                    Forms\Components\Repeater::make('outcomes')->label('Natijalar')->schema([Tr::text('text', 'Band')])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null),
+                    Tr::rich('description', 'Qo‘shimcha matn (ixtiyoriy)', 'courses'),
+                ]),
                 Forms\Components\Tabs\Tab::make('Tariflar')->schema([
+                    Forms\Components\Toggle::make('meta.plans_on_request')->label('Tariflar o‘rniga “Narxi so‘rov bo‘yicha” blokini ko‘rsatish'),
+                    Tr::text('meta.plans_lead', 'Izoh (masalan: bir martada to‘lasangiz — 20% chegirma)'),
                     Forms\Components\Repeater::make('plans')->label('Kurs tariflari')->schema([
                         Tr::text('name', 'Nomi', true),
                         Tr::text('subtitle', 'Izoh'),
-                        Tr::text('price_label', 'Narx ustidagi yozuv'),
-                        Tr::text('price', 'Narx (matn)'),
-                        Forms\Components\Toggle::make('highlight')->label('Ajratib ko‘rsatish'),
+                        Forms\Components\Grid::make(2)->schema([
+                            Forms\Components\TextInput::make('price_once')->label('Bir martada (so‘m)')->numeric(),
+                            Forms\Components\TextInput::make('price_split')->label('Bo‘lib to‘lansa (so‘m)')->numeric(),
+                        ]),
+                        Forms\Components\Toggle::make('highlight')->label('Ajratib ko‘rsatish (sariq)'),
                         Forms\Components\Repeater::make('features')->label('Imkoniyatlar')->schema([Tr::text('text', 'Band')])->defaultItems(0)->collapsible(),
                     ])->defaultItems(0)->collapsible()->itemLabel(fn (array $state) => $state['name']['uz'] ?? null),
+                    Tr::text('meta.plans_note', 'Pastdagi izoh (* ...)'),
                 ]),
                 Forms\Components\Tabs\Tab::make('SEO')->schema([
                     Tr::text('seo_title', 'SEO sarlavha'),

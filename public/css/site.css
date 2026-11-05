@@ -818,3 +818,128 @@ body.is-leaving{opacity:0;transition:opacity .2s}
   .features{grid-template-columns:1fr}
   .section-head--lg > p{width:auto}
 }
+
+/* ---------- Kurs sahifasi (Figma: Kurs — Buxgalteriya noldan) ---------- */
+.chip--light{background:rgba(255,255,255,.7);font-size:13px}
+.h2--56{font-size:clamp(34px,3.6vw,56px)}
+.badge-y{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:100px;background:linear-gradient(90deg,#ffe08a,#f8b34d);font-size:13px;font-weight:600;font-style:normal;color:var(--ink);white-space:nowrap}
+.badge-y--dark{background:var(--ink);color:#fff}
+.icon-tile--white{background:#fff;border:1px solid var(--line)}
+.icon-tile--blue2{background:linear-gradient(180deg,#8dbbff,#2f6fe4);color:#fff}
+.icon-tile--40{width:40px;height:40px;border-radius:12px;--s:20px}
+.icon-tile--green32{width:32px;height:32px;border-radius:8px;background:linear-gradient(180deg,#7fddaa,#1f9d5c);color:#fff;--s:16px}
+
+/* Kurs kimlar uchun */
+.aud{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.aud__tile{display:flex;flex-direction:column;gap:24px;padding:32px;border-radius:28px;background:#fff;border:1px solid var(--line);transition:transform .5s var(--ease)}
+.aud__tile:hover{transform:translateY(-6px)}
+.aud__tile .icon-tile{transition:transform .35s var(--spring)}
+.aud__tile:hover .icon-tile{transform:rotate(-6deg)}
+.aud__tile h3{font-size:20px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.aud__tile p{font-size:15px;color:var(--text)}
+.aud__tile--acc{border:0;background:linear-gradient(145.2deg,#ffe59e 0%,#f8b34d 71.4%)}
+.aud__tile--acc p{color:var(--ink-2)}
+.aud__tile--dark{border:0;background:var(--ink);color:#fff}
+.aud__tile--dark p{color:var(--muted-2)}
+
+/* Kurs dasturi — sticky scroll */
+.program{display:grid;grid-template-columns:520px 1fr;gap:64px;align-items:start}
+.program__left{position:sticky;top:120px;display:flex;flex-direction:column;gap:32px;align-items:flex-start}
+.program__text{display:flex;flex-direction:column;gap:16px}
+.program__text p{font-size:18px;color:var(--text)}
+.program__nav{position:relative;align-self:stretch;display:flex;flex-direction:column}
+.program__nav a{position:relative;display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid rgba(22,23,26,.08);transition:color .25s}
+.program__nav a i{width:3px;height:24px;border-radius:2px;background:rgba(22,23,26,.1);flex:none}
+.program__nav a b{font-size:15px;font-weight:600;color:#a9adb5;transition:color .25s}
+.program__nav a span{flex:1;font-size:18px;font-weight:500;color:var(--muted);line-height:1.5;transition:color .25s}
+.program__nav a.is-active b,.program__nav a.is-active span{color:var(--ink)}
+.program__nav a.is-active span{font-weight:700}
+.program__nav a:hover span{color:var(--ink)}
+.program__ind{position:absolute;left:0;top:0;width:3px;height:24px;border-radius:2px;background:var(--g-yellow);z-index:1;transition:transform .5s var(--spring)}
+.program__mods{display:flex;flex-direction:column;gap:24px}
+.module{display:flex;gap:24px;padding:12px;border-radius:28px;background:#fff;border:1px solid var(--line);transition:box-shadow .4s var(--ease),transform .5s var(--ease)}
+.module.is-current{box-shadow:0 16px 20px rgba(89,56,5,.1)}
+.module__img{width:260px;height:220px;flex:none;border-radius:16px;overflow:hidden}
+.module__img img{width:100%;height:calc(100% + 40px);margin-top:-20px;object-fit:cover;will-change:transform}
+.module__body{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:16px;padding:20px 12px 20px 0}
+.module__top{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;color:var(--muted)}
+.module h3{font-size:26px;font-weight:700;line-height:1.1;letter-spacing:-.01em;margin-bottom:8px}
+.module p{font-size:16px;color:var(--text)}
+
+/* Kurs yakunida */
+.outcomes{display:flex;align-items:center;gap:80px}
+.outcomes__img{width:620px;height:620px;flex:none;border-radius:28px;overflow:hidden}
+.outcomes__img img{width:100%;height:100%;object-fit:cover}
+.outcomes__text{flex:1;display:flex;flex-direction:column;gap:40px}
+.outcomes__head{display:flex;flex-direction:column;gap:16px}
+.outcomes__head p{font-size:18px;color:var(--text)}
+.outcomes__list{display:flex;flex-direction:column;gap:20px}
+.outcomes__list li{display:flex;align-items:center;gap:16px;font-size:18px;font-weight:500;line-height:1.4}
+
+/* Tariflar */
+.plans-head{display:flex;gap:48px;align-items:flex-end;margin-bottom:48px}
+.plans-head h2{flex:1}
+.plans-head__right{display:flex;flex-direction:column;align-items:flex-end;gap:16px}
+.plans-head__right p{font-size:18px;color:var(--text);text-align:right;max-width:440px}
+.segmented--sm{width:380px;background:#f0f1f3}
+.segmented--sm span{font-size:14px;padding:11px 16px}
+.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+.pcard{display:flex;flex-direction:column;gap:24px;padding:32px;border-radius:28px;background:#fff;border:1px solid var(--line);transition:transform .5s var(--ease)}
+.pcard:hover{transform:translateY(-6px)}
+.pcard--hl{border:0;background:linear-gradient(125deg,#ffe59e 0%,#f8b34d 71.4%);box-shadow:0 24px 24px rgba(89,56,5,.16);animation:glow 4s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 24px 24px rgba(89,56,5,.16)}50%{box-shadow:0 24px 48px rgba(245,165,36,.42)}}
+.pcard__head h3{font-size:28px;font-weight:700;line-height:1.1;margin-bottom:8px}
+.pcard__head p{font-size:15px;color:var(--text)}
+.pcard--hl .pcard__head p{color:var(--ink-2)}
+.pcard__price{display:flex;flex-direction:column;gap:4px}
+.pcard__price small{font-size:13px;font-weight:500;color:var(--muted)}
+.pcard--hl .pcard__price small{color:#5a4310}
+.pcard__price b{font-size:40px;font-weight:700;line-height:1.1;white-space:nowrap;display:block;overflow:hidden}
+.pcard__price b [data-price-value]{display:inline-block;transition:transform .35s var(--ease),opacity .35s}
+.pcard__price b.is-rolling [data-price-value]{transform:translateY(-100%);opacity:0}
+.pcard__full{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+.pcard--hl .pcard__full{color:var(--ink-2)}
+.pcard__full s{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 55%/0 1px no-repeat;transition:background-size .5s var(--ease)}
+.pcard__full.is-strike s{background-size:100% 1px}
+.pcard__btn{justify-content:space-between;width:100%}
+.pcard hr{border:0;height:1px;background:rgba(22,23,26,.08);margin:0}
+.pcard--hl hr{background:rgba(22,23,26,.12)}
+.pcard__features{display:flex;flex-direction:column;gap:12px}
+.pcard__features li{display:flex;gap:12px;align-items:flex-start;font-size:15px;font-weight:500;line-height:1.4;--s:20px}
+.pcard__features li .icon{color:#1f9d5c}
+.pcard--hl .pcard__features li .icon{color:var(--ink)}
+.on-request{display:flex;align-items:center;gap:48px;padding:48px;border-radius:28px;background:var(--ink);color:#fff}
+.on-request .t{flex:1;display:flex;flex-direction:column;gap:8px}
+.on-request b{font-size:32px;font-weight:700;line-height:1.1;letter-spacing:-.02em}
+.on-request p{font-size:17px;color:var(--muted-2)}
+.shine{position:relative;overflow:hidden}
+.shine::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);transform:translateX(-120%);animation:shine 3s ease-in-out infinite}
+@keyframes shine{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+
+@media (max-width:1280px){
+  .aud{grid-template-columns:1fr 1fr}
+  .program{grid-template-columns:1fr}
+  .program__left{position:static}
+  .program__nav{display:none}
+  .outcomes{flex-direction:column;align-items:stretch;gap:40px}
+  .outcomes__img{width:100%;height:420px}
+  .pcards{grid-template-columns:1fr 1fr}
+  .on-request{flex-wrap:wrap;gap:24px}
+}
+@media (max-width:810px){
+  .aud{grid-template-columns:1fr}
+  .module{flex-direction:column}
+  .module__img{width:100%;height:200px}
+  .module__body{padding:8px 12px 16px}
+  .module h3{font-size:22px}
+  .outcomes__img{height:320px}
+  .outcomes__list li{font-size:16px}
+  .plans-head{flex-direction:column;align-items:flex-start;gap:16px}
+  .plans-head__right{align-items:flex-start}
+  .plans-head__right p{text-align:left}
+  .segmented--sm{width:100%}
+  .pcards{grid-template-columns:1fr}
+  .pcard__price b{font-size:32px}
+  .on-request{padding:28px 24px}
+  .on-request b{font-size:26px}
+}

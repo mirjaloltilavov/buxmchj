@@ -47,6 +47,7 @@ class ContentSeeder extends Seeder
         $this->settings();
         $this->heroSlides();
         $this->courses();
+        (new CourseContentSeeder)->run();
         $this->services();
         $this->articles();
         $this->teachers();

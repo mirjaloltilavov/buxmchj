@@ -436,6 +436,65 @@
     upd();
   });
 
+  /* Kurs dasturi — sticky: ko'rinib turgan modulga mos menyu bandi aktiv, indikator siljiydi; modul rasmi parallax ±20 */
+  $$('[data-program]').forEach(function (box) {
+    var links = $$('[data-module-link]', box), mods = $$('[data-module]', box), ind = $('.program__ind', box);
+    var setCur = function (i) {
+      links.forEach(function (a, k) { a.classList.toggle('is-active', k === i); });
+      mods.forEach(function (m, k) { m.classList.toggle('is-current', k === i); });
+      var a = links[i];
+      if (ind && a) ind.style.transform = 'translateY(' + (a.offsetTop + (a.offsetHeight - 24) / 2) + 'px)';
+    };
+    var upd = function () {
+      var mid = window.innerHeight * 0.45, cur = 0;
+      mods.forEach(function (m, k) {
+        var r = m.getBoundingClientRect();
+        if (r.top < mid) cur = k;
+        var img = $('[data-parallax]', m);
+        if (img && !reduce) {
+          var p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
+          img.style.transform = 'translateY(' + Math.max(-20, Math.min(20, -p * 40)) + 'px)';
+        }
+      });
+      setCur(cur);
+    };
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var t = mods[parseInt(a.getAttribute('data-module-link'), 10)];
+        if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 140, behavior: reduce ? 'auto' : 'smooth' });
+      });
+    });
+    window.addEventListener('scroll', function () { raf(upd); }, { passive: true });
+    window.addEventListener('resize', upd);
+    setTimeout(upd, 60);
+  });
+
+  /* Tariflar: "Bir martada / Bo'lib to'lash" — narx raqami aylanib almashadi, eski narx ustidan chiziq chiziladi */
+  $$('[data-pay-toggle]').forEach(function (tg) {
+    var section = tg.closest('section') || document;
+    var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
+    var apply = function (mode) {
+      $$('[data-price]', section).forEach(function (pr) {
+        var b = $('b', pr), val = $('[data-price-value]', pr), lbl = $('[data-price-label]', pr), full = $('.pcard__full', pr);
+        var v = parseInt(pr.getAttribute(mode === 'split' ? 'data-split' : 'data-once'), 10) || 0;
+        b.classList.add('is-rolling');
+        setTimeout(function () {
+          val.textContent = fmt(v);
+          lbl.textContent = lbl.getAttribute(mode === 'split' ? 'data-split-label' : 'data-once-label');
+          b.classList.remove('is-rolling');
+        }, 200);
+        if (full) full.style.visibility = mode === 'split' ? 'hidden' : 'visible';
+      });
+    };
+    $$('input', tg).forEach(function (i) { i.addEventListener('change', function () { apply(i.value); }); });
+  });
+  // eski narx ustidan chiziq — ko'ringanda
+  if ('IntersectionObserver' in window) {
+    var sio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-strike'); sio.unobserve(e.target); } }); }, { threshold: 0.6 });
+    $$('.pcard__full').forEach(function (el) { sio.observe(el); });
+  }
+
   /* =====================================================================
      11. Video modal (bitiruvchilar)
   ===================================================================== */
