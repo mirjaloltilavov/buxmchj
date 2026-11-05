@@ -1,1 +1,2 @@
 new.buxmchj.uz
+test
