@@ -229,6 +229,14 @@ class ContentSeeder extends Seeder
     private function articles(): void
     {
         if (Article::exists()) {
+            // Avval o'rnatilgan saytda: yangi maydonlar (teglar, muallif) bo'sh bo'lsa to'ldiriladi
+            foreach (json_decode(file_get_contents(database_path('seeders/data/articles.json')), true) as $a) {
+                Article::where('slug', $a['slug'])->whereNull('tags')->update([
+                    'tags' => json_encode($a['tags'] ?? null, JSON_UNESCAPED_UNICODE),
+                    'author' => json_encode($a['author'] ?? null, JSON_UNESCAPED_UNICODE),
+                ]);
+            }
+
             return;
         }
         $cats = [
@@ -246,6 +254,7 @@ class ContentSeeder extends Seeder
                 'slug' => $a['slug'],
                 'article_category_id' => $ids[$a['category']] ?? null,
                 'title' => $a['title'], 'excerpt' => $a['excerpt'], 'body' => $a['body'],
+                'tags' => $a['tags'] ?? null, 'author' => $a['author'] ?? null,
                 'cover' => $this->img('img/'.$a['cover'], 'articles'),
                 'read_minutes' => $a['read_minutes'],
                 'published_at' => $a['published_at'],

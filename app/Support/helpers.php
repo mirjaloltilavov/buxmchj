@@ -108,3 +108,38 @@ if (! function_exists('price_from')) {
         return app()->getLocale() === 'ru' ? 'от '.money_uz($amount).' сум' : money_uz($amount).' so‘mdan';
     }
 }
+
+if (! function_exists('article_html')) {
+    /**
+     * Admin rich-editor HTML'ini Figma "Article body" ko'rinishiga moslaydi:
+     *  - "Muhim:" / "Важно:" bilan boshlangan paragraf → sariq callout (info ikonka bilan)
+     *  - <ul> elementlari → yashil ✓ ikonka bilan
+     *  - Trix rasm biriktirmalari (<figure> ichidagi <a>) tozalanadi
+     */
+    function article_html(?string $html): string
+    {
+        $html = (string) $html;
+        if ($html === '') {
+            return '';
+        }
+
+        $info = icon('info-circle');
+        $html = preg_replace_callback(
+            '~<p>\s*(?:<strong>)?\s*(Muhim|Diqqat|Eslatma|Важно|Внимание)\s*:?\s*(?:</strong>)?\s*:?\s*(.*?)</p>~su',
+            fn ($m) => '<aside class="callout"><span class="callout__icon">'.$info.'</span><div><b>'.e($m[1]).'</b><p>'.ucfirst(trim($m[2])).'</p></div></aside>',
+            $html
+        );
+
+        $tick = icon('tick-circle');
+        $html = preg_replace_callback('~<ul>(.*?)</ul>~s', function ($m) use ($tick) {
+            return '<ul class="ticks">'.preg_replace('~<li>~', '<li>'.$tick.'<span>', str_replace('</li>', '</span></li>', $m[1])).'</ul>';
+        }, $html);
+
+        // Trix: <figure ...><a href=..><img></a><figcaption>…</figcaption></figure>
+        $html = preg_replace('~<figure[^>]*data-trix-attachment[^>]*>~', '<figure>', $html);
+        $html = preg_replace('~<figure>\s*<a [^>]*>(\s*<img[^>]*>)\s*</a>~', '<figure>$1', $html);
+        $html = preg_replace('~<img(?![^>]*loading=)~', '<img loading="lazy"', $html);
+
+        return $html;
+    }
+}

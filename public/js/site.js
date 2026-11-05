@@ -717,6 +717,73 @@
   }
 
   /* =====================================================================
+     14. Maqola (Figma Motion notes):
+     - Yuqorida o'qish progress chizig'i (sariq)
+     - Sarlavha so'zma-so'z stagger, muqova pastdan chiqadi va scroll'da parallax
+     - Paragraflar ko'ringanda fade-up; iqtibos chizig'i yuqoridan chiziladi
+     - Chapda sticky ulashish: havola nusxalanganda "Nusxalandi" tooltip
+  ===================================================================== */
+  var aHero = $('[data-a-hero]');
+  if (aHero) {
+    raf(function () { aHero.classList.add('is-entered'); });
+    var cov = $('[data-a-parallax]', aHero);
+    var prog = $('[data-read-progress]');
+    var prose = $('[data-prose]');
+    var onA = function () {
+      if (cov && !reduce) {
+        var r = cov.parentNode.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < window.innerHeight) {
+          var p = Math.max(0, Math.min(1, (window.innerHeight - r.top) / (window.innerHeight + r.height)));
+          cov.style.transform = 'translateY(' + (-p * 13) + '%)';
+        }
+      }
+      if (prog && prose) {
+        var pr = prose.getBoundingClientRect();
+        var total = pr.height - window.innerHeight * 0.5;
+        var done = Math.max(0, Math.min(1, (window.innerHeight * 0.5 - pr.top) / Math.max(1, total)));
+        prog.style.setProperty('--p', done.toFixed(4));
+      }
+    };
+    window.addEventListener('scroll', function () { raf(onA); }, { passive: true });
+    window.addEventListener('resize', onA);
+    onA();
+    if (prose) {
+      $$(':scope > *', prose).forEach(function (el, i) {
+        el.setAttribute('data-reveal', el.tagName === 'FIGURE' ? 'card' : 'up');
+        if (i === 0) el.style.setProperty('--d', '120ms');
+      });
+      observeReveal(prose);
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-copy]');
+    if (btn) {
+      e.preventDefault();
+      var text = btn.getAttribute('data-copy');
+      var ok = function () {
+        btn.classList.add('is-copied');
+        clearTimeout(btn._t);
+        btn._t = setTimeout(function () { btn.classList.remove('is-copied'); }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, ok);
+      else {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (err) {}
+        document.body.removeChild(ta); ok();
+      }
+      return;
+    }
+    var nat = e.target.closest('[data-share-native]');
+    if (nat && navigator.share) {
+      e.preventDefault();
+      navigator.share({ title: document.title, url: location.href }).catch(function () {});
+    }
+  });
+
+  /* =====================================================================
      12. Sahifa o'tishi: fade 300 ms
   ===================================================================== */
   document.addEventListener('click', function (e) {

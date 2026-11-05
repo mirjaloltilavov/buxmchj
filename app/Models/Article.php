@@ -14,7 +14,7 @@ class Article extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'title' => 'array', 'excerpt' => 'array', 'body' => 'array',
+        'title' => 'array', 'excerpt' => 'array', 'body' => 'array', 'tags' => 'array', 'author' => 'array',
         'seo_title' => 'array', 'seo_description' => 'array',
         'published_at' => 'datetime', 'is_featured' => 'boolean', 'is_active' => 'boolean',
     ];
