@@ -61,7 +61,7 @@
             </label>
         @endif
         <p class="form-error" data-form-error hidden></p>
-        <button type="submit" class="btn btn--acc btn--block" style="position:relative">{{ __('Ariza yuborish') }} {{ icon('arrow-right') }}</button>
+        <button type="submit" class="btn-pill btn-pill--yellow btn-pill--l btn-pill--block"><span class="label">{{ __('Ariza yuborish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></button>
         <p class="form-note">{{ __('Ma’lumotlaringiz faqat siz bilan bog‘lanish uchun ishlatiladi.') }}</p>
     </div>
     <div class="form-success" role="status" aria-live="polite"><span class="ok">{{ icon('tick-circle') }}</span><b>{{ __('Rahmat, tez orada qo‘ng‘iroq qilamiz') }}</b><span class="fc-sub">{{ __('Arizangiz qabul qilindi. Ish vaqtida 15 daqiqa ichida bog‘lanamiz.') }}</span></div>

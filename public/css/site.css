@@ -1624,3 +1624,12 @@ html[lang="ru"] .hero h1,html[lang="ru"] .hero .hero-h{font-size:clamp(40px,3.9v
 .ccard .btn-pill--outline,.course-card .btn--ghost{background-image:linear-gradient(90deg,var(--y1),var(--y2),var(--y1));background-size:200% 100%;background-position:0 0;background-color:transparent;background-repeat:no-repeat;background-blend-mode:normal;transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease)}
 .ccard .btn-pill--outline,.course-card .btn--ghost{background-image:none}
 .ccard:hover .btn-pill--outline,.course-card:hover .btn--ghost{background-image:linear-gradient(90deg,var(--y1),var(--y2),var(--y1));border-color:transparent;color:var(--ink);box-shadow:0 8px 20px rgba(245,165,36,.35)}
+
+/* Segmented: ikonka span'i padding olmasin (ilgari ikonka nolga siqilib ko'rinmay qolgan edi) */
+.segmented label > span .icon{padding:0;margin:0;border-radius:0;background:none!important;color:inherit;display:inline-block;width:var(--s,16px);height:var(--s,16px);flex:none}
+.segmented label > span .icon svg{width:100%;height:100%;display:block}
+/* Mobilda ham qator bo'lib turadi (pill siljishi uchun), matn sig'masa o'raladi */
+@media (max-width:640px){
+  .segmented{flex-direction:row;border-radius:100px}
+  .segmented label > span{padding:10px 8px;font-size:13px;white-space:normal;text-align:center;line-height:1.2;gap:6px}
+}
