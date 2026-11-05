@@ -44,7 +44,8 @@ class TeacherResource extends Resource
             Tables\Columns\TextColumn::make('name')->label('Ism')->formatStateUsing(fn ($record) => $record->name['uz'] ?? ''),
             Tables\Columns\TextColumn::make('role')->label('Lavozim')->formatStateUsing(fn ($record) => $record->role['uz'] ?? ''),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function getPages(): array
@@ -52,6 +53,7 @@ class TeacherResource extends Resource
         return [
             'index' => Pages\ListTeachers::route('/'),
             'create' => Pages\CreateTeacher::route('/create'),
+            'view' => Pages\ViewTeacher::route('/{record}'),
             'edit' => Pages\EditTeacher::route('/{record}/edit'),
         ];
     }

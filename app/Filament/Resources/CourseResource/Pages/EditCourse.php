@@ -12,6 +12,9 @@ class EditCourse extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [Actions\DeleteAction::make()];
+        return [
+            Actions\ViewAction::make()->label('Ko‘rish'),
+            Actions\DeleteAction::make(),
+        ];
     }
 }

@@ -41,7 +41,8 @@ class InstagramPostResource extends Resource
             Tables\Columns\ImageColumn::make('image')->label('')->disk('public')->height(64),
             Tables\Columns\TextColumn::make('url')->label('Havola')->limit(50),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function getPages(): array
@@ -49,6 +50,7 @@ class InstagramPostResource extends Resource
         return [
             'index' => Pages\ListInstagramPosts::route('/'),
             'create' => Pages\CreateInstagramPost::route('/create'),
+            'view' => Pages\ViewInstagramPost::route('/{record}'),
             'edit' => Pages\EditInstagramPost::route('/{record}/edit'),
         ];
     }

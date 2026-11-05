@@ -37,7 +37,8 @@ class ArticleCategoryResource extends Resource
             Tables\Columns\TextColumn::make('name')->label('Nomi')->formatStateUsing(fn ($record) => $record->name['uz'] ?? ''),
             Tables\Columns\TextColumn::make('slug'),
             Tables\Columns\TextColumn::make('articles_count')->label('Maqolalar')->counts('articles'),
-        ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function getPages(): array
@@ -45,6 +46,7 @@ class ArticleCategoryResource extends Resource
         return [
             'index' => Pages\ListArticleCategories::route('/'),
             'create' => Pages\CreateArticleCategory::route('/create'),
+            'view' => Pages\ViewArticleCategory::route('/{record}'),
             'edit' => Pages\EditArticleCategory::route('/{record}/edit'),
         ];
     }

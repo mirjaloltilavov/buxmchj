@@ -39,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
                 'gray' => Color::Zinc,
             ])
             ->navigationGroups([
+                NavigationGroup::make('Mijozlar'),
                 NavigationGroup::make('Kontent'),
                 NavigationGroup::make('Bosh sahifa'),
                 NavigationGroup::make('Sozlamalar'),
@@ -52,10 +53,17 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
+                        ->widgets([
+                \App\Filament\Widgets\QuickActions::class,
+                \App\Filament\Widgets\LeadStats::class,
+                \App\Filament\Widgets\LeadsChart::class,
+                \App\Filament\Widgets\LatestLeads::class,
             ])
+            ->darkMode(true)
+            ->globalSearch()
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->maxContentWidth('full')
+            ->userMenuItems([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

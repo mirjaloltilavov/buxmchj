@@ -44,7 +44,8 @@ class GraduateResource extends Resource
             Tables\Columns\TextColumn::make('subtitle')->label('Guruh / ish joyi')->formatStateUsing(fn ($record) => $record->subtitle['uz'] ?? ''),
             Tables\Columns\IconColumn::make('video_url')->label('Video')->boolean(fn ($state) => filled($state)),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function getPages(): array
@@ -52,6 +53,7 @@ class GraduateResource extends Resource
         return [
             'index' => Pages\ListGraduates::route('/'),
             'create' => Pages\CreateGraduate::route('/create'),
+            'view' => Pages\ViewGraduate::route('/{record}'),
             'edit' => Pages\EditGraduate::route('/{record}/edit'),
         ];
     }

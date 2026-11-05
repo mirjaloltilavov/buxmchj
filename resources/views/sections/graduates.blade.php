@@ -14,10 +14,10 @@
     </div>
     <div class="grads-track" data-track data-stagger="80">
         @foreach($graduates as $g)
-            <div class="grad" data-reveal="up40">
+            <div @class(['grad', 'grad--video' => $g->video_url]) data-reveal="up40">
                 <a href="{{ $g->video_url ?: '#' }}" class="zoom" @if($g->video_url) data-video="{{ $g->video_url }}" @else onclick="return false" @endif>
                     @if($g->photo)<img src="{{ media_url($g->photo) }}" alt="{{ $g->tr('name') }}" loading="lazy" draggable="false">@endif
-                    <span class="play" aria-hidden="true">{{ icon('play') }}</span>
+                    @if($g->video_url)<span class="play" aria-hidden="true">{{ icon('play') }}</span>@endif
                 </a>
                 <b>{{ $g->tr('name') }}</b>
                 <span>{{ icon('briefcase') }} {{ $g->tr('subtitle') }}</span>

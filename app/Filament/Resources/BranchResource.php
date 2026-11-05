@@ -46,7 +46,8 @@ class BranchResource extends Resource
             Tables\Columns\TextColumn::make('name')->label('Nomi')->formatStateUsing(fn ($record) => $record->name['uz'] ?? ''),
             Tables\Columns\TextColumn::make('address')->label('Manzil')->formatStateUsing(fn ($record) => $record->address['uz'] ?? ''),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function getPages(): array
@@ -54,6 +55,7 @@ class BranchResource extends Resource
         return [
             'index' => Pages\ListBranchs::route('/'),
             'create' => Pages\CreateBranch::route('/create'),
+            'view' => Pages\ViewBranch::route('/{record}'),
             'edit' => Pages\EditBranch::route('/{record}/edit'),
         ];
     }

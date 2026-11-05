@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // "5 soat avval" kabi vaqtlar lotin alifbosida chiqsin (admin va sayt)
+        if (app()->getLocale() === 'uz') {
+            \Illuminate\Support\Carbon::setLocale('uz_Latn');
+        }
     }
 
     /**

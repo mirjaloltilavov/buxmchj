@@ -69,7 +69,8 @@ class HeroSlideResource extends Resource
             Tables\Columns\TextColumn::make('tab_label')->label('Slayd')->formatStateUsing(fn ($record) => $record->tab_label['uz'] ?? ''),
             Tables\Columns\TextColumn::make('title')->label('Sarlavha')->formatStateUsing(fn ($record) => $record->title['uz'] ?? '')->wrap()->limit(60),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function getPages(): array
@@ -77,6 +78,7 @@ class HeroSlideResource extends Resource
         return [
             'index' => Pages\ListHeroSlides::route('/'),
             'create' => Pages\CreateHeroSlide::route('/create'),
+            'view' => Pages\ViewHeroSlide::route('/{record}'),
             'edit' => Pages\EditHeroSlide::route('/{record}/edit'),
         ];
     }

@@ -57,7 +57,7 @@
       el.setAttribute('data-reveal', rule[1]);
       var p = el.parentElement;
       var i = groups.get(p) || 0;
-      el.style.setProperty('--d', Math.round((rule[3] + i * rule[2]) * 1.4) + 'ms');
+      el.style.setProperty('--d', Math.round((rule[3] + i * rule[2]) * 1.8) + 'ms');
       groups.set(p, i + 1);
     });
   });
@@ -84,7 +84,7 @@
     var step = parseInt(box.getAttribute('data-stagger'), 10) || 80;
     var base = parseInt(box.getAttribute('data-stagger-base'), 10) || 0;
     $$('[data-reveal]', box).forEach(function (el, i) {
-      if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', Math.round((base + i * step) * 1.4) + 'ms');
+      if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', Math.round((base + i * step) * 1.8) + 'ms');
     });
   });
   // ✓ belgilarni chizish (stroke draw, 60 ms stagger)

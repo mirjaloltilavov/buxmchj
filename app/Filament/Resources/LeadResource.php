@@ -5,6 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LeadResource\Pages;
 use App\Models\Lead;
 use Filament\Forms;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,6 +20,39 @@ class LeadResource extends Resource
     protected static ?string $modelLabel = 'ariza';
     protected static ?string $pluralModelLabel = 'Arizalar';
     protected static ?int $navigationSort = -1;
+    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $navigationGroup = 'Mijozlar';
+    protected static ?string $navigationLabel = 'Arizalar';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'phone', 'message'];
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        $color = ['new' => 'warning', 'contacted' => 'info', 'done' => 'success', 'spam' => 'gray'];
+
+        return $infolist->schema([
+            Infolists\Components\Section::make('Mijoz')->icon('heroicon-o-user')->columns(3)->schema([
+                Infolists\Components\TextEntry::make('name')->label('Ism')->weight('bold')->size('lg')->icon('heroicon-o-user'),
+                Infolists\Components\TextEntry::make('phone')->label('Telefon')->icon('heroicon-o-phone')->copyable()->copyMessage('Nusxalandi')
+                    ->url(fn ($record) => 'tel:'.preg_replace('/[^0-9+]/', '', $record->phone))->color('primary')->weight('bold')->size('lg'),
+                Infolists\Components\TextEntry::make('status')->label('Holat')->badge()
+                    ->formatStateUsing(fn ($state) => Lead::STATUSES[$state] ?? $state)->color(fn ($state) => $color[$state] ?? 'gray'),
+            ]),
+            Infolists\Components\Section::make('Ariza')->icon('heroicon-o-chat-bubble-left-ellipsis')->columns(3)->schema([
+                Infolists\Components\TextEntry::make('interest')->label('Qiziqish')->badge()->formatStateUsing(fn ($state) => Lead::INTERESTS[$state] ?? '—'),
+                Infolists\Components\TextEntry::make('created_at')->label('Yuborilgan')->dateTime('d.m.Y H:i')->icon('heroicon-o-clock')
+                    ->helperText(fn ($record) => $record->created_at?->diffForHumans()),
+                Infolists\Components\TextEntry::make('source')->label('Qaysi sahifadan')->placeholder('—')->icon('heroicon-o-globe-alt'),
+                Infolists\Components\TextEntry::make('message')->label('Xabar')->placeholder('Xabar qoldirilmagan')->columnSpanFull()->prose(),
+            ]),
+            Infolists\Components\Section::make('Admin izohi')->icon('heroicon-o-pencil')->schema([
+                Infolists\Components\TextEntry::make('note')->hiddenLabel()->placeholder('Izoh yo‘q. “Tahrirlash” orqali yozishingiz mumkin.')->prose(),
+            ]),
+        ]);
+    }
 
     public static function getNavigationBadge(): ?string
     {
@@ -53,11 +89,12 @@ class LeadResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->defaultSort('created_at', 'desc')->columns([
+        return $table->defaultSort('created_at', 'desc')->poll('30s')->striped()->emptyStateHeading('Hozircha arizalar yo‘q')
+            ->emptyStateDescription('Saytdagi formalardan kelgan arizalar shu yerda ko‘rinadi.')->emptyStateIcon('heroicon-o-inbox')->columns([
             Tables\Columns\TextColumn::make('created_at')->label('Sana')->dateTime('d.m.Y H:i')->sortable(),
             Tables\Columns\TextColumn::make('name')->label('Ism')->searchable(),
-            Tables\Columns\TextColumn::make('phone')->label('Telefon')->searchable()->url(fn ($record) => 'tel:'.preg_replace('/[^0-9+]/', '', $record->phone)),
-            Tables\Columns\TextColumn::make('interest')->label('Qiziqish')->formatStateUsing(fn ($state) => Lead::INTERESTS[$state] ?? '—')->badge(),
+            Tables\Columns\TextColumn::make('phone')->label('Telefon')->searchable()->icon('heroicon-o-phone')->copyable()->weight('bold')->url(fn ($record) => 'tel:'.preg_replace('/[^0-9+]/', '', $record->phone)),
+            Tables\Columns\TextColumn::make('interest')->label('Qiziqish')->formatStateUsing(fn ($state) => Lead::INTERESTS[$state] ?? '—')->badge()->color('gray'),
             Tables\Columns\TextColumn::make('message')->label('Xabar')->limit(40)->toggleable(),
             Tables\Columns\TextColumn::make('source')->label('Sahifa')->toggleable(isToggledHiddenByDefault: true),
             Tables\Columns\SelectColumn::make('status')->label('Holat')->options(Lead::STATUSES)->selectablePlaceholder(false),
@@ -65,10 +102,25 @@ class LeadResource extends Resource
             Tables\Filters\SelectFilter::make('status')->label('Holat')->options(Lead::STATUSES),
             Tables\Filters\SelectFilter::make('interest')->label('Qiziqish')->options(Lead::INTERESTS),
         ])->actions([
-            Tables\Actions\EditAction::make(),
-            Tables\Actions\DeleteAction::make(),
+            Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\ActionGroup::make([
+                Tables\Actions\Action::make('contacted')->label('Bog‘lanildi')->icon('heroicon-o-phone-arrow-up-right')->color('info')
+                    ->visible(fn ($record) => $record->status === 'new')
+                    ->action(fn ($record) => $record->update(['status' => 'contacted'])),
+                Tables\Actions\Action::make('done')->label('Yakunlandi')->icon('heroicon-o-check-circle')->color('success')
+                    ->visible(fn ($record) => ! in_array($record->status, ['done', 'spam'], true))
+                    ->action(fn ($record) => $record->update(['status' => 'done'])),
+                Tables\Actions\EditAction::make()->label('Tahrirlash'),
+                Tables\Actions\DeleteAction::make()->label('O‘chirish'),
+            ]),
         ])->bulkActions([
-            Tables\Actions\DeleteBulkAction::make(),
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\BulkAction::make('contacted')->label('“Bog‘lanildi” deb belgilash')->icon('heroicon-o-phone-arrow-up-right')
+                    ->action(fn ($records) => $records->each->update(['status' => 'contacted']))->deselectRecordsAfterCompletion(),
+                Tables\Actions\BulkAction::make('done')->label('“Yakunlandi” deb belgilash')->icon('heroicon-o-check-circle')
+                    ->action(fn ($records) => $records->each->update(['status' => 'done']))->deselectRecordsAfterCompletion(),
+                Tables\Actions\DeleteBulkAction::make()->label('O‘chirish'),
+            ]),
         ]);
     }
 
@@ -76,6 +128,7 @@ class LeadResource extends Resource
     {
         return [
             'index' => Pages\ListLeads::route('/'),
+            'view' => Pages\ViewLead::route('/{record}'),
             'edit' => Pages\EditLead::route('/{record}/edit'),
         ];
     }

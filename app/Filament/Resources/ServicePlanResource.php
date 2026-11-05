@@ -45,7 +45,8 @@ class ServicePlanResource extends Resource
             Tables\Columns\TextColumn::make('price')->label('Narx')->numeric(thousandsSeparator: ' ')->suffix(' so‘m'),
             Tables\Columns\IconColumn::make('is_highlighted')->label('Ajratilgan')->boolean(),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function getPages(): array
@@ -53,6 +54,7 @@ class ServicePlanResource extends Resource
         return [
             'index' => Pages\ListServicePlans::route('/'),
             'create' => Pages\CreateServicePlan::route('/create'),
+            'view' => Pages\ViewServicePlan::route('/{record}'),
             'edit' => Pages\EditServicePlan::route('/{record}/edit'),
         ];
     }

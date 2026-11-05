@@ -72,7 +72,8 @@ class ArticleResource extends Resource
                 ->getOptionLabelFromRecordUsing(fn ($record) => $record->name['uz'] ?? $record->slug),
         ])->actions([
             Tables\Actions\Action::make('view')->label('Ko‘rish')->icon('heroicon-o-eye')->url(fn ($record) => route('article', $record->slug))->openUrlInNewTab(),
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'),
             Tables\Actions\DeleteAction::make(),
         ]);
     }
@@ -82,6 +83,7 @@ class ArticleResource extends Resource
         return [
             'index' => Pages\ListArticles::route('/'),
             'create' => Pages\CreateArticle::route('/create'),
+            'view' => Pages\ViewArticle::route('/{record}'),
             'edit' => Pages\EditArticle::route('/{record}/edit'),
         ];
     }

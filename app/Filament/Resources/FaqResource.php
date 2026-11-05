@@ -44,7 +44,8 @@ class FaqResource extends Resource
             Tables\Columns\TextColumn::make('question')->label('Savol')->formatStateUsing(fn ($record) => $record->question['uz'] ?? '')->wrap(),
             Tables\Columns\TextColumn::make('pages')->label('Sahifalar')->badge()->formatStateUsing(fn ($state) => self::PAGES[$state] ?? $state),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function getPages(): array
@@ -52,6 +53,7 @@ class FaqResource extends Resource
         return [
             'index' => Pages\ListFaqs::route('/'),
             'create' => Pages\CreateFaq::route('/create'),
+            'view' => Pages\ViewFaq::route('/{record}'),
             'edit' => Pages\EditFaq::route('/{record}/edit'),
         ];
     }
