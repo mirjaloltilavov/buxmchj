@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('popup', 'course')
 @section('title', hs('courses_page.title', 'Buxgalteriya kurslari').' — Buxgalter MChJ')
 
 @section('content')

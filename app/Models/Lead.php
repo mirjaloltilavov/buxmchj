@@ -18,5 +18,6 @@ class Lead extends Model
     public const INTERESTS = [
         'course' => 'O‘quv kursi',
         'service' => 'Buxgalteriya xizmati',
+        'guide' => 'Bepul qo‘llanma (popup)',
     ];
 }

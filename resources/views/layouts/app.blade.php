@@ -42,6 +42,10 @@
 
     @include('partials.footer')
 
+    @hasSection('popup')
+        @include('partials.promo-popup', ['type' => trim($__env->yieldContent('popup'))])
+    @endif
+
     <script src="{{ asset('js/site.js') }}?v={{ filemtime(public_path('js/site.js')) }}" defer></script>
     {!! setting('body_code') !!}
 </body>

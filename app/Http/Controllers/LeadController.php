@@ -16,14 +16,15 @@ class LeadController extends Controller
         }
 
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:120'],
+            'name' => ['required_unless:interest,guide', 'nullable', 'string', 'max:120'],
             'phone' => ['required', 'string', 'max:40', 'regex:/^[0-9+()\-\s]{7,}$/'],
-            'interest' => ['nullable', 'in:course,service'],
+            'interest' => ['nullable', 'in:course,service,guide'],
             'message' => ['nullable', 'string', 'max:2000'],
             'source' => ['nullable', 'string', 'max:255'],
             'locale' => ['nullable', 'in:uz,ru'],
         ]);
 
+        $data['name'] = $data['name'] ?? null ?: '—';
         $lead = Lead::create($data + ['ip' => $request->ip(), 'status' => 'new']);
         $notifier->notify($lead);
 

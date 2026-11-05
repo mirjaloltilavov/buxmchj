@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('popup', 'service')
 @section('title', __('Buxgalteriya xizmati').' — Buxgalter MChJ')
 
 @php

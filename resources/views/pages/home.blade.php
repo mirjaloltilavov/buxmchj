@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('popup', 'course')
 
 @section('content')
     @include('sections.hero')

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('popup', 'guide')
 @section('title', __('Maqolalar').' — Buxgalter MChJ')
 @section('description', hs('blog.lead', 'Soliq, 1C va buxgalteriya bo‘yicha amaliy maslahatlar — tadbirkorlar, buxgalterlar va o‘quvchilar uchun.'))
 

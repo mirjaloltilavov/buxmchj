@@ -309,10 +309,16 @@
   ===================================================================== */
   $$('[data-consult]').forEach(function (a) {
     a.addEventListener('click', function (e) {
-      var target = $('#consultation') || $('#form') || $('[data-lead-form]');
+      var target = $('#consultation') || $('#form') || $('[data-lead-form]:not(.promo__form)');
+      if (window.__closePopup && a.closest('.popup')) window.__closePopup();
       if (target) {
         e.preventDefault();
         setMenu(false);
+        var want = a.getAttribute('data-interest');
+        if (want) {
+          var r = $('input[name="interest"][value="' + want + '"]', target);
+          if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+        }
         target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
         var input = $('input[name="name"]', target);
         if (input) setTimeout(function () { input.focus({ preventScroll: true }); }, 700);
@@ -817,6 +823,97 @@
           m.classList.remove('is-in'); void m.offsetWidth; m.classList.add('is-in');
         }
       });
+    });
+  }
+
+  /* =====================================================================
+     16. Promo popuplar (Figma Motion notes — Popups):
+     - Trigger: N s dan keyin yoki exit-intent, sessiyada 1 marta
+     - Kurs: rasm clip-reveal, '−20%' stiker −30° → −8° (spring), eski narx chiziladi, yangi narx count-up
+     - Countdown har soniya almashadi; Close hover 90°
+     - Mobil: pastdan sheet, pastga tortib yopiladi
+  ===================================================================== */
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  $$('[data-countdown]').forEach(function (cd) {
+    var end = Date.parse(cd.getAttribute('data-countdown'));
+    var cells = {}; $$('[data-cd]', cd).forEach(function (b) { cells[b.getAttribute('data-cd')] = b; });
+    var tick = function () {
+      var left = Math.max(0, Math.floor((end - Date.now()) / 1000));
+      var v = { d: Math.floor(left / 86400), h: Math.floor(left % 86400 / 3600), m: Math.floor(left % 3600 / 60), s: left % 60 };
+      Object.keys(v).forEach(function (k) {
+        var el = cells[k], txt = pad(v[k]);
+        if (el && el.textContent !== txt) {
+          el.textContent = txt;
+          if (!reduce && cd.offsetParent) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
+        }
+      });
+    };
+    tick(); setInterval(tick, 1000);
+  });
+
+  var promo = $('[data-promo]');
+  if (promo) {
+    var key = 'promo_seen_' + promo.getAttribute('data-promo');
+    var seen = function () { try { return sessionStorage.getItem(key) === '1'; } catch (e) { return false; } };
+    var mark = function () { try { sessionStorage.setItem(key, '1'); } catch (e) {} };
+    var busy = function () {
+      var a = document.activeElement;
+      return $('.popup.is-open') || $('.mobile-menu.is-open') || (a && /INPUT|TEXTAREA|SELECT/.test(a.tagName));
+    };
+    var counted = false;
+    var openPromo = function () {
+      if (seen() || busy()) return false;
+      mark();
+      promo.setAttribute('aria-hidden', 'false');
+      promo.classList.add('is-open');
+      document.documentElement.style.overflow = 'hidden';
+      var cnt = $('[data-promo-count]', promo);
+      if (cnt && !counted && !reduce) {
+        counted = true;
+        var to = +cnt.getAttribute('data-promo-count'), from = Math.round(to * 1.25), t0 = null;
+        var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); };
+        var step = function (ts) {
+          if (!t0) t0 = ts + 700;
+          var p = Math.max(0, Math.min(1, (ts - t0) / 1000));
+          var e = 1 - Math.pow(1 - p, 3);
+          cnt.textContent = fmt(Math.round((from + (to - from) * e) / 1000) * 1000);
+          if (p < 1) raf(step);
+        };
+        cnt.textContent = fmt(from);
+        raf(step);
+      }
+      return true;
+    };
+    var delay = (parseInt(promo.getAttribute('data-delay'), 10) || 15) * 1000;
+    if (!seen()) {
+      var timer = setTimeout(function retry() { if (!openPromo() && !seen()) timer = setTimeout(retry, 5000); }, delay);
+      document.addEventListener('mouseout', function onOut(e) {
+        if (e.relatedTarget || e.clientY > 0 || isMobile()) return;
+        if (performance.now() < 4000) return;
+        if (openPromo()) { clearTimeout(timer); document.removeEventListener('mouseout', onOut); }
+      });
+    }
+    promo.addEventListener('transitionend', function () {
+      if (!promo.classList.contains('is-open')) promo.setAttribute('aria-hidden', 'true');
+    });
+
+    // Mobil sheet: pastga tortib yopish
+    var sheet = $('[data-sheet]', promo), sy = null, dy = 0;
+    sheet.addEventListener('touchstart', function (e) {
+      if (!isMobile() || sheet.scrollTop > 0) return;
+      sy = e.touches[0].clientY; dy = 0; sheet.classList.add('is-dragging');
+    }, { passive: true });
+    sheet.addEventListener('touchmove', function (e) {
+      if (sy === null) return;
+      dy = Math.max(0, e.touches[0].clientY - sy);
+      sheet.style.setProperty('--drag', dy + 'px');
+    }, { passive: true });
+    sheet.addEventListener('touchend', function () {
+      if (sy === null) return;
+      sheet.classList.remove('is-dragging');
+      sy = null;
+      if (dy > 110) { closePopup(); setTimeout(function () { sheet.style.removeProperty('--drag'); }, 450); }
+      else sheet.style.removeProperty('--drag');
     });
   }
 

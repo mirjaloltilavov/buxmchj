@@ -28,7 +28,7 @@ class SiteSettings extends Page implements HasForms
         'site_name', 'phone', 'telegram_url', 'telegram_handle', 'instagram_url', 'instagram_handle', 'youtube_url',
         'work_hours', 'footer_about', 'map_embed', 'hero_autoplay',
         'telegram_bot_token', 'telegram_chat_id',
-        'seo_title', 'seo_description', 'legal_privacy', 'legal_offer', 'head_code', 'body_code',
+        'seo_title', 'seo_description', 'legal_privacy', 'legal_offer', 'head_code', 'body_code', 'popups',
     ];
 
     public ?array $data = [];
@@ -69,6 +69,41 @@ class SiteSettings extends Page implements HasForms
                 Forms\Components\Tabs\Tab::make('Huquqiy matnlar')->icon('heroicon-o-scale')->schema([
                     Tr::rich('legal_privacy', 'Maxfiylik siyosati', 'legal'),
                     Tr::rich('legal_offer', 'Ommaviy oferta', 'legal'),
+                ]),
+                Forms\Components\Tabs\Tab::make('Popuplar')->icon('heroicon-o-gift')->schema([
+                    Forms\Components\Placeholder::make('popups_help')->label('')->content('Popup sahifada 15 soniyadan keyin yoki foydalanuvchi sahifani tark etmoqchi bo‘lganda chiqadi — bir sessiyada bir marta. Kurs chegirmasi: bosh sahifa va kurs sahifalarida; xizmat chegirmasi: xizmat sahifasida; qo‘llanma: maqolalarda.'),
+                    Forms\Components\TextInput::make('popups.delay')->label('Necha soniyadan keyin chiqsin')->numeric()->default(15),
+                    Forms\Components\Section::make('Kurs chegirma')->collapsible()->columns(2)->schema([
+                        Forms\Components\Toggle::make('popups.course.enabled')->label('Yoqilgan')->default(true)->columnSpanFull(),
+                        Forms\Components\TextInput::make('popups.course.title.uz')->label('Sarlavha (UZ)')->placeholder('Kursga hozir yoziling — 20 % chegirma'),
+                        Forms\Components\TextInput::make('popups.course.title.ru')->label('Sarlavha (RU)'),
+                        Forms\Components\Textarea::make('popups.course.text.uz')->label('Matn (UZ)')->rows(2),
+                        Forms\Components\Textarea::make('popups.course.text.ru')->label('Matn (RU)')->rows(2),
+                        Forms\Components\TextInput::make('popups.course.price_new')->label('Yangi narx (so‘m)')->numeric()->placeholder('2160000'),
+                        Forms\Components\TextInput::make('popups.course.price_old')->label('Eski narx (so‘m)')->numeric()->placeholder('2700000'),
+                        Forms\Components\TextInput::make('popups.course.caption.uz')->label('Narx izohi (UZ)')->placeholder('Premium tarif · bir martalik to‘lovda'),
+                        Forms\Components\TextInput::make('popups.course.caption.ru')->label('Narx izohi (RU)'),
+                        Forms\Components\DatePicker::make('popups.course.deadline')->label('Taklif tugash sanasi')->helperText('Bo‘sh qolsa — joriy oy oxirigacha.')->native(false),
+                        Forms\Components\FileUpload::make('popups.course.image')->label('Rasm')->image()->disk('public')->directory('popups'),
+                    ]),
+                    Forms\Components\Section::make('Xizmat chegirma')->collapsible()->columns(2)->schema([
+                        Forms\Components\Toggle::make('popups.service.enabled')->label('Yoqilgan')->default(true)->columnSpanFull(),
+                        Forms\Components\TextInput::make('popups.service.title.uz')->label('Sarlavha (UZ)')->placeholder('Birinchi oy buxgalteriya xizmati — 50 % chegirma'),
+                        Forms\Components\TextInput::make('popups.service.title.ru')->label('Sarlavha (RU)'),
+                        Forms\Components\Textarea::make('popups.service.text.uz')->label('Matn (UZ)')->rows(2),
+                        Forms\Components\Textarea::make('popups.service.text.ru')->label('Matn (RU)')->rows(2),
+                        Forms\Components\Textarea::make('popups.service.points.uz')->label('Afzalliklar (UZ, har biri yangi qatorda)')->rows(3),
+                        Forms\Components\Textarea::make('popups.service.points.ru')->label('Afzalliklar (RU, har biri yangi qatorda)')->rows(3),
+                        Forms\Components\DatePicker::make('popups.service.deadline')->label('Taklif tugash sanasi')->helperText('Bo‘sh qolsa — joriy oy oxirigacha.')->native(false),
+                    ]),
+                    Forms\Components\Section::make('Bepul qo‘llanma')->collapsible()->columns(2)->schema([
+                        Forms\Components\Toggle::make('popups.guide.enabled')->label('Yoqilgan')->default(true)->columnSpanFull(),
+                        Forms\Components\TextInput::make('popups.guide.title.uz')->label('Sarlavha (UZ)')->placeholder('YaTT va MChJ uchun soliq kalendari 2027'),
+                        Forms\Components\TextInput::make('popups.guide.title.ru')->label('Sarlavha (RU)'),
+                        Forms\Components\Textarea::make('popups.guide.text.uz')->label('Matn (UZ)')->rows(2),
+                        Forms\Components\Textarea::make('popups.guide.text.ru')->label('Matn (RU)')->rows(2),
+                        Forms\Components\FileUpload::make('popups.guide.image')->label('Rasm')->image()->disk('public')->directory('popups'),
+                    ]),
                 ]),
                 Forms\Components\Tabs\Tab::make('Qo‘shimcha kod')->icon('heroicon-o-code-bracket')->schema([
                     Forms\Components\Textarea::make('head_code')->label('<head> ichiga (Google Analytics, Meta Pixel...)')->rows(5),

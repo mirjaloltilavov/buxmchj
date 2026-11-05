@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('popup', 'guide')
 @section('title', ($article->tr('seo_title') ?: $article->tr('title')).' — Buxgalter MChJ')
 @section('description', $article->tr('seo_description') ?: $article->tr('excerpt'))
 @section('og_image', media_url($article->cover))
