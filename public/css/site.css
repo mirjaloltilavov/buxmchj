@@ -454,11 +454,8 @@ ul{margin:0;padding:0;list-style:none}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
 /* Sahifa o‘tishi: fade 300 ms + kontent y16 */
-body{animation:pageIn .3s var(--ease) both}
-main{animation:mainIn .5s var(--ease) both}
 @keyframes pageIn{from{opacity:0}}
 @keyframes mainIn{from{transform:translateY(16px)}}
-body.is-leaving{opacity:0;transition:opacity .2s}
 
 /* Input: focus 150 ms sariq, xato silkinish */
 .input{transition:border-color .15s,box-shadow .15s}

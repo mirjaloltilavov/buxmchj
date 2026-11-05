@@ -232,7 +232,7 @@
      4. Hero slider (Motion: Hero slider)
      - Kirish: badge → sarlavha → tavsif → tugmalar 120 ms stagger; rasm 1.06 → 1 (900 ms);
        suzuvchi kartalar navbat bilan pop (200 ms oraliq), so'ng ±6 px suzish (4 s)
-     - Autoplay 6 s, tab progress linear; hover — pauza
+     - Autoplay 6 s, tab progress linear (hover autoplay'ni to'xtatmaydi; faqat tab yashirin bo'lsa pauza)
      - Almashganda: matn cross-fade + y16, rasm clip-reveal chapdan o'ngga (700 ms)
      - Fon chiziqlari parallax 0.2
   ===================================================================== */
@@ -277,8 +277,6 @@
     var prev = $('[data-prev]', hero), next = $('[data-next]', hero);
     if (prev) prev.addEventListener('click', function () { setActive(current - 1); });
     if (next) next.addEventListener('click', function () { setActive(current + 1); });
-    hero.addEventListener('mouseenter', pause);
-    hero.addEventListener('mouseleave', resume);
     document.addEventListener('visibilitychange', function () { document.hidden ? pause() : resume(); });
     // Kirish animatsiyasi
     raf(function () { hero.classList.add('is-entered'); setActive(0, true); });
@@ -976,13 +974,13 @@
       }
       return true;
     };
-    var delay = (parseInt(promo.getAttribute('data-delay'), 10) || 15) * 1000;
+    var promoDelay = (parseInt(promo.getAttribute('data-delay'), 10) || 15) * 1000;
     if (!seen()) {
-      var timer = setTimeout(function retry() { if (!openPromo() && !seen()) timer = setTimeout(retry, 5000); }, delay);
+      var promoTimer = setTimeout(function retry() { if (!openPromo() && !seen()) promoTimer = setTimeout(retry, 5000); }, promoDelay);
       document.addEventListener('mouseout', function onOut(e) {
         if (e.relatedTarget || e.clientY > 0 || isMobile()) return;
         if (performance.now() < 4000) return;
-        if (openPromo()) { clearTimeout(timer); document.removeEventListener('mouseout', onOut); }
+        if (openPromo()) { clearTimeout(promoTimer); document.removeEventListener('mouseout', onOut); }
       });
     }
     promo.addEventListener('transitionend', function () {
@@ -1009,20 +1007,4 @@
     });
   }
 
-  /* =====================================================================
-     12. Sahifa o'tishi: fade 300 ms
-  ===================================================================== */
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('a');
-    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    var href = a.getAttribute('href');
-    if (!href || href.charAt(0) === '#' || a.target === '_blank' || a.hasAttribute('download') || /^(tel:|mailto:|javascript:)/.test(href)) return;
-    var url = new URL(a.href, location.href);
-    if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
-    if (reduce) return;
-    e.preventDefault();
-    document.body.classList.add('is-leaving');
-    setTimeout(function () { location.href = a.href; }, 200);
-  });
-  window.addEventListener('pageshow', function (e) { if (e.persisted) document.body.classList.remove('is-leaving'); });
 })();
