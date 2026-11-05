@@ -60,8 +60,9 @@
   });
 
   var revealEls = $$('[data-reveal], .draw');
+  var io = null;
   if ('IntersectionObserver' in window && !reduce) {
-    var io = new IntersectionObserver(function (entries) {
+    io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
       });
@@ -76,6 +77,12 @@
     }, 300);
   } else {
     revealEls.forEach(function (el) { el.classList.add('is-in'); });
+  }
+  // Keyin qo'shilgan (AJAX) elementlar uchun
+  function observeReveal(root) {
+    $$('[data-reveal]', root).forEach(function (el) {
+      if (io) io.observe(el); else el.classList.add('is-in');
+    });
   }
 
   /* =====================================================================
@@ -589,6 +596,125 @@
     });
   });
   document.addEventListener('click', function (e) { if (e.target.closest('[data-popup-close]')) { e.preventDefault(); closePopup(); } });
+
+  /* =====================================================================
+     13. Maqolalar (Figma Motion notes):
+     - Qidiruv placeholder'i har 3 s da almashadi (yozilayotgandek); fokusda soya kattalashadi
+     - Tanlangan maqola: muqova chapdan o'ngga clip-reveal 800 ms, matn 120 ms stagger
+     - Filtr: sticky top 96 + soya; chip almashganda kartalar 150 ms fade-out, yangilari 60 ms stagger;
+       son "roll" bo'ladi. "Ko'proq" — skeleton shimmer, keyin kartalar stagger bilan.
+     - Telegram CTA: qog'oz samolyot uchib kiradi (x−40, y40 → 0)
+  ===================================================================== */
+  var bs = $('[data-bsearch]');
+  if (bs) {
+    var bInput = $('input[type=search]', bs), bPh = $('.bsearch__ph', bs);
+    var hints = [];
+    try { hints = JSON.parse(bInput.getAttribute('data-hints') || '[]'); } catch (e) {}
+    if (hints.length && bPh && !reduce) {
+      bs.classList.add('has-hints');
+      var hi = 0, typer;
+      var typeHint = function (text) {
+        clearInterval(typer);
+        var n = 0;
+        typer = setInterval(function () {
+          n++; bPh.textContent = text.slice(0, n);
+          if (n >= text.length) clearInterval(typer);
+        }, 45);
+      };
+      typeHint(bInput.getAttribute('placeholder'));
+      setInterval(function () {
+        if (document.activeElement === bInput || bInput.value) return;
+        typeHint(hints[hi++ % hints.length]);
+      }, 3000);
+    }
+  }
+
+  $$('[data-bfeat], .tg-cta').forEach(function (el) {
+    if (!io) { el.classList.add('is-in'); return; }
+    if (!el.hasAttribute('data-reveal')) io.observe(el);
+  });
+
+  var blog = $('[data-blog]');
+  if (blog) {
+    var bf = $('[data-bfilter]', blog), hdr = $('.site-header');
+    var onBScroll = function () {
+      var hidden = hdr && hdr.classList.contains('is-hidden');
+      var t = hidden ? (isMobile() ? 8 : 16) : (isMobile() ? 76 : 96);
+      bf.style.top = t + 'px';
+      bf.classList.toggle('is-stuck', bf.getBoundingClientRect().top <= t + 1 && window.scrollY > 200);
+    };
+    window.addEventListener('scroll', onBScroll, { passive: true });
+    onBScroll();
+
+    var results = $('[data-bresults]', blog);
+    var countEl = $('[data-bcount]', blog);
+    var drop = function (el) { if (el && el.parentNode) el.parentNode.removeChild(el); };
+    var swap = function (html, mode) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var nr = $('[data-bresults]', doc), nc = $('[data-bcount]', doc), nf = $('[data-bfilter] .bfilter__chips', doc);
+      if (!nr) return false;
+      if (mode === 'append') {
+        var grid = $('[data-bgrid]', results);
+        $$('.acard--sk', grid).forEach(drop);
+        $$('[data-bgrid] > .acard', nr).forEach(function (c, i) {
+          c.style.setProperty('--d', (i % 3) * 60 + 'ms'); grid.appendChild(c);
+        });
+        drop($('.bmore', results));
+        var newMore = $('.bmore', nr);
+        if (newMore) results.appendChild(newMore);
+        observeReveal(grid);
+      } else {
+        results.innerHTML = nr.innerHTML;
+        if (nf) $('.bfilter__chips', bf).innerHTML = nf.innerHTML;
+        if (nc && countEl && countEl.textContent !== nc.textContent) {
+          countEl.classList.remove('is-roll'); void countEl.offsetWidth; countEl.classList.add('is-roll');
+          setTimeout(function () { countEl.textContent = nc.textContent; }, 160);
+        }
+        observeReveal(results);
+      }
+      return true;
+    };
+    var getHtml = function (url) {
+      return fetch(url, { headers: { 'X-Requested-With': 'fetch' } }).then(function (r) {
+        if (!r.ok) throw new Error(r.status); return r.text();
+      });
+    };
+
+    blog.addEventListener('click', function (e) {
+      var chip = e.target.closest('[data-fchip]');
+      var more = e.target.closest('[data-bmore]');
+      if (!chip && !more) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var url = (chip || more).href.split('#')[0];
+      if (chip) {
+        if (chip.classList.contains('is-active')) return;
+        $$('[data-fchip]', bf).forEach(function (c) { c.classList.toggle('is-active', c === chip); });
+        results.classList.add('is-out');
+        var wait = new Promise(function (r) { setTimeout(r, 150); });
+        Promise.all([getHtml(url), wait]).then(function (res) {
+          if (!swap(res[0], 'replace')) { location.href = url; return; }
+          results.classList.remove('is-out');
+          history.pushState(null, '', url + '#all');
+          var y = blog.getBoundingClientRect().top + window.scrollY - 120;
+          if (window.scrollY > y) window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+        }).catch(function () { location.href = url; });
+      } else {
+        if (more.classList.contains('is-loading')) return;
+        more.classList.add('is-loading');
+        var grid = $('[data-bgrid]', results);
+        if (grid) {
+          var sk = '<article class="acard acard--sk" aria-hidden="true"><span class="acard__img"></span><div class="acard__body"><span class="sk" style="width:40%"></span><span class="sk" style="height:22px"></span><span class="sk" style="width:80%"></span></div></article>';
+          grid.insertAdjacentHTML('beforeend', sk + sk + sk);
+        }
+        Promise.all([getHtml(url), new Promise(function (r) { setTimeout(r, 400); })]).then(function (res) {
+          if (!swap(res[0], 'append')) location.href = url;
+        }).catch(function () { location.href = url; });
+      }
+    });
+    window.addEventListener('popstate', function () { if ($('[data-blog]')) location.reload(); });
+  }
 
   /* =====================================================================
      12. Sahifa o'tishi: fade 300 ms

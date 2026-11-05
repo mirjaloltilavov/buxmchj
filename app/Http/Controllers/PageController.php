@@ -74,11 +74,17 @@ class PageController extends Controller
             $query->where(fn ($w) => $w->where('title', 'like', "%{$q}%")->orWhere('excerpt', 'like', "%{$q}%"));
         }
 
+        // Tanlangan maqola faqat filtrsiz ko'rinishda alohida chiqadi va gridda takrorlanmaydi
+        $featured = (! $active && $q === '') ? Article::published()->with('category')->where('is_featured', true)->latest('published_at')->first() : null;
+        if ($featured) {
+            $query->whereKeyNot($featured->id);
+        }
+
         return view('pages.blog', [
             'categories' => $categories,
             'activeCategory' => $active,
             'search' => $q,
-            'featured' => Article::published()->where('is_featured', true)->first(),
+            'featured' => $featured,
             'articles' => $query->paginate(12)->withQueryString(),
             'total' => Article::published()->count(),
         ]);
