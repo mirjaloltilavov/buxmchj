@@ -733,7 +733,8 @@ ul{margin:0;padding:0;list-style:none}
 .career__lbl .node{width:10px;height:10px;border-radius:50%;border:2px solid rgba(255,255,255,.3);transition:background-color .3s,border-color .3s}
 .career__lvl.is-reached .node{background:var(--y1);border-color:var(--y1)}
 .career__lvl b{font-size:clamp(40px,3.5vw,56px);font-weight:700;line-height:1.1;letter-spacing:-.03em}
-.career__lvl:last-child b{color:var(--y1)}
+.career__lvl b{transition:color .5s var(--ease)}
+.career__lvl.is-current b{color:var(--y1)}
 .career__lvl strong{font-size:20px;font-weight:600}
 .career__lvl small{font-size:15px;color:var(--muted-2);line-height:1.4}
 .note{font-size:13px;color:var(--muted);margin-top:24px}

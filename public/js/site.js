@@ -493,6 +493,9 @@
       var p = Math.min(1, Math.max(0, (window.innerHeight * 0.85 - r.top) / (r.height + window.innerHeight * 0.35)));
       if (line) line.style.width = (p * 100) + '%';
       lvls.forEach(function (l, i) { l.classList.toggle('is-reached', p >= i / Math.max(1, lvls.length - 1) - 0.02); });
+      // Sariq raqam progress chizig'i bilan birga 1-bosqichdan oxirgisigacha siljiydi
+      var cur = Math.min(lvls.length - 1, Math.floor(p * lvls.length));
+      lvls.forEach(function (l, i) { l.classList.toggle('is-current', i === cur); });
     };
     window.addEventListener('scroll', function () { raf(upd); }, { passive: true });
     upd();
