@@ -18,7 +18,7 @@
         </div>
         <div class="card-foot">
             <p class="p">{{ ($row ?? false) && ! $course->is_featured ? ($course->tr('price_note') ?: $priceText) : $priceText }}</p>
-            <a href="{{ $url }}" @class(['btn', 'btn--acc' => ! ($row ?? false), 'btn--ghost' => ($row ?? false)])>{{ __('Batafsil') }} {{ icon('arrow-right') }}</a>
+            <a href="{{ $url }}" class="btn btn--ghost">{{ __('Batafsil') }} {{ icon('arrow-right') }}</a>
         </div>
     </div>
 </article>

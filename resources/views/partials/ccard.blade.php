@@ -21,7 +21,7 @@
         </div>
         <div class="ccard__foot">
             <b>{{ $priceText }}</b>
-            <a href="{{ $url }}" class="btn-pill btn-pill--m {{ $course->is_featured ? 'btn-pill--yellow' : 'btn-pill--outline' }}"><span class="label">{{ __('Batafsil') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+            <a href="{{ $url }}" class="btn-pill btn-pill--m btn-pill--outline"><span class="label">{{ __('Batafsil') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
         </div>
     </div>
 </article>
