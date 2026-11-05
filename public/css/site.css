@@ -975,7 +975,7 @@ ul{margin:0;padding:0;list-style:none}
 .sb--dark{border:0;background:var(--ink);color:#fff}
 
 /* Tariflar (4 ustun) */
-.pcards--4{grid-template-columns:repeat(4,1fr);gap:16px}
+.pcards--4{grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:16px}
 .pcard--sm{padding:24px}
 .pcard--sm .pcard__price b{font-size:32px}
 

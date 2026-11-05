@@ -75,7 +75,7 @@
         <section class="section section--soft" id="plans">
             <div class="container">
                 @include('partials.section-head', ['title' => __('Xizmat tariflari'), 'lead' => __('Narx tashkilot shakli, QQS va faoliyat turiga bog‘liq. Aniq narxni konsultatsiyada aytamiz.'), 'lg' => true])
-                <div class="pcards pcards--4" data-snap>
+                <div class="pcards pcards--4" data-snap style="--n: {{ max(1, min(4, $plans->count())) }}">
                     @foreach($plans as $i => $plan)
                         <div @class(['pcard', 'pcard--sm', 'pcard--hl' => $plan->is_highlighted]) data-reveal="up40" style="--d: {{ $i * 80 + ($plan->is_highlighted ? 120 : 0) }}ms">
                             <div class="pcard__head"><h3>{{ $plan->tr('name') }}</h3><p>{{ $plan->tr('subtitle') }}</p></div>
