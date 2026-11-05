@@ -20,8 +20,6 @@
         'title' => __('Buxgalteriya xizmati'),
         'lead' => hs('services_page.lead', 'Hisob yuritish, soliq hisobotlari, ish haqi va bank operatsiyalari — tajribali jamoaga topshiring, o‘zingiz biznesingizga e’tibor bering.'),
         'crumbs' => [__('Buxgalteriya xizmati') => null],
-        'badge' => hs('services_page.badge', 'YaTT va MChJ uchun'),
-        'badgeBlue' => true,
         'image' => setting('texts.services_page.image') ?: 'img/dir-services.jpg',
         'imgTall' => true,
     ])

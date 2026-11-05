@@ -52,7 +52,6 @@
     <section class="section c-form" id="form">
         <div class="container c-form__grid">
             <div class="c-form__left" data-stagger="80">
-                <span class="chip chip--grey" data-reveal><i class="dot"></i>{{ __('Bepul konsultatsiya') }}</span>
                 <div class="c-form__head" data-reveal>
                     <h2 class="h2 h2--56">{{ hs('contact.form_title', 'Savolingizni qoldiring — o‘zimiz qo‘ng‘iroq qilamiz') }}</h2>
                     <p>{{ hs('contact.form_lead', 'Formani to‘ldiring: mutaxassisimiz siz bilan bog‘lanib, mos kurs yoki xizmat turini tanlashga yordam beradi.') }}</p>

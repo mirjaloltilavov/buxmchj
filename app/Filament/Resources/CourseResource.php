@@ -46,7 +46,6 @@ class CourseResource extends Resource
                     ]),
                 ]),
                 Forms\Components\Tabs\Tab::make('Hero')->schema([
-                    Tr::text('meta.badge', 'Yuqoridagi belgi (masalan: Offline · onlayn · 4 oydan 1 yilgacha)'),
                     CardsField::make('meta.stats')->label('Raqamlar (hero pastida)')->kind('stat')->cols(4)->max(4)->itemName('raqam')->addLabel('Raqam qo‘shish')->drawerWidth('md')->itemSchema(fn () => [
                         IconPicker::make('icon')->label('Ikonka'),
                         Tr::text('value', 'Qiymat (26–40, 1C, Diplom...)'),

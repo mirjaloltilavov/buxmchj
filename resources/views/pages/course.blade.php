@@ -18,7 +18,6 @@
         'crumbs' => [__('Kurslar') => lroute('courses'), $course->tr('title') => null],
         'image' => $course->image,
         'crumbsRoot' => false,
-        'badge' => tr($m['badge'] ?? null),
     ])
         <div class="hero-ctas">
             <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult><span class="label">{{ __('Kursga yozilish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
@@ -68,7 +67,6 @@
         <section class="section" id="program">
             <div class="container program" data-program>
                 <div class="program__left">
-                    <span class="badge-y" data-reveal>{{ $course->tr('title') }}</span>
                     <div class="program__text" data-reveal style="--d:120ms">
                         <h2 class="h2">{{ __('Kurs dasturi') }}</h2>
                         @if(tr($m['program_lead'] ?? null))<p>{{ tr($m['program_lead']) }}</p>@endif
