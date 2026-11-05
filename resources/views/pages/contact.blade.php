@@ -34,10 +34,10 @@
     @if($branches->isNotEmpty())
         <section class="section section--soft">
             <div class="container">
-                <div class="section-head reveal"><h2 class="h2">{{ __('Manzilimiz') }}</h2><p>{{ __('Offline kurslar Toshkentdagi o‘quv markazimizda o‘tadi.') }}</p></div>
+                <div class="section-head"><h2 class="h2">{{ __('Manzilimiz') }}</h2><p>{{ __('Offline kurslar Toshkentdagi o‘quv markazimizda o‘tadi.') }}</p></div>
                 <div class="branches">
                     @foreach($branches as $b)
-                        <div class="branch-card reveal">
+                        <div class="branch-card">
                             <b style="font-size:22px">{{ $b->tr('name') }}</b>
                             <div class="row">{{ icon('location') }} <span>{{ $b->tr('address') }}</span></div>
                             @if($b->tr('hours'))<div class="row">{{ icon('clock') }} <span>{{ $b->tr('hours') }}</span></div>@endif
@@ -46,7 +46,7 @@
                         </div>
                     @endforeach
                     @if(setting('map_embed'))
-                        <div class="map reveal">{!! setting('map_embed') !!}</div>
+                        <div class="map">{!! setting('map_embed') !!}</div>
                     @endif
                 </div>
             </div>

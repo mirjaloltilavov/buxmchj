@@ -1,12 +1,12 @@
 {{-- Figma: Directions --}}
 <section class="section" id="directions">
     <div class="container">
-        <div class="section-head reveal">
+        <div class="section-head">
             <h2 class="h2">{{ hs('directions.title', 'Kurslar va buxgalteriya xizmati') }}</h2>
             <p>{{ hs('directions.lead', 'Buxgalter bo‘lmoqchi bo‘lganlar uchun o‘quv kurslari, tadbirkorlar uchun esa buxgalteriyani to‘liq yuritish xizmati.') }}</p>
         </div>
         <div class="directions">
-            <article class="direction direction--courses reveal">
+            <article class="direction direction--courses">
                 <div class="direction-img"><img src="{{ media_url(setting('texts.directions.courses_image') ?: 'img/dir-courses.jpg') }}" alt="" loading="lazy"></div>
                 <div class="direction-body">
                     <h3>{{ hs('directions.courses_title', 'Buxgalteriya kurslari') }}</h3>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </article>
-            <article class="direction direction--services reveal">
+            <article class="direction direction--services">
                 <div class="direction-img"><img src="{{ media_url(setting('texts.directions.services_image') ?: 'img/dir-services.jpg') }}" alt="" loading="lazy"></div>
                 <div class="direction-body">
                     <h3>{{ hs('directions.services_title', 'Buxgalteriya xizmati') }}</h3>

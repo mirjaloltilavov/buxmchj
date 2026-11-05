@@ -19,7 +19,7 @@
     @if($related->isNotEmpty())
         <section class="section section--soft">
             <div class="container">
-                <div class="section-head reveal"><h2 class="h2">{{ __('O‘xshash maqolalar') }}</h2></div>
+                <div class="section-head"><h2 class="h2">{{ __('O‘xshash maqolalar') }}</h2></div>
                 <div class="cards-grid">
                     @foreach($related as $item)
                         @include('partials.article-card', ['article' => $item])

@@ -1,7 +1,7 @@
 {{-- Figma: Consultation --}}
 <section class="section" id="consultation">
     <div class="container">
-        <div class="consult reveal">
+        <div class="consult">
             <div class="left">
                 <h2 class="h2">{{ hs('consult.title', 'Bepul konsultatsiyaga yoziling') }}</h2>
                 <p>{{ hs('consult.lead', '15 daqiqalik suhbatda sizga mos kurs yoki xizmat tarifini tanlab beramiz.') }}</p>

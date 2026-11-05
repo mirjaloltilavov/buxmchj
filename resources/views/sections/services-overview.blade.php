@@ -1,7 +1,7 @@
 {{-- Figma: Services overview --}}
 <section class="section section--soft" id="services">
     <div class="container services-ov">
-        <div class="left reveal">
+        <div class="left">
             <h2 class="h2">{{ hs('services.title', 'Tadbirkorlar uchun buxgalteriya xizmati') }}</h2>
             <p>{{ hs('services.lead', 'Buxgalteriyani tajribali jamoaga topshiring: hisob yuritish, hisobotlar va soliq organi bilan yozishmalar bizning zimmamizda. Tariflar va to‘liq narxlar Xizmat sahifasida.') }}</p>
             <div class="facts">
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="right">
-            <div class="services-media reveal">
+            <div class="services-media">
                 <img src="{{ media_url(setting('texts.services.image') ?: 'img/services.jpg') }}" alt="" loading="lazy">
                 <div class="price-float">
                     <span class="fc-sub" style="font-weight:500">{{ __('Oylik xizmat') }}</span>
@@ -24,7 +24,7 @@
             </div>
             <div class="service-cards">
                 @foreach($services as $i => $service)
-                    <div class="service-card reveal">
+                    <div class="service-card">
                         <div class="top"><span class="num">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span><span class="icon-tile icon-tile--44">{{ icon($service->icon) }}</span></div>
                         <div><h3>{{ $service->tr('title') }}</h3><p>{{ $service->tr('description') }}</p></div>
                     </div>

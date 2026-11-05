@@ -3,7 +3,7 @@
 @php $list = $articles->reject(fn ($a) => $a->is($featured))->take(4); @endphp
 <section class="section section--soft" id="articles">
     <div class="container">
-        <div class="articles-head reveal">
+        <div class="articles-head">
             <div class="t">
                 <h2 class="h2">{{ hs('articles.title', 'Foydali maqolalar') }}</h2>
                 <p>{{ hs('articles.lead', 'Soliq, 1C va buxgalteriya bo‘yicha amaliy maslahatlar — tadbirkorlar va o‘quvchilar uchun.') }}</p>
@@ -12,7 +12,7 @@
         </div>
         <div class="articles-grid">
             @php $url = lroute('article', ['article' => $featured->slug]); @endphp
-            <article class="article-feature reveal">
+            <article class="article-feature">
                 <a href="{{ $url }}" class="img"><img src="{{ media_url($featured->cover) }}" alt="{{ $featured->tr('title') }}" loading="lazy"></a>
                 <div style="display:flex;flex-direction:column;gap:12px">
                     @include('partials.article-meta', ['article' => $featured, 'withCategory' => true])
@@ -23,7 +23,7 @@
             </article>
             <div class="article-list">
                 @foreach($list as $article)
-                    <a href="{{ lroute('article', ['article' => $article->slug]) }}" class="article-row reveal">
+                    <a href="{{ lroute('article', ['article' => $article->slug]) }}" class="article-row">
                         <span class="img"><img src="{{ media_url($article->cover) }}" alt="" loading="lazy"></span>
                         <span class="b">@include('partials.article-meta', ['article' => $article])<h4>{{ $article->tr('title') }}</h4></span>
                     </a>

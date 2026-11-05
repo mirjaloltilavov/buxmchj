@@ -25,10 +25,10 @@
     @if($course->audience)
         <section class="section section--soft">
             <div class="container">
-                <div class="section-head reveal"><h2 class="h2">{{ __('Kurs kimlar uchun') }}</h2></div>
+                <div class="section-head"><h2 class="h2">{{ __('Kurs kimlar uchun') }}</h2></div>
                 <div class="service-cards" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
                     @foreach($course->audience as $item)
-                        <div class="service-card reveal"><span class="icon-tile icon-tile--44">{{ icon($item['icon'] ?? 'user') }}</span><div><h3>{{ tr($item['title'] ?? null) }}</h3><p>{{ tr($item['text'] ?? null) }}</p></div></div>
+                        <div class="service-card"><span class="icon-tile icon-tile--44">{{ icon($item['icon'] ?? 'user') }}</span><div><h3>{{ tr($item['title'] ?? null) }}</h3><p>{{ tr($item['text'] ?? null) }}</p></div></div>
                     @endforeach
                 </div>
             </div>
@@ -38,10 +38,10 @@
     @if($course->program)
         <section class="section">
             <div class="container">
-                <div class="section-head reveal"><h2 class="h2">{{ __('Kurs dasturi') }}</h2></div>
+                <div class="section-head"><h2 class="h2">{{ __('Kurs dasturi') }}</h2></div>
                 <div class="program">
                     @foreach($course->program as $i => $module)
-                        <div class="module reveal">
+                        <div class="module">
                             <span class="num">{{ __('Modul') }} {{ $i + 1 }}</span>
                             <h3>{{ tr($module['title'] ?? null) }}</h3>
                             @if(tr($module['text'] ?? null))<p style="color:var(--text)">{{ tr($module['text']) }}</p>@endif
@@ -58,10 +58,10 @@
     @if($course->plans)
         <section class="section section--soft" id="plans">
             <div class="container">
-                <div class="section-head reveal"><h2 class="h2">{{ __('Tariflar') }}</h2></div>
+                <div class="section-head"><h2 class="h2">{{ __('Tariflar') }}</h2></div>
                 <div class="plans">
                     @foreach($course->plans as $plan)
-                        <div @class(['plan', 'reveal', 'is-hl' => ! empty($plan['highlight'])])>
+                        <div @class(['plan', 'is-hl' => ! empty($plan['highlight'])])>
                             <div><h3>{{ tr($plan['name'] ?? null) }}</h3><p class="sub">{{ tr($plan['subtitle'] ?? null) }}</p></div>
                             <p class="price"><small>{{ tr($plan['price_label'] ?? null) ?: __('Narxi') }}</small>{{ tr($plan['price'] ?? null) }}</p>
                             <ul>@foreach(($plan['features'] ?? []) as $f)<li>{{ icon('tick-circle') }} {{ tr($f['text'] ?? $f) }}</li>@endforeach</ul>

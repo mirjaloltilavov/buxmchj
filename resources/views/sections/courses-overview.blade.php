@@ -3,7 +3,7 @@
 @php $first = $courses->firstWhere('is_featured', true) ?? $courses->first(); $rest = $courses->reject(fn ($c) => $c->is($first))->take(2); @endphp
 <section class="section" id="courses">
     <div class="container">
-        <div class="section-head reveal">
+        <div class="section-head">
             <h2 class="h2">{{ hs('courses.title', 'Kurslarimiz') }}</h2>
             <p>{{ hs('courses.lead', 'O‘zingizga mos formatni tanlang. Batafsil dastur, jadval va narxlar Kurslar sahifasida.') }}</p>
         </div>

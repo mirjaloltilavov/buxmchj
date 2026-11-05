@@ -1,7 +1,7 @@
 {{-- Figma: Instagram --}}
 @if($instagram->isNotEmpty())
 <section class="insta" id="instagram">
-    <div class="container insta-head reveal">
+    <div class="container insta-head">
         <h2 class="h2">{{ setting('instagram_handle', '@buxgalter_mchj') }}</h2>
         <a href="{{ setting('instagram_url', 'https://instagram.com/buxgalter_mchj') }}" target="_blank" rel="noopener" class="btn-pill btn-pill--ink btn-pill--l">{{ __('Obuna bo‘lish') }} <span class="arrow">{{ icon('arrow-diag') }}</span></a>
     </div>

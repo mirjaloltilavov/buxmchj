@@ -11,13 +11,13 @@
 
     <section class="section">
         <div class="container">
-            <div class="section-head reveal">
+            <div class="section-head">
                 <h2 class="h2">{{ __('Nimalarni o‘z zimmamizga olamiz') }}</h2>
                 <p>{{ __('Buxgalteriyaning barcha yo‘nalishlarini bitta jamoa yuritadi — siz faqat natijani ko‘rasiz.') }}</p>
             </div>
             <div class="service-cards" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
                 @foreach($services as $i => $service)
-                    <div class="service-card reveal">
+                    <div class="service-card">
                         <div class="top"><span class="num">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span><span class="icon-tile icon-tile--44">{{ icon($service->icon) }}</span></div>
                         <div><h3>{{ $service->tr('title') }}</h3><p>{{ $service->tr('description') }}</p></div>
                     </div>
@@ -29,13 +29,13 @@
     @if($plans->isNotEmpty())
         <section class="section section--soft" id="plans">
             <div class="container">
-                <div class="section-head reveal">
+                <div class="section-head">
                     <h2 class="h2">{{ __('Xizmat tariflari') }}</h2>
                     <p>{{ __('Narx tashkilot shakli, QQS va faoliyat turiga bog‘liq. Aniq narxni konsultatsiyada aytamiz.') }}</p>
                 </div>
                 <div class="plans">
                     @foreach($plans as $plan)
-                        <div @class(['plan', 'reveal', 'is-hl' => $plan->is_highlighted])>
+                        <div @class(['plan', 'is-hl' => $plan->is_highlighted])>
                             <div><h3>{{ $plan->tr('name') }}</h3><p class="sub">{{ $plan->tr('subtitle') }}</p></div>
                             <p class="price"><small>{{ __('Oyiga') }}</small>{{ money_uz($plan->price) }} {{ __('so‘m') }}</p>
                             <ul>@foreach(($plan->features ?? []) as $f)<li>{{ icon('tick-circle') }} {{ tr($f['text'] ?? $f) }}</li>@endforeach</ul>

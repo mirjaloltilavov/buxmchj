@@ -2,7 +2,7 @@
     $priceText = $course->price ? price_from($course->price) : ($course->tr('price_note') ?: __('Narxi kurs sahifasida'));
     $url = lroute('course', ['course' => $course->slug]);
 @endphp
-<article @class(['course-card', 'course-card--row' => ($row ?? false), 'reveal'])>
+<article @class(['course-card', 'course-card--row' => ($row ?? false)])>
     <a href="{{ $url }}" class="img"><img src="{{ media_url($course->image) }}" alt="{{ $course->tr('title') }}" loading="lazy"></a>
     <div class="body">
         <div style="display:flex;flex-direction:column;gap:12px">

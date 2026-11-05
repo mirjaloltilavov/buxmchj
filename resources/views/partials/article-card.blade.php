@@ -1,5 +1,5 @@
 @php $url = lroute('article', ['article' => $article->slug]); @endphp
-<article class="article-feature reveal">
+<article class="article-feature">
     <a href="{{ $url }}" class="img"><img src="{{ media_url($article->cover) }}" alt="{{ $article->tr('title') }}" loading="lazy"></a>
     <div style="display:flex;flex-direction:column;gap:12px">
         @include('partials.article-meta', ['article' => $article, 'withCategory' => true])

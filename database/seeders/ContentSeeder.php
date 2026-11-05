@@ -7,6 +7,7 @@ use App\Models\ArticleCategory;
 use App\Models\Branch;
 use App\Models\Course;
 use App\Models\Faq;
+use App\Models\Graduate;
 use App\Models\HeroSlide;
 use App\Models\InstagramPost;
 use App\Models\Service;
@@ -49,6 +50,7 @@ class ContentSeeder extends Seeder
         $this->services();
         $this->articles();
         $this->teachers();
+        $this->graduates();
         $this->faqs();
         $this->instagram();
         $this->branches();
@@ -258,6 +260,24 @@ class ContentSeeder extends Seeder
         ];
         foreach ($list as $i => [$n, $nr, $r, $rr, $photo]) {
             Teacher::create(['name' => $this->t($n, $nr), 'role' => $this->t($r, $rr), 'photo' => $this->img($photo, 'teachers'), 'sort' => $i + 1]);
+        }
+    }
+
+    private function graduates(): void
+    {
+        if (Graduate::exists()) {
+            return;
+        }
+        $list = [
+            ['Dilnoza Karimova', 'Дилноза Каримова', 'BH-28 guruhi · buxgalter, «Orient Trade» MChJ', 'Группа BH-28 · бухгалтер, ООО «Orient Trade»', 'g1'],
+            ['Jasur Toshmatov', 'Жасур Тошматов', 'BH-32 guruhi · bosh buxgalter yordamchisi, «Nur Logistic»', 'Группа BH-32 · помощник главбуха, «Nur Logistic»', 'g2'],
+            ['Malika Yusupova', 'Малика Юсупова', 'BH-36 guruhi · YaTT buxgalteri, o‘z mijozlari bilan', 'Группа BH-36 · бухгалтер ИП, ведёт своих клиентов', 'g3'],
+            ['Sardor Rahimov', 'Сардор Рахимов', 'BH-40 guruhi · 1C mutaxassisi, «Smart Build» MChJ', 'Группа BH-40 · специалист 1С, ООО «Smart Build»', 'g4'],
+            ['Nigora Aliyeva', 'Нигора Алиева', 'BH-41 guruhi · buxgalter, «Green Food» MChJ', 'Группа BH-41 · бухгалтер, ООО «Green Food»', 'g5'],
+            ['Bekzod Ergashev', 'Бекзод Эргашев', 'BH-36 guruhi · soliq bo‘yicha mutaxassis', 'Группа BH-36 · специалист по налогам', 'g6'],
+        ];
+        foreach ($list as $i => [$n, $nr, $s, $sr, $photo]) {
+            Graduate::create(['name' => $this->t($n, $nr), 'subtitle' => $this->t($s, $sr), 'photo' => $this->img("img/graduates/{$photo}.jpg", 'graduates'), 'sort' => $i + 1]);
         }
     }
 

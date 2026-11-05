@@ -34,7 +34,7 @@
     {!! setting('head_code') !!}
 </head>
 <body class="@yield('body_class')">
-    @include('partials.header', ['altUrl' => $altUrl, 'solid' => trim($__env->yieldContent('header_solid')) === '1'])
+    @include('partials.header', ['altUrl' => $altUrl, 'theme' => trim($__env->yieldContent('header_theme')) ?: 'yellow'])
 
     <main>
         @yield('content')
