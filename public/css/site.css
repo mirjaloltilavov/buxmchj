@@ -161,7 +161,7 @@ ul{margin:0;padding:0;list-style:none}
 .float-card{position:absolute;z-index:3;background:#fff;box-shadow:0 20px 24px rgba(89,56,5,.18);pointer-events:auto}
 .float-card--1c{left:calc(50% + 540px);top:310px;display:flex;align-items:center;gap:12px;padding:12px 20px 12px 12px;border-radius:20px}
 .float-card--program{left:calc(50% + 600px);top:560px;width:300px;padding:20px;border-radius:24px;display:flex;flex-direction:column;gap:12px}
-.float-card--dark{left:calc(50% + 40px);top:890px;background:var(--ink);color:#fff;display:flex;align-items:center;gap:12px;padding:16px 16px 16px 20px;border-radius:24px}
+.float-card--dark{left:calc(50% + 40px);top:auto;bottom:112px;background:var(--ink);color:#fff;display:flex;align-items:center;gap:12px;padding:16px 16px 16px 20px;border-radius:24px}
 .icon-tile{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:14px;background:var(--g-yellow);color:var(--ink);--s:24px}
 .icon-tile--52{width:52px;height:52px}
 .icon-tile--44{width:44px;height:44px;border-radius:12px;--s:22px}
