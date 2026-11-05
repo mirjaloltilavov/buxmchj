@@ -8,7 +8,7 @@
                 <h2 class="h2">{{ hs('articles.title', 'Foydali maqolalar') }}</h2>
                 <p>{{ hs('articles.lead', 'Soliq, 1C va buxgalteriya bo‘yicha amaliy maslahatlar — tadbirkorlar va o‘quvchilar uchun.') }}</p>
             </div>
-            <a href="{{ lroute('blog') }}" class="btn-pill btn-pill--outline btn-pill--l">{{ __('Barcha maqolalar') }} <span class="arrow">{{ icon('arrow-diag') }}</span></a>
+            <a href="{{ lroute('blog') }}" class="btn-pill btn-pill--outline btn-pill--l">{{ __('Barcha maqolalar') }} <span class="arrow">{{ icon('arrow-right') }}</span></a>
         </div>
         <div class="articles-grid">
             @php $url = lroute('article', ['article' => $featured->slug]); @endphp

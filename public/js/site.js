@@ -8,6 +8,21 @@
   var ru = document.documentElement.lang === 'ru';
   var raf = window.requestAnimationFrame || function (f) { return setTimeout(f, 16); };
 
+  /* Tugma yozuvi: hover'da tepaga chiqib, pastdan qaytib kiradi (matn .roll ichiga o'raladi) */
+  var rollify = function (btn) {
+    if (btn.hasAttribute('data-rolled')) return;
+    btn.setAttribute('data-rolled', '');
+    var box = btn.querySelector(':scope > .label') || btn;
+    Array.prototype.slice.call(box.childNodes).forEach(function (n) {
+      if (n.nodeType !== 3 || !n.textContent.trim()) return;
+      var w = document.createElement('span'), inner = document.createElement('span');
+      w.className = 'roll'; inner.textContent = n.textContent.trim(); w.appendChild(inner);
+      box.replaceChild(w, n);
+    });
+  };
+  var rollAll = function (root) { $$('.btn-pill, .btn', root).forEach(rollify); };
+  rollAll(document);
+
   /* =====================================================================
      1. Reveal + stagger (Motion system: Reveal / Stagger)
      Shablonda: data-reveal="up|scale|card|pop|left|right|clip|clip-up|fade"
@@ -42,15 +57,34 @@
       el.setAttribute('data-reveal', rule[1]);
       var p = el.parentElement;
       var i = groups.get(p) || 0;
-      el.style.setProperty('--d', (rule[3] + i * rule[2]) + 'ms');
+      el.style.setProperty('--d', Math.round((rule[3] + i * rule[2]) * 1.4) + 'ms');
       groups.set(p, i + 1);
     });
+  });
+  // Umumiy qoida: bo'limlardagi appear berilmagan har bir blok ham chiqadi (hech narsa "qotib" turmasin)
+  var SKIP = 'input,.sr-only,[data-page-hero],[data-a-hero],[data-c-hero],.hero,.p-hero,.a-hero,.c-hero,#instagram,[data-bfeat],.snap-dots,script,style,template';
+  $$('main > section, main > div > section').forEach(function (sec) {
+    if (sec.matches(SKIP)) return;
+    var walk = function (el, depth) {
+      var i = 0;
+      Array.prototype.slice.call(el.children).forEach(function (ch) {
+        if (ch.hasAttribute('data-reveal') || ch.matches(SKIP) || ch.hidden) return;
+        var pos = getComputedStyle(ch).position;
+        if (pos === 'absolute' || pos === 'fixed') return;
+        if (ch.querySelector('[data-reveal]')) { if (depth < 5) walk(ch, depth + 1); return; }
+        if (!ch.textContent.trim() && !ch.querySelector('img,svg,iframe,video,input,button')) return;
+        ch.setAttribute('data-reveal', 'up');
+        if (!ch.style.getPropertyValue('--d')) ch.style.setProperty('--d', (i * 110) + 'ms');
+        i++;
+      });
+    };
+    walk(sec, 0);
   });
   $$('[data-stagger]').forEach(function (box) {
     var step = parseInt(box.getAttribute('data-stagger'), 10) || 80;
     var base = parseInt(box.getAttribute('data-stagger-base'), 10) || 0;
     $$('[data-reveal]', box).forEach(function (el, i) {
-      if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', (base + i * step) + 'ms');
+      if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', Math.round((base + i * step) * 1.4) + 'ms');
     });
   });
   // ✓ belgilarni chizish (stroke draw, 60 ms stagger)
@@ -67,6 +101,22 @@
         if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
       });
     }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
+    // clip-path bilan yashirilgan element brauzer uchun "ko'rinmaydi" — uning o'rniga ota-elementi kuzatiladi
+    var ioClip = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        (en.target._clipKids || []).forEach(function (k) { k.classList.add('is-in'); });
+        ioClip.unobserve(en.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    var baseObserve = io.observe.bind(io);
+    io.observe = function (el) {
+      if (/^clip/.test(el.getAttribute('data-reveal') || '') && el.parentElement) {
+        var par = el.parentElement;
+        (par._clipKids = par._clipKids || []).push(el);
+        ioClip.observe(par);
+      } else baseObserve(el);
+    };
     revealEls.forEach(function (el) { io.observe(el); });
     // juda baland elementlar 20 % ga yetmasligi mumkin
     setTimeout(function () {
@@ -669,7 +719,7 @@
         drop($('.bmore', results));
         var newMore = $('.bmore', nr);
         if (newMore) results.appendChild(newMore);
-        observeReveal(grid);
+        observeReveal(grid); rollAll(results);
       } else {
         results.innerHTML = nr.innerHTML;
         if (nf) $('.bfilter__chips', bf).innerHTML = nf.innerHTML;
@@ -677,7 +727,7 @@
           countEl.classList.remove('is-roll'); void countEl.offsetWidth; countEl.classList.add('is-roll');
           setTimeout(function () { countEl.textContent = nc.textContent; }, 160);
         }
-        observeReveal(results);
+        observeReveal(results); rollAll(results);
       }
       return true;
     };

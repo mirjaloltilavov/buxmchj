@@ -21,7 +21,7 @@
                     <div class="hero-ctas">
                         @if($slide->tr('primary_label'))
                             <a href="{{ $slide->primary_url ?: '#consultation' }}" class="btn-pill btn-pill--ink btn-pill--xl" @if(! $slide->primary_url || str_starts_with($slide->primary_url, '#consult')) data-consult @endif>
-                                {{ $slide->tr('primary_label') }} <span class="arrow">{{ icon('arrow-diag') }}</span>
+                                {{ $slide->tr('primary_label') }} <span class="arrow">{{ icon('arrow-right') }}</span>
                             </a>
                         @endif
                         @if($slide->tr('secondary_label'))
@@ -60,7 +60,7 @@
                             <span class="fc-sub" style="color:var(--muted-2)">{{ tr($c['dark_sub'] ?? null) }}</span>
                             <span class="fc-title">{{ tr($c['dark_title']) }}</span>
                         </span>
-                        <span class="arrow-btn">{{ icon('arrow-diag') }}</span>
+                        <span class="arrow-btn">{{ icon('arrow-right') }}</span>
                     </a>
                 @endif
             </div>

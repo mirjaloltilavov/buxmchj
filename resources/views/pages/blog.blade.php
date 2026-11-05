@@ -95,7 +95,7 @@
                 @endif
                 @if($articles->hasMorePages())
                     <div class="bmore">
-                        <a href="{{ $articles->nextPageUrl() }}#all" class="btn-pill btn-pill--outline btn-pill--l" data-bmore><span class="label">{{ __('Ko‘proq maqolalar') }}</span><span class="arrow">{{ icon('arrow-diag') }}</span></a>
+                        <a href="{{ $articles->nextPageUrl() }}#all" class="btn-pill btn-pill--outline btn-pill--l" data-bmore><span class="label">{{ __('Ko‘proq maqolalar') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
                     </div>
                 @endif
             </div>
