@@ -41,13 +41,13 @@ class TeacherResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->reorderable('sort')->defaultSort('sort')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->reorderable('sort')->defaultSort('sort')->columns([
             Tables\Columns\ImageColumn::make('photo')->label('')->disk('public')->circular(),
             Tables\Columns\TextColumn::make('name')->label('Ism')->formatStateUsing(fn ($record) => $record->name['uz'] ?? ''),
             Tables\Columns\TextColumn::make('role')->label('Lavozim')->formatStateUsing(fn ($record) => $record->role['uz'] ?? ''),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -63,11 +63,6 @@ class TeacherResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListTeachers::route('/'),
-            'create' => Pages\CreateTeacher::route('/create'),
-            'view' => Pages\ViewTeacher::route('/{record}'),
-            'edit' => Pages\EditTeacher::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListTeachers::route('/')];
     }
 }

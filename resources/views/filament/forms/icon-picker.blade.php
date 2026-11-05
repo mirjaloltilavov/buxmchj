@@ -17,7 +17,7 @@
         <div class="bx-picker__panel" x-show="open" x-cloak x-transition.opacity x-on:click.outside="open = false">
             <div class="bx-picker__top">
                 <input type="search" x-model="q" placeholder="Qidirish (masalan: calendar, user, hujjat)…" class="bx-picker__search" x-on:keydown.enter.prevent>
-                <a href="{{ \App\Filament\Resources\IconResource::getUrl('create') }}" target="_blank" class="bx-picker__add">+ SVG qo‘shish</a>
+                <a href="{{ \App\Filament\Resources\IconResource::getUrl('index') }}" target="_blank" class="bx-picker__add">+ SVG qo‘shish</a>
             </div>
             <div class="bx-picker__grid">
                 <template x-for="i in list" :key="i.n">

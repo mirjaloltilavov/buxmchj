@@ -43,12 +43,12 @@ class ServiceResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->reorderable('sort')->defaultSort('sort')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->reorderable('sort')->defaultSort('sort')->columns([
             Tables\Columns\TextColumn::make('title')->label('Nomi')->formatStateUsing(fn ($record) => $record->title['uz'] ?? ''),
             Tables\Columns\TextColumn::make('icon')->label('Ikonka')->badge(),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -64,11 +64,6 @@ class ServiceResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListServices::route('/'),
-            'create' => Pages\CreateService::route('/create'),
-            'view' => Pages\ViewService::route('/{record}'),
-            'edit' => Pages\EditService::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListServices::route('/')];
     }
 }

@@ -9,9 +9,6 @@
         <div @class(['hero-slide', 'hero-slide--'.$slide->theme, 'is-active' => $i === 0]) data-slide="{{ $i }}" @if($i) aria-hidden="true" @endif>
             <div class="container hero-inner">
                 <div class="hero-copy">
-                    @if($slide->tr('chip'))
-                        <span class="chip"><i class="dot"></i>{{ $slide->tr('chip') }}</span>
-                    @endif
                     @if($i === 0)
                         <h1>{{ $slide->tr('title') }}</h1>
                     @else

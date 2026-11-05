@@ -3,14 +3,22 @@
 namespace App\Filament\Resources\LeadResource\Pages;
 
 use App\Filament\Resources\LeadResource;
+use Filament\Actions;
+use Filament\Resources\Pages\ManageRecords;
 use App\Models\Lead;
 use Filament\Resources\Components\Tab;
-use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 
-class ListLeads extends ListRecords
+class ListLeads extends ManageRecords
 {
     protected static string $resource = LeadResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make()->label('Qo‘shish')->icon('heroicon-o-plus')->slideOver()->modalWidth('3xl'),
+        ];
+    }
 
     public function getTabs(): array
     {

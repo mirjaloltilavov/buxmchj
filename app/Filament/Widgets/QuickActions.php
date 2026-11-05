@@ -18,7 +18,7 @@ class QuickActions extends Widget
         return [
             'greeting' => ($h < 12 ? 'Xayrli tong' : ($h < 18 ? 'Xayrli kun' : 'Xayrli kech')).($name ? ', '.$name : ''),
             'links' => [
-                ['Maqola qo‘shish', 'heroicon-o-document-plus', \App\Filament\Resources\ArticleResource::getUrl('create')],
+                ['Maqolalar', 'heroicon-o-document-plus', \App\Filament\Resources\ArticleResource::getUrl('index')],
                 ['Kurslar', 'heroicon-o-academic-cap', \App\Filament\Resources\CourseResource::getUrl('index')],
                 ['Sahifa matnlari', 'heroicon-o-language', \App\Filament\Pages\PageTexts::getUrl()],
                 ['Sayt sozlamalari', 'heroicon-o-cog-6-tooth', \App\Filament\Pages\SiteSettings::getUrl()],

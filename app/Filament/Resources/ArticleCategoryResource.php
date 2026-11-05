@@ -36,12 +36,12 @@ class ArticleCategoryResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->reorderable('sort')->defaultSort('sort')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->reorderable('sort')->defaultSort('sort')->columns([
             Tables\Columns\TextColumn::make('name')->label('Nomi')->formatStateUsing(fn ($record) => $record->name['uz'] ?? ''),
             Tables\Columns\TextColumn::make('slug'),
             Tables\Columns\TextColumn::make('articles_count')->label('Maqolalar')->counts('articles'),
-        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -56,11 +56,6 @@ class ArticleCategoryResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListArticleCategories::route('/'),
-            'create' => Pages\CreateArticleCategory::route('/create'),
-            'view' => Pages\ViewArticleCategory::route('/{record}'),
-            'edit' => Pages\EditArticleCategory::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListArticleCategories::route('/')];
     }
 }

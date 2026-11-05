@@ -7,7 +7,7 @@
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:.5rem">
                 @foreach($links as $l)
-                    <x-filament::button tag="a" :href="$l[2]" :icon="$l[1]" :color="($l[3] ?? false) ? 'gray' : 'primary'" :outlined="! ($l[0] === 'Maqola qo‘shish')" :target="($l[3] ?? false) ? '_blank' : null">{{ $l[0] }}</x-filament::button>
+                    <x-filament::button tag="a" :href="$l[2]" :icon="$l[1]" :color="($l[3] ?? false) ? 'gray' : 'primary'" :outlined="! ($l[0] === 'Maqolalar')" :target="($l[3] ?? false) ? '_blank' : null">{{ $l[0] }}</x-filament::button>
                 @endforeach
             </div>
         </div>

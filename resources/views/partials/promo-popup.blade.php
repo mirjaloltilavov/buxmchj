@@ -26,7 +26,6 @@
                 <span class="promo__sticker"><b>−20%</b><small>{{ __('chegirma') }}</small></span>
             </div>
             <div class="promo__body">
-                <span class="badge-y"><i class="dot"></i>{{ __('Maxsus taklif') }}</span>
                 <div class="promo__head">
                     <h3>{{ $t('title', 'Kursga hozir yoziling — 20 % chegirma') }}</h3>
                     <p>{{ $t('text', 'To‘lovni bir martada amalga oshirsangiz, istalgan tarifga 20 % chegirma beriladi. Joylar soni cheklangan.') }}</p>
@@ -49,7 +48,6 @@
             <div class="promo__body promo__body--dark">
                 <div class="promo__top">
                     <span class="icon-tile promo__gift">{{ icon('gift') }}</span>
-                    <span class="badge-y"><i class="dot"></i>{{ __('Yangi mijozlar uchun') }}</span>
                 </div>
                 <div class="promo__head">
                     <h3>{{ $t('title', 'Birinchi oy buxgalteriya xizmati — 50 % chegirma') }}</h3>
@@ -72,7 +70,6 @@
         @else
             <div class="promo__img promo__img--guide"><img src="{{ media_url($p['image'] ?? 'img/popup-guide.jpg') }}" alt="" loading="lazy"></div>
             <div class="promo__body">
-                <span class="chip chip--grey"><i class="dot"></i>{{ __('Bepul qo‘llanma') }}</span>
                 <div class="promo__head">
                     <h3>{{ $t('title', 'YaTT va MChJ uchun soliq kalendari 2027') }}</h3>
                     <p>{{ $t('text', 'Barcha hisobot va to‘lov muddatlari bitta PDF faylda. Raqamingizni qoldiring — Telegram orqali yuboramiz.') }}</p>

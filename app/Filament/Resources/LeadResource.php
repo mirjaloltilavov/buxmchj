@@ -89,7 +89,7 @@ class LeadResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->defaultSort('created_at', 'desc')->poll('30s')->striped()->emptyStateHeading('Hozircha arizalar yo‘q')
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->defaultSort('created_at', 'desc')->poll('30s')->striped()->emptyStateHeading('Hozircha arizalar yo‘q')
             ->emptyStateDescription('Saytdagi formalardan kelgan arizalar shu yerda ko‘rinadi.')->emptyStateIcon('heroicon-o-inbox')->columns([
             Tables\Columns\TextColumn::make('created_at')->label('Sana')->dateTime('d.m.Y H:i')->sortable(),
             Tables\Columns\TextColumn::make('name')->label('Ism')->searchable(),
@@ -102,7 +102,13 @@ class LeadResource extends Resource
             Tables\Filters\SelectFilter::make('status')->label('Holat')->options(Lead::STATUSES),
             Tables\Filters\SelectFilter::make('interest')->label('Qiziqish')->options(Lead::INTERESTS),
         ])->actions([
-            Tables\Actions\ViewAction::make()->label('Ko‘rish'),
+            Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl')->extraModalFooterActions(fn ($record) => [
+                Tables\Actions\Action::make('call')->label('Qo‘ng‘iroq qilish')->icon('heroicon-o-phone')->color('primary')->url('tel:'.preg_replace('/[^0-9+]/', '', (string) $record->phone)),
+                Tables\Actions\Action::make('contacted')->label('Bog‘lanildi')->icon('heroicon-o-phone-arrow-up-right')->color('info')
+                    ->visible($record->status === 'new')->action(fn () => $record->update(['status' => 'contacted']))->cancelParentActions(),
+                Tables\Actions\Action::make('done')->label('Yakunlandi')->icon('heroicon-o-check-circle')->color('success')
+                    ->visible(! in_array($record->status, ['done', 'spam'], true))->action(fn () => $record->update(['status' => 'done']))->cancelParentActions(),
+            ]),
             Tables\Actions\ActionGroup::make([
                 Tables\Actions\Action::make('contacted')->label('Bog‘lanildi')->icon('heroicon-o-phone-arrow-up-right')->color('info')
                     ->visible(fn ($record) => $record->status === 'new')
@@ -110,7 +116,7 @@ class LeadResource extends Resource
                 Tables\Actions\Action::make('done')->label('Yakunlandi')->icon('heroicon-o-check-circle')->color('success')
                     ->visible(fn ($record) => ! in_array($record->status, ['done', 'spam'], true))
                     ->action(fn ($record) => $record->update(['status' => 'done'])),
-                Tables\Actions\EditAction::make()->label('Tahrirlash'),
+                Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl'),
                 Tables\Actions\DeleteAction::make()->label('O‘chirish'),
             ]),
         ])->bulkActions([
@@ -126,10 +132,6 @@ class LeadResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListLeads::route('/'),
-            'view' => Pages\ViewLead::route('/{record}'),
-            'edit' => Pages\EditLead::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListLeads::route('/')];
     }
 }

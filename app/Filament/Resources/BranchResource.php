@@ -44,12 +44,12 @@ class BranchResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->reorderable('sort')->defaultSort('sort')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->reorderable('sort')->defaultSort('sort')->columns([
             Tables\Columns\TextColumn::make('name')->label('Nomi')->formatStateUsing(fn ($record) => $record->name['uz'] ?? ''),
             Tables\Columns\TextColumn::make('address')->label('Manzil')->formatStateUsing(fn ($record) => $record->address['uz'] ?? ''),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -66,11 +66,6 @@ class BranchResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListBranchs::route('/'),
-            'create' => Pages\CreateBranch::route('/create'),
-            'view' => Pages\ViewBranch::route('/{record}'),
-            'edit' => Pages\EditBranch::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListBranchs::route('/')];
     }
 }

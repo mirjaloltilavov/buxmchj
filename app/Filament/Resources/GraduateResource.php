@@ -41,14 +41,14 @@ class GraduateResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->reorderable('sort')->defaultSort('sort')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->reorderable('sort')->defaultSort('sort')->columns([
             Tables\Columns\ImageColumn::make('photo')->label('')->disk('public')->height(56),
             Tables\Columns\TextColumn::make('name')->label('Ism')->formatStateUsing(fn ($record) => $record->name['uz'] ?? ''),
             Tables\Columns\TextColumn::make('subtitle')->label('Guruh / ish joyi')->formatStateUsing(fn ($record) => $record->subtitle['uz'] ?? ''),
             Tables\Columns\IconColumn::make('video_url')->label('Video')->boolean(fn ($state) => filled($state)),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -64,11 +64,6 @@ class GraduateResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListGraduates::route('/'),
-            'create' => Pages\CreateGraduate::route('/create'),
-            'view' => Pages\ViewGraduate::route('/{record}'),
-            'edit' => Pages\EditGraduate::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListGraduates::route('/')];
     }
 }

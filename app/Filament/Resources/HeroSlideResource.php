@@ -31,7 +31,6 @@ class HeroSlideResource extends Resource
             Forms\Components\Section::make('Asosiy')->schema([
                 Forms\Components\Select::make('theme')->label('Mavzu')->options(['courses' => 'Kurslar (yashil nuqta)', 'services' => 'Xizmat (ko‘k nuqta)'])->default('courses')->required(),
                 Tr::text('tab_label', 'Pastdagi tab nomi', true),
-                Tr::text('chip', 'Yuqoridagi belgi (chip)'),
                 Tr::textarea('title', 'Sarlavha', true, 2),
                 Tr::textarea('lead', 'Qisqa matn', false, 2),
                 Forms\Components\FileUpload::make('image')->label('Portret rasm (600×840)')->image()->disk('public')->directory('hero')->imageEditor(),
@@ -68,13 +67,13 @@ class HeroSlideResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->reorderable('sort')->defaultSort('sort')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->reorderable('sort')->defaultSort('sort')->columns([
             Tables\Columns\ImageColumn::make('image')->label('')->disk('public')->height(48),
             Tables\Columns\TextColumn::make('tab_label')->label('Slayd')->formatStateUsing(fn ($record) => $record->tab_label['uz'] ?? ''),
             Tables\Columns\TextColumn::make('title')->label('Sarlavha')->formatStateUsing(fn ($record) => $record->title['uz'] ?? '')->wrap()->limit(60),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('5xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('5xl'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -83,7 +82,7 @@ class HeroSlideResource extends Resource
             I\Section::make('Slayd')->columns(['default' => 1, 'lg' => 3])->schema([
                 Info::img('image', 'Portret rasm', 260),
                 I\Group::make([
-                    Info::text('theme', 'Mavzu'), Info::tr('tab_label', 'Pastdagi tab nomi'), Info::tr('chip', 'Yuqoridagi belgi'),
+                    Info::text('theme', 'Mavzu'), Info::tr('tab_label', 'Pastdagi tab nomi'),
                     Info::tr('title', 'Sarlavha', true), Info::tr('lead', 'Qisqa matn', true),
                 ])->columnSpan(['lg' => 2]),
             ]),
@@ -97,11 +96,6 @@ class HeroSlideResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListHeroSlides::route('/'),
-            'create' => Pages\CreateHeroSlide::route('/create'),
-            'view' => Pages\ViewHeroSlide::route('/{record}'),
-            'edit' => Pages\EditHeroSlide::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListHeroSlides::route('/')];
     }
 }

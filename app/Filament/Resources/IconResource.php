@@ -57,7 +57,7 @@ class IconResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->modifyQueryUsing(fn ($query) => $query->orderByRaw("case \"group\" when 'custom' then 0 when 'site' then 1 else 2 end")->orderBy('name'))->striped()->paginated([48, 96, 200])->defaultPaginationPageOption(48)
+        return $table->recordUrl(null)->recordAction(Tables\Actions\EditAction::class)->modifyQueryUsing(fn ($query) => $query->orderByRaw("case \"group\" when 'custom' then 0 when 'site' then 1 else 2 end")->orderBy('name'))->striped()->paginated([48, 96, 200])->defaultPaginationPageOption(48)
             ->columns([
                 Tables\Columns\ViewColumn::make('svg')->label('')->view('filament.tables.icon-preview'),
                 Tables\Columns\TextColumn::make('label')->label('Nomi')->searchable()->weight(FontWeight::SemiBold),
@@ -70,7 +70,7 @@ class IconResource extends Resource
                 Tables\Filters\SelectFilter::make('group')->label('Guruh')->options(['site' => 'Sayt ikonkalari', 'heroicons' => 'Qo‘shimcha', 'custom' => 'Mening ikonkalarim']),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label('Tahrirlash')->visible(fn (Icon $r) => ! $r->is_system),
+                Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl')->visible(fn (Icon $r) => ! $r->is_system),
                 Tables\Actions\DeleteAction::make()->label('O‘chirish')->visible(fn (Icon $r) => ! $r->is_system),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->label('O‘chirish')])])
@@ -80,10 +80,6 @@ class IconResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListIcons::route('/'),
-            'create' => Pages\CreateIcon::route('/create'),
-            'edit' => Pages\EditIcon::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListIcons::route('/')];
     }
 }

@@ -39,12 +39,12 @@ class InstagramPostResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->reorderable('sort')->defaultSort('sort')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->reorderable('sort')->defaultSort('sort')->columns([
             Tables\Columns\ImageColumn::make('image')->label('')->disk('public')->height(64),
             Tables\Columns\TextColumn::make('url')->label('Havola')->limit(50),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -60,11 +60,6 @@ class InstagramPostResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListInstagramPosts::route('/'),
-            'create' => Pages\CreateInstagramPost::route('/create'),
-            'view' => Pages\ViewInstagramPost::route('/{record}'),
-            'edit' => Pages\EditInstagramPost::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListInstagramPosts::route('/')];
     }
 }

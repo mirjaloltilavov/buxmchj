@@ -42,12 +42,12 @@ class FaqResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->reorderable('sort')->defaultSort('sort')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->reorderable('sort')->defaultSort('sort')->columns([
             Tables\Columns\TextColumn::make('question')->label('Savol')->formatStateUsing(fn ($record) => $record->question['uz'] ?? '')->wrap(),
             Tables\Columns\TextColumn::make('pages')->label('Sahifalar')->badge()->formatStateUsing(fn ($state) => self::PAGES[$state] ?? $state),
             Tables\Columns\ToggleColumn::make('is_active')->label('Faol'),
-        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'), Tables\Actions\DeleteAction::make()]);
+        ])->actions([Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('3xl'), Tables\Actions\DeleteAction::make()]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -63,11 +63,6 @@ class FaqResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListFaqs::route('/'),
-            'create' => Pages\CreateFaq::route('/create'),
-            'view' => Pages\ViewFaq::route('/{record}'),
-            'edit' => Pages\EditFaq::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListFaqs::route('/')];
     }
 }

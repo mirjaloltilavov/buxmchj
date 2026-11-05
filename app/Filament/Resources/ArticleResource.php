@@ -62,7 +62,7 @@ class ArticleResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table->defaultSort('published_at', 'desc')->columns([
+        return $table->recordUrl(null)->recordAction(Tables\Actions\ViewAction::class)->defaultSort('published_at', 'desc')->columns([
             Tables\Columns\ImageColumn::make('cover')->label('')->disk('public')->height(48),
             Tables\Columns\TextColumn::make('title')->label('Sarlavha')->formatStateUsing(fn ($record) => $record->title['uz'] ?? '')->wrap()
                 ->searchable(query: fn ($query, $search) => $query->where('title', 'like', "%{$search}%")),
@@ -75,8 +75,8 @@ class ArticleResource extends Resource
                 ->getOptionLabelFromRecordUsing(fn ($record) => $record->name['uz'] ?? $record->slug),
         ])->actions([
             Tables\Actions\Action::make('view')->label('Ko‘rish')->icon('heroicon-o-eye')->url(fn ($record) => route('article', $record->slug))->openUrlInNewTab(),
-            Tables\Actions\ViewAction::make()->label('Ko‘rish'),
-            Tables\Actions\EditAction::make()->label('Tahrirlash'),
+            Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('7xl'),
+            Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('7xl'),
             Tables\Actions\DeleteAction::make(),
         ]);
     }
@@ -105,11 +105,6 @@ class ArticleResource extends Resource
 
     public static function getPages(): array
     {
-        return [
-            'index' => Pages\ListArticles::route('/'),
-            'create' => Pages\CreateArticle::route('/create'),
-            'view' => Pages\ViewArticle::route('/{record}'),
-            'edit' => Pages\EditArticle::route('/{record}/edit'),
-        ];
+        return ['index' => Pages\ListArticles::route('/')];
     }
 }

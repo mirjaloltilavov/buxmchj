@@ -26,7 +26,7 @@ class LatestLeads extends TableWidget
                 Tables\Columns\TextColumn::make('phone')->label('Telefon')->icon('heroicon-o-phone')->copyable(),
                 Tables\Columns\TextColumn::make('status')->label('Holat')->badge()->formatStateUsing(fn ($state) => Lead::STATUSES[$state] ?? $state)->color(fn ($state) => $color[$state] ?? 'gray'),
             ])
-            ->recordUrl(fn ($record) => LeadResource::getUrl('view', ['record' => $record]))
+            ->recordUrl(fn ($record) => LeadResource::getUrl('index'))
             ->headerActions([
                 Tables\Actions\Action::make('all')->label('Hammasi')->icon('heroicon-o-arrow-right')->url(LeadResource::getUrl('index'))->color('gray'),
             ]);
