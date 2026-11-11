@@ -1559,6 +1559,7 @@ a:hover > .arrow-btn .icon,.arrow-btn:hover .icon{transform:rotate(0)}
 .c-map.is-in .c-marker .c-pin{animation:pinDrop2 .8s var(--spring) .2s both}
 @keyframes pinDrop2{from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:none}}
 .c-map__canvas .leaflet-control-attribution{font-size:10px}
+.c-map__canvas .leaflet-tile-pane{filter:saturate(.7) brightness(1.04) contrast(.95)}
 .c-map__canvas .leaflet-top.leaflet-right{top:auto;bottom:24px}
 @media (max-width:810px){.c-map__canvas{position:relative;height:300px;order:2}}
 

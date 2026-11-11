@@ -889,7 +889,9 @@
       loadLeaflet(function () {
         var lat = +canvas.getAttribute('data-lat'), lng = +canvas.getAttribute('data-lng');
         lmap = L.map(canvas, { zoomControl: true, scrollWheelZoom: false, attributionControl: true });
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd', attribution: '© OpenStreetMap © CARTO' }).addTo(lmap);
+        // Fon xaritasi: OpenStreetMap (kalit talab qilmaydi). Admin'da boshqa tile havolasi berilsa — o'sha
+        var tiles = canvas.getAttribute('data-tiles') || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+        L.tileLayer(tiles, { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(lmap);
         var icon = L.divIcon({ className: 'c-marker', html: '<span class="c-pin"><i></i>' + (document.querySelector('template.c-pin-src') || { innerHTML: '' }).innerHTML + '</span>', iconSize: [60, 60], iconAnchor: [30, 60] });
         lmark = L.marker([lat, lng], { icon: icon, keyboard: false }).addTo(lmap);
         focusAt(lat, lng, false);

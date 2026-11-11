@@ -36,15 +36,65 @@ class BranchResource extends Resource
                 Tr::text('address', 'Manzil', true),
                 Tr::text('hours', 'Ish vaqti'),
                 Forms\Components\TextInput::make('phone')->label('Telefon'),
-                Forms\Components\TextInput::make('map_url')->label('Xarita havolasi (Yandex/Google)')->url(),
-                Forms\Components\TextInput::make('lat')->label('Kenglik (lat)')->numeric()->placeholder('41.2756')->helperText('Google Maps’da joyni o‘ng tugma bilan bosing — birinchi raqam shu.'),
-                Forms\Components\TextInput::make('lng')->label('Uzunlik (lng)')->numeric()->placeholder('69.2037')->helperText('Shu yerdagi ikkinchi raqam. Xaritadagi nuqta shu koordinataga biriktiriladi.'),
+            ]),
+            Forms\Components\Section::make('Xaritadagi joy (pin)')->icon('heroicon-o-map-pin')->schema([
+                Forms\Components\TextInput::make('map_url')->label('Xarita havolasi (Yandex/Google)')->url()->live(onBlur: true)
+                    ->helperText('“Yo‘l ko‘rsatish” tugmasi shu havolani ochadi. Havolada koordinata bo‘lsa, pin ham o‘zi o‘sha joyga qo‘yiladi.')
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        if ($c = static::coordsFrom((string) $state)) {
+                            $set('lat', $c[0]);
+                            $set('lng', $c[1]);
+                        }
+                    }),
+                Forms\Components\ViewField::make('map_picker')->hiddenLabel()->view('filament.forms.map-picker')->dehydrated(false),
+                Forms\Components\Grid::make(2)->schema([
+                    Forms\Components\TextInput::make('lat')->label('Kenglik (lat)')->numeric()->placeholder('41.2756')->rules(['nullable', 'numeric', 'between:-90,90']),
+                    Forms\Components\TextInput::make('lng')->label('Uzunlik (lng)')->numeric()->placeholder('69.2037')->rules(['nullable', 'numeric', 'between:-180,180']),
+                ]),
             ]),
             Forms\Components\Section::make()->columns(2)->schema([
                 Forms\Components\TextInput::make('sort')->label('Tartib')->numeric()->default(0),
                 Forms\Components\Toggle::make('is_active')->label('Faol')->default(true),
             ]),
         ]);
+    }
+
+    /** Google/Yandex havolasidan yoki "41.27, 69.20" matnidan koordinata ajratib oladi */
+    public static function coordsFrom(string $text): ?array
+    {
+        $t = urldecode($text);
+        $pairs = [
+            '~!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)~' => false,       // Google: aniq nuqta
+            '~@(-?\d+\.\d+),(-?\d+\.\d+)~' => false,           // Google: xarita markazi
+            '~[?&](?:q|query|destination)=(-?\d+\.\d+),\s*(-?\d+\.\d+)~' => false,
+            '~[?&]pt=(-?\d+\.\d+),(-?\d+\.\d+)~' => true,      // Yandex: lng,lat
+            '~[?&]ll=(-?\d+\.\d+),(-?\d+\.\d+)~' => true,      // Yandex: lng,lat
+            '~^\s*(-?\d+\.\d+)\s*[,; ]\s*(-?\d+\.\d+)\s*$~' => false,
+        ];
+        foreach ($pairs as $re => $swap) {
+            if (preg_match($re, $t, $m)) {
+                [$lat, $lng] = $swap ? [(float) $m[2], (float) $m[1]] : [(float) $m[1], (float) $m[2]];
+                if (abs($lat) <= 90 && abs($lng) <= 180) {
+                    return [round($lat, 6), round($lng, 6)];
+                }
+            }
+        }
+
+        // Qisqa havola (maps.app.goo.gl, goo.gl/maps, yandex …/-/…): ochib, oxirgi manzildan olinadi
+        if (preg_match('~^https://(maps\.app\.goo\.gl|goo\.gl/maps|yandex\.(uz|ru|com)/maps/-/)~', trim($text))) {
+            try {
+                $final = null;
+                \Illuminate\Support\Facades\Http::timeout(8)->withOptions(['allow_redirects' => ['track_redirects' => true], 'on_stats' => function ($st) use (&$final) {
+                    $final = (string) $st->getEffectiveUri();
+                }])->get(trim($text));
+                if ($final && $final !== trim($text)) {
+                    return static::coordsFrom($final);
+                }
+            } catch (\Throwable) {
+            }
+        }
+
+        return null;
     }
 
     public static function table(Table $table): Table

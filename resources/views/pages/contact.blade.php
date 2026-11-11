@@ -85,7 +85,7 @@
                 </div>
                 <div class="c-map" data-reveal="card">
                     @if($first['lat'] && $first['lng'])
-                        <div class="c-map__canvas" data-leaflet data-lat="{{ $first['lat'] }}" data-lng="{{ $first['lng'] }}" role="application" aria-label="{{ __('Xarita') }}"></div>
+                        <div class="c-map__canvas" data-leaflet data-lat="{{ $first['lat'] }}" data-lng="{{ $first['lng'] }}" @if(filled(setting('map_tiles'))) data-tiles="{{ setting('map_tiles') }}" @endif role="application" aria-label="{{ __('Xarita') }}"></div>
                     @else
                         <iframe class="c-map__frame" src="{{ $first['map'] }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="{{ __('Xarita') }}" data-map-frame></iframe>
                         <span class="c-pin" aria-hidden="true" data-pin><i></i>{{ icon('location', 28) }}</span>
