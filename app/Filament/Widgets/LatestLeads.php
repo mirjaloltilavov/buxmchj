@@ -31,4 +31,9 @@ class LatestLeads extends TableWidget
                 Tables\Actions\Action::make('all')->label('Hammasi')->icon('heroicon-o-arrow-right')->url(LeadResource::getUrl('index'))->color('gray'),
             ]);
     }
+
+    public static function canView(): bool
+    {
+        return (bool) auth()->user()?->hasRole('super_admin', 'admin', 'manager');
+    }
 }

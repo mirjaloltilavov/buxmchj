@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RoleAccess;
 use App\Filament\Resources\TeacherResource\Pages;
 use App\Filament\Support\Tr;
 use App\Models\Teacher;
@@ -16,6 +17,10 @@ use Filament\Tables\Table;
 
 class TeacherResource extends Resource
 {
+    use RoleAccess;
+
+    protected static array $roles = ['super_admin', 'admin', 'editor'];
+
     protected static ?string $model = Teacher::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Kontent';

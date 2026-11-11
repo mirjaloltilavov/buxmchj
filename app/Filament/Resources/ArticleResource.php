@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RoleAccess;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Support\Tr;
 use App\Models\Article;
@@ -17,6 +18,10 @@ use Illuminate\Support\Str;
 
 class ArticleResource extends Resource
 {
+    use RoleAccess;
+
+    protected static array $roles = ['super_admin', 'admin', 'editor'];
+
     protected static ?string $model = Article::class;
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
     protected static ?string $navigationGroup = 'Kontent';

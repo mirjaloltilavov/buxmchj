@@ -27,4 +27,9 @@ class LeadStats extends StatsOverviewWidget
             Stat::make('Saytdagi kontent', Course::count().' kurs · '.Article::published()->count().' maqola')->description('Chop etilgan')->color('gray'),
         ];
     }
+
+    public static function canView(): bool
+    {
+        return (bool) auth()->user()?->hasRole('super_admin', 'admin', 'manager');
+    }
 }

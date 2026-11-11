@@ -39,4 +39,9 @@ class LeadsChart extends ChartWidget
     {
         return ['plugins' => ['legend' => ['display' => false]], 'scales' => ['y' => ['beginAtZero' => true, 'ticks' => ['precision' => 0]]]];
     }
+
+    public static function canView(): bool
+    {
+        return (bool) auth()->user()?->hasRole('super_admin', 'admin', 'manager');
+    }
 }

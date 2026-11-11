@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RoleAccess;
 use App\Filament\Resources\BranchResource\Pages;
 use App\Filament\Support\Tr;
 use App\Models\Branch;
@@ -16,6 +17,10 @@ use Filament\Tables\Table;
 
 class BranchResource extends Resource
 {
+    use RoleAccess;
+
+    protected static array $roles = ['super_admin', 'admin', 'editor'];
+
     protected static ?string $model = Branch::class;
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
     protected static ?string $navigationGroup = 'Kontent';

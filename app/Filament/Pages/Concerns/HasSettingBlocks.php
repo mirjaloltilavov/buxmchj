@@ -146,8 +146,17 @@ trait HasSettingBlocks
             ->form(fn (array $arguments) => ($this->findBlock($arguments['key'])['schema'])())
             ->action(function (array $data, array $arguments) {
                 $b = $this->findBlock($arguments['key']);
+                $changes = [];
                 foreach ($b['paths'] as $path) {
-                    $this->writePath($path, data_get($data, $path));
+                    $old = $this->readPath($path);
+                    $new = data_get($data, $path);
+                    if ($old != $new) {
+                        $changes[$path] = ['old' => $old, 'new' => $new];
+                    }
+                    $this->writePath($path, $new);
+                }
+                if ($changes) {
+                    \App\Models\ActivityLog::record('settings', null, $changes, static::$title.' → '.$b['title']);
                 }
                 $this->afterBlockSaved();
                 Notification::make()->title('Saqlandi')->success()->send();
@@ -162,6 +171,7 @@ trait HasSettingBlocks
         }
         $on = ! (bool) $this->readPath($b['toggle'], true);
         $this->writePath($b['toggle'], $on);
+        \App\Models\ActivityLog::record('settings', null, [$b['toggle'] => ['old' => ! $on, 'new' => $on]], static::$title.' → '.$b['title'].($on ? ' (yoqildi)' : ' (o‘chirildi)'));
         Notification::make()->title($on ? 'Yoqildi' : 'O‘chirildi')->success()->send();
     }
 

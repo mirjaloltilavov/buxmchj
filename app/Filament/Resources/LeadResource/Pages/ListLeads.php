@@ -26,6 +26,8 @@ class ListLeads extends ManageRecords
 
         return [
             'all' => Tab::make('Hammasi')->badge(Lead::count()),
+            'mine' => Tab::make('Menga biriktirilgan')->icon('heroicon-o-user-circle')->badge(Lead::where('assigned_to', auth()->id())->whereIn('status', ['new', 'contacted'])->count() ?: null)->badgeColor('primary')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('assigned_to', auth()->id())),
             'new' => Tab::make('Yangi')->icon('heroicon-o-bell-alert')->badge($count('new') ?: null)->badgeColor('warning')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'new')),
             'contacted' => Tab::make('Bog‘lanildi')->icon('heroicon-o-phone-arrow-up-right')->badge($count('contacted') ?: null)->badgeColor('info')

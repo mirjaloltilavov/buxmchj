@@ -20,6 +20,13 @@ class SiteSettings extends Page implements HasForms, HasActions
     protected static ?string $title = 'Sayt sozlamalari';
     protected static ?int $navigationSort = 1;
 
+    public static function canAccess(): bool
+    {
+        $u = auth()->user();
+
+        return $u && in_array($u->role, ['super_admin', 'admin'], true);
+    }
+
     protected function hint(): ?string
     {
         return 'Har bir blok yonidagi “Tahrirlash” tugmasi o‘ng tomondan oyna ochadi. Popuplarni kartochkaning o‘zidagi tugma bilan yoqish yoki o‘chirish mumkin.';

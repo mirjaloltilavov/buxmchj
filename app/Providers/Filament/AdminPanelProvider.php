@@ -29,6 +29,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->brandName('Buxgalter MChJ')
             ->brandLogo(fn () => view('filament.brand'))
             ->brandLogoHeight('2rem')
@@ -43,6 +46,7 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make('Kontent'),
                 NavigationGroup::make('Bosh sahifa'),
                 NavigationGroup::make('Sozlamalar'),
+                NavigationGroup::make('Tizim'),
             ])
             ->navigationItems([
                 NavigationItem::make('Saytni ochish')->url('/', shouldOpenInNewTab: true)->icon('heroicon-o-arrow-top-right-on-square')->sort(100),

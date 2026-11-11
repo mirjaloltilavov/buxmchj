@@ -20,9 +20,30 @@ Sayt manzili: **https://new.buxmchj.uz**, admin panel: **https://new.buxmchj.uz/
 | Hero slaydlar | Bosh sahifadagi slayder, suzuvchi kartochkalar |
 | Instagram postlar | Bosh sahifa va Aloqa sahifasidagi lenta |
 | Sahifa matnlari | Barcha sarlavha va matnlar (bo‘sh qolsa dizayndagi matn chiqadi) |
-| Sayt sozlamalari | Telefon, ijtimoiy tarmoqlar, Telegram bot, SEO, huquqiy matnlar, Analytics kodi |
+| Sayt sozlamalari | Telefon, ijtimoiy tarmoqlar, Telegram bot, SEO, huquqiy matnlar, popuplar, Analytics kodi |
+| Foydalanuvchilar | Xodimlar, rollar (Bosh admin / Admin / Kontent muharriri / Menejer), bloklash, parol |
+| Faollik jurnali | Kim nimani qachon o‘zgartirgani |
 
 Yangi ariza kelganda Telegram'ga xabar keladi: *Sayt sozlamalari → Telegram bot* bo‘limiga bot token va chat ID kiritiladi.
+
+## Foydalanuvchilar va rollar
+
+Admin panel → **Tizim → Foydalanuvchilar** (faqat *Bosh admin* ko‘radi). Har bir xodimga alohida login beriladi.
+
+| Rol | Nimaga kira oladi |
+|---|---|
+| Bosh admin | Hammasi: kontent, arizalar, sozlamalar, foydalanuvchilar, faollik jurnali |
+| Admin | Kontent, arizalar, sozlamalar, jurnal. Foydalanuvchilarni boshqarmaydi |
+| Kontent muharriri | Faqat sayt kontenti (kurslar, xizmatlar, maqolalar, sahifa matnlari va h.k.) |
+| Menejer | Faqat arizalar: ko‘rish, holat, izoh, “O‘zimga olish” |
+
+- **Bloklash:** bloklangan foydalanuvchi panelga kira olmaydi. O‘zingizni va oxirgi bosh adminni bloklab/o‘chirib bo‘lmaydi.
+- **Parolni tiklash:** foydalanuvchi menyusidagi “Parolni tiklash” yangi parolni bir marta ko‘rsatadi.
+- **Profil:** har kim o‘ng yuqoridagi menyudan o‘z ismi, rasmi, telefoni va parolini o‘zgartiradi.
+- **Arizalar:** yangi ariza kelganda arizalar bilan ishlaydigan hamma xodimga panel ichida bildirishnoma (qo‘ng‘iroqcha) keladi. Arizani xodimga biriktirish mumkin (“Menga biriktirilgan” tab).
+- **Faollik jurnali:** kim, qachon, nimani qo‘shdi/o‘zgartirdi/o‘chirdi va kim tizimga kirdi.
+
+Yangilanishdan keyin birinchi `site:install` mavjud birinchi foydalanuvchini *Bosh admin* qiladi.
 
 ## Serverga birinchi o‘rnatish (Plesk, pscloud)
 

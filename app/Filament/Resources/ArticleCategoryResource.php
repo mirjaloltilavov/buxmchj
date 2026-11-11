@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RoleAccess;
 use App\Filament\Resources\ArticleCategoryResource\Pages;
 use App\Filament\Support\Tr;
 use App\Models\ArticleCategory;
@@ -16,6 +17,10 @@ use Filament\Tables\Table;
 
 class ArticleCategoryResource extends Resource
 {
+    use RoleAccess;
+
+    protected static array $roles = ['super_admin', 'admin', 'editor'];
+
     protected static ?string $model = ArticleCategory::class;
     protected static ?string $navigationIcon = 'heroicon-o-tag';
     protected static ?string $navigationGroup = 'Kontent';

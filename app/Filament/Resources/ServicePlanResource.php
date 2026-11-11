@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RoleAccess;
 use App\Filament\Resources\ServicePlanResource\Pages;
 use App\Filament\Support\Tr;
 use App\Filament\Forms\CardsField;
@@ -18,6 +19,10 @@ use Filament\Tables\Table;
 
 class ServicePlanResource extends Resource
 {
+    use RoleAccess;
+
+    protected static array $roles = ['super_admin', 'admin', 'editor'];
+
     protected static ?string $model = ServicePlan::class;
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
     protected static ?string $navigationGroup = 'Kontent';

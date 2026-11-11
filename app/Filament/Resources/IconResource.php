@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RoleAccess;
 use App\Filament\Resources\IconResource\Pages;
 use App\Models\Icon;
 use App\Support\IconSvg;
@@ -16,6 +17,10 @@ use Illuminate\Support\HtmlString;
 
 class IconResource extends Resource
 {
+    use RoleAccess;
+
+    protected static array $roles = ['super_admin', 'admin', 'editor'];
+
     protected static ?string $model = Icon::class;
     protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
     protected static ?string $navigationGroup = 'Sozlamalar';

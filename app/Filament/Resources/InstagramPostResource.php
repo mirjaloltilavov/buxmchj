@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RoleAccess;
 use App\Filament\Resources\InstagramPostResource\Pages;
 use App\Filament\Support\Tr;
 use App\Models\InstagramPost;
@@ -16,6 +17,10 @@ use Filament\Tables\Table;
 
 class InstagramPostResource extends Resource
 {
+    use RoleAccess;
+
+    protected static array $roles = ['super_admin', 'admin', 'editor'];
+
     protected static ?string $model = InstagramPost::class;
     protected static ?string $navigationIcon = 'heroicon-o-camera';
     protected static ?string $navigationGroup = 'Bosh sahifa';

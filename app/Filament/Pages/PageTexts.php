@@ -24,6 +24,13 @@ class PageTexts extends Page implements HasForms, HasActions
     protected static ?string $title = 'Sahifa matnlari';
     protected static ?int $navigationSort = 3;
 
+    public static function canAccess(): bool
+    {
+        $u = auth()->user();
+
+        return $u && in_array($u->role, ['super_admin', 'admin', 'editor'], true);
+    }
+
     protected function hint(): ?string
     {
         return 'Bo‘sh qoldirilgan maydonlarda dizayndagi standart matn ko‘rinadi. Tahrirlash uchun blok yonidagi tugmani bosing.';

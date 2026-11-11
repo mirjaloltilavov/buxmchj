@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RoleAccess;
 use App\Filament\Resources\CourseResource\Pages;
 use App\Filament\Forms\CardsField;
 use App\Filament\Forms\IconPicker;
@@ -18,6 +19,10 @@ use Filament\Tables\Table;
 
 class CourseResource extends Resource
 {
+    use RoleAccess;
+
+    protected static array $roles = ['super_admin', 'admin', 'editor'];
+
     protected static ?string $model = Course::class;
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
     protected static ?string $navigationGroup = 'Kontent';
