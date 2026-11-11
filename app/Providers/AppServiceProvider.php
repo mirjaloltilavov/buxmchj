@@ -20,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // Statistika sahifasi vidjetlari (panelda avto-topilmaydi) — lazy yuklanishi uchun Livewire'ga ro'yxatdan o'tkaziladi
+        foreach (glob(app_path('Filament/Widgets/Stats/*.php')) as $file) {
+            $class = 'App\\Filament\\Widgets\\Stats\\'.basename($file, '.php');
+            \Livewire\Livewire::component('lead-stats.'.\Illuminate\Support\Str::kebab(class_basename($class)), $class);
+        }
+
         // "5 soat avval" kabi vaqtlar lotin alifbosida chiqsin: til o'zgargan har safar qayta o'rnatiladi
         Event::listen(LocaleUpdated::class, function ($e) {
             if ($e->locale === 'uz') {

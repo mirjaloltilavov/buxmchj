@@ -100,4 +100,10 @@
     .bx-sw i::after{content:"";position:absolute;left:.15rem;top:.15rem;width:.85rem;height:.85rem;border-radius:50%;background:#fff;transition:transform .2s}
     .bx-sw.is-on i{background:#f5a524}.bx-sw.is-on i::after{transform:translateX(.85rem)}
     @media (max-width:700px){.bx-set__rows{grid-template-columns:1fr}}
+    .bx-set__card{display:flex;flex-direction:column}.bx-set__card>.bx-set__rows{flex:1 1 auto}
+    .bx-set__foot{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.75rem 1.25rem;border-top:1px solid rgba(0,0,0,.06);font-size:.8rem;color:#868b94}
+    .dark .bx-set__foot{border-color:rgba(255,255,255,.08)}
+    /* 5 ustunli KPI qatori (Filament 4 tagacha qo'llaydi) */
+    @media (min-width: 768px) { .fi-wi-stats-overview-stats-ctn:not([class*="grid-cols"]) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1280px) { .fi-wi-stats-overview-stats-ctn:not([class*="grid-cols"]) { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 </style>

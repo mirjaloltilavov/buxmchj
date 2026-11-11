@@ -55,11 +55,34 @@ class SiteSettings extends Page implements HasForms, HasActions
                     Forms\Components\TextInput::make('instagram_handle')->label('Instagram nomi')->placeholder('@buxgalter_mchj'),
                     Forms\Components\TextInput::make('youtube_url')->label('YouTube havolasi')->url(),
                 ]],
-                'bot' => ['title' => 'Telegram bot (ariza xabarlari)', 'icon' => 'heroicon-o-bell-alert', 'description' => 'Yangi ariza kelganda guruhga xabar yuboriladi.', 'paths' => ['telegram_bot_token', 'telegram_chat_id'], 'schema' => fn () => [
-                    Forms\Components\Placeholder::make('tg_help')->label('')->content('@BotFather orqali bot yarating, botni guruhga qo‘shing va guruh chat ID sini kiriting.'),
-                    Forms\Components\TextInput::make('telegram_bot_token')->label('Bot token')->password()->revealable(),
-                    Forms\Components\TextInput::make('telegram_chat_id')->label('Chat ID')->placeholder('-1001234567890'),
-                ]],
+            ],
+            'Arizalar xabarnomasi' => [
+                'bot' => ['title' => 'Telegram bot', 'icon' => 'heroicon-o-paper-airplane', 'description' => 'Yangi ariza kelishi bilan Telegram guruh yoki shaxsiy chatga xabar keladi.', 'toggle' => 'notify_tg_enabled', 'paths' => ['telegram_bot_token', 'telegram_chat_id'],
+                    'test' => ['label' => 'Sinov xabari', 'run' => fn () => app(\App\Services\LeadNotifier::class)->testTelegram()],
+                    'schema' => fn () => [
+                        Forms\Components\Placeholder::make('tg_help')->label('Qanday ulanadi')->content(new \Illuminate\Support\HtmlString('1) Telegram’da <b>@BotFather</b> → /newbot orqali bot yarating va tokenni nusxalang.<br>2) Botni guruhga qo‘shing (yoki botga o‘zingiz /start yozing).<br>3) Chat ID ni <b>@userinfobot</b> yoki <b>@getidsbot</b> orqali bilib oling. Guruh ID si odatda <code>-100</code> bilan boshlanadi.<br>4) Saqlang va “Sinov xabari” tugmasini bosing.')),
+                        Forms\Components\TextInput::make('telegram_bot_token')->label('Bot token')->password()->revealable()->placeholder('123456789:AA...'),
+                        Forms\Components\TextInput::make('telegram_chat_id')->label('Chat ID')->placeholder('-1001234567890')->helperText('Bir nechta chat bo‘lsa vergul bilan ajrating.'),
+                    ]],
+                'mail' => ['title' => 'Email xabarnoma', 'icon' => 'heroicon-o-envelope', 'description' => 'Har bir yangi ariza ko‘rsatilgan pochtaga xat bo‘lib keladi.', 'toggle' => 'notify_mail_enabled', 'paths' => ['notify_mail_to', 'mail_method', 'smtp_host', 'smtp_port', 'smtp_encryption', 'smtp_username', 'smtp_password', 'mail_from_address', 'mail_from_name'],
+                    'test' => ['label' => 'Sinov xati', 'run' => fn () => app(\App\Services\LeadNotifier::class)->testMail()],
+                    'schema' => fn () => [
+                        Forms\Components\TextInput::make('notify_mail_to')->label('Qabul qiluvchilar')->placeholder('info@buxmchj.uz, manager@buxmchj.uz')->helperText('Bir nechta manzil bo‘lsa vergul bilan ajrating.'),
+                        Forms\Components\Radio::make('mail_method')->label('Yuborish usuli')->inline()->default('server')->live()
+                            ->options(['server' => 'Server pochtasi (Plesk)', 'smtp' => 'SMTP (Gmail, Yandex, Plesk pochta)'])
+                            ->helperText('SMTP ishonchliroq: xatlar “Spam”ga kamroq tushadi.'),
+                        Forms\Components\Grid::make(2)->visible(fn (Forms\Get $get) => $get('mail_method') === 'smtp')->schema([
+                            Forms\Components\TextInput::make('smtp_host')->label('SMTP server')->placeholder('smtp.gmail.com'),
+                            Forms\Components\TextInput::make('smtp_port')->label('Port')->numeric()->placeholder('587'),
+                            Forms\Components\Select::make('smtp_encryption')->label('Shifrlash')->options(['tls' => 'TLS (587)', 'ssl' => 'SSL (465)', 'none' => 'Yo‘q'])->default('tls'),
+                            Forms\Components\TextInput::make('smtp_username')->label('Login')->placeholder('info@buxmchj.uz'),
+                            Forms\Components\TextInput::make('smtp_password')->label('Parol')->password()->revealable()->helperText('Gmail uchun “App password” (ilova paroli) kerak.')->columnSpanFull(),
+                        ]),
+                        Forms\Components\Grid::make(2)->schema([
+                            Forms\Components\TextInput::make('mail_from_address')->label('Kimdan (email)')->email()->placeholder('noreply@buxmchj.uz')->helperText('SMTP’da odatda login bilan bir xil bo‘lishi kerak.'),
+                            Forms\Components\TextInput::make('mail_from_name')->label('Kimdan (nom)')->placeholder('Buxgalter MChJ'),
+                        ]),
+                    ]],
             ],
             'SEO va brending' => [
                 'seo' => ['title' => 'SEO: bosh sahifa', 'icon' => 'heroicon-o-magnifying-glass', 'description' => 'Google natijalarida chiqadigan sarlavha va tavsif.', 'paths' => ['seo_title', 'seo_description'], 'schema' => fn () => [

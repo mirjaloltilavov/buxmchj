@@ -22,6 +22,41 @@ class Lead extends Model
         'guide' => 'Bepul qo‘llanma (popup)',
     ];
 
+    protected $casts = ['contacted_at' => 'datetime', 'closed_at' => 'datetime'];
+
+    /** Holat o'zgarganda vaqtlarni avtomatik qo'yadi (statistika uchun) */
+    protected static function booted(): void
+    {
+        static::saving(function (self $lead) {
+            if ($lead->isDirty('status')) {
+                if ($lead->status !== 'new' && ! $lead->contacted_at) {
+                    $lead->contacted_at = now();
+                }
+                $lead->closed_at = in_array($lead->status, ['done', 'spam'], true) ? ($lead->closed_at ?? now()) : null;
+            }
+        });
+    }
+
+    /** Arizaning manbasi (statistikada ko'rinadi) */
+    public function channel(): string
+    {
+        return static::channelOf($this->utm_source, $this->utm_medium, $this->referrer);
+    }
+
+    public static function channelOf(?string $utmSource, ?string $utmMedium, ?string $referrer): string
+    {
+        if ($utmSource) {
+            return $utmSource.($utmMedium ? ' / '.$utmMedium : '');
+        }
+        if ($referrer) {
+            $host = parse_url($referrer, PHP_URL_HOST) ?: $referrer;
+
+            return preg_replace('/^www\./', '', $host);
+        }
+
+        return 'To‘g‘ridan-to‘g‘ri';
+    }
+
     public function assignee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to');

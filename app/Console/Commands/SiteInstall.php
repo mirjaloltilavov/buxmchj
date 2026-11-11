@@ -44,7 +44,7 @@ class SiteInstall extends Command
         if ($email && $password) {
             $user = User::where('email', $email)->first();
             if (! $user) {
-                User::create(['name' => 'Admin', 'email' => $email, 'password' => Hash::make($password), 'role' => 'super_admin', 'is_active' => true]);
+                User::create(['name' => 'Admin', 'username' => User::where('username', 'admin')->exists() ? null : 'admin', 'email' => $email, 'password' => Hash::make($password), 'role' => 'super_admin', 'is_active' => true]);
                 $this->line("Admin yaratildi: {$email}");
             } elseif ($this->option('fresh-admin')) {
                 $user->update(['password' => Hash::make($password), 'role' => 'super_admin', 'is_active' => true]);

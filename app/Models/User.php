@@ -32,7 +32,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public const ROLE_COLORS = ['super_admin' => 'danger', 'admin' => 'warning', 'editor' => 'info', 'manager' => 'success'];
 
-    protected $fillable = ['name', 'email', 'phone', 'avatar', 'password', 'role', 'is_active', 'last_login_at'];
+    protected $fillable = ['name', 'username', 'email', 'phone', 'avatar', 'password', 'role', 'is_active', 'last_login_at'];
 
     protected $hidden = ['password', 'remember_token'];
 

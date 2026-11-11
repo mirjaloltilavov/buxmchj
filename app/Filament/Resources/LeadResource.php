@@ -54,6 +54,15 @@ class LeadResource extends Resource
                 Infolists\Components\TextEntry::make('source')->label('Qaysi sahifadan')->placeholder('—')->icon('heroicon-o-globe-alt'),
                 Infolists\Components\TextEntry::make('message')->label('Xabar')->placeholder('Xabar qoldirilmagan')->columnSpanFull()->prose(),
             ]),
+            Infolists\Components\Section::make('Manba va vaqtlar')->icon('heroicon-o-chart-bar')->columns(3)->collapsible()->schema([
+                Infolists\Components\TextEntry::make('channel')->label('Manba')->state(fn ($record) => $record->channel())->badge()->color('info'),
+                Infolists\Components\TextEntry::make('utm_campaign')->label('Reklama kampaniyasi')->placeholder('—'),
+                Infolists\Components\TextEntry::make('referrer')->label('Qaysi saytdan kelgan')->placeholder('—')->limit(60),
+                Infolists\Components\TextEntry::make('contacted_at')->label('Bog‘lanilgan')->placeholder('Hali bog‘lanilmagan')
+                    ->formatStateUsing(fn ($state, $record) => $state ? $state->format('d.m.Y H:i').' (javob: '.\App\Support\LeadPeriod::humanMinutes($record->created_at->diffInMinutes($state)).')' : null),
+                Infolists\Components\TextEntry::make('closed_at')->label('Yopilgan')->placeholder('—')->dateTime('d.m.Y H:i'),
+                Infolists\Components\TextEntry::make('ip')->label('IP manzil')->placeholder('—'),
+            ]),
             Infolists\Components\Section::make('Admin izohi')->icon('heroicon-o-pencil')->schema([
                 Infolists\Components\TextEntry::make('note')->hiddenLabel()->placeholder('Izoh yo‘q. “Tahrirlash” orqali yozishingiz mumkin.')->prose(),
             ]),
@@ -114,6 +123,7 @@ class LeadResource extends Resource
             Tables\Columns\TextColumn::make('phone')->label('Telefon')->searchable()->icon('heroicon-o-phone')->copyable()->weight('bold')->url(fn ($record) => 'tel:'.preg_replace('/[^0-9+]/', '', $record->phone)),
             Tables\Columns\TextColumn::make('interest')->label('Qiziqish')->formatStateUsing(fn ($state) => Lead::INTERESTS[$state] ?? '—')->badge()->color('gray'),
             Tables\Columns\TextColumn::make('message')->label('Xabar')->limit(40)->toggleable(),
+            Tables\Columns\TextColumn::make('channel')->label('Manba')->state(fn ($record) => $record->channel())->badge()->color('gray')->toggleable(),
             Tables\Columns\TextColumn::make('source')->label('Sahifa')->toggleable(isToggledHiddenByDefault: true),
             Tables\Columns\SelectColumn::make('status')->label('Holat')->options(Lead::STATUSES)->selectablePlaceholder(false),
             Tables\Columns\TextColumn::make('assignee.name')->label('Mas’ul')->placeholder('—')->icon('heroicon-o-user-circle')->toggleable(),
@@ -153,6 +163,8 @@ class LeadResource extends Resource
                     ->action(fn ($records) => $records->each->update(['status' => 'contacted']))->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('done')->label('“Yakunlandi” deb belgilash')->icon('heroicon-o-check-circle')
                     ->action(fn ($records) => $records->each->update(['status' => 'done']))->deselectRecordsAfterCompletion(),
+                Tables\Actions\BulkAction::make('exportCsv')->label('Excel (CSV) yuklab olish')->icon('heroicon-o-arrow-down-tray')
+                    ->action(fn ($records) => \App\Support\LeadExport::download($records)),
                 Tables\Actions\DeleteBulkAction::make()->label('O‘chirish'),
             ]),
         ]);

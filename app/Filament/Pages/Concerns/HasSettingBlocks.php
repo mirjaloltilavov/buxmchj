@@ -56,6 +56,7 @@ trait HasSettingBlocks
                     'key' => $key, 'title' => $b['title'], 'icon' => $b['icon'] ?? 'heroicon-o-cog-6-tooth', 'description' => $b['description'] ?? null,
                     'rows' => $this->blockRows($b),
                     'toggle' => isset($b['toggle']) ? ['on' => (bool) $this->readPath($b['toggle'], true)] : null,
+                    'test' => $b['test']['label'] ?? null,
                 ];
             }
         }
@@ -122,6 +123,9 @@ trait HasSettingBlocks
                 $label .= ' ('.strtoupper($m[1]).')';
             }
             $v = data_get($data, $name);
+            if ((($c instanceof \Filament\Forms\Components\Select && ! $c->isMultiple()) || $c instanceof \Filament\Forms\Components\Radio) && filled($v) && is_scalar($v)) {
+                $v = $c->getOptions()[$v] ?? $v;
+            }
             $kind = match (true) {
                 $c instanceof FileUpload && $c->isMultiple() => 'files',
                 $c instanceof FileUpload => 'image',
@@ -174,6 +178,18 @@ trait HasSettingBlocks
         $this->writePath($b['toggle'], $on);
         \App\Models\ActivityLog::record('settings', null, [$b['toggle'] => ['old' => ! $on, 'new' => $on]], static::$title.' → '.$b['title'].($on ? ' (yoqildi)' : ' (o‘chirildi)'));
         Notification::make()->title($on ? 'Yoqildi' : 'O‘chirildi')->success()->send();
+    }
+
+    /** Blokdagi "Sinov" tugmasi: 'test' => ['label' => ..., 'run' => fn () => [bool, string]] */
+    public function testBlock(string $key): void
+    {
+        $b = $this->findBlock($key);
+        if (! $b || ! isset($b['test']['run'])) {
+            return;
+        }
+        [$ok, $msg] = ($b['test']['run'])();
+        $n = Notification::make()->title($ok ? 'Yuborildi' : 'Yuborilmadi')->body($msg);
+        ($ok ? $n->success() : $n->danger()->persistent())->send();
     }
 
     protected function afterBlockSaved(): void

@@ -12,7 +12,8 @@ Sayt manzili: **https://new.buxmchj.uz**, admin panel: **https://new.buxmchj.uz/
 
 | Bo‘lim | Nima qiladi |
 |---|---|
-| Arizalar | Saytdagi formalardan kelgan arizalar, holati va izohi |
+| Arizalar | Saytdagi formalardan kelgan arizalar: holat, izoh, mas’ul xodim, manba (UTM), Excel (CSV) eksport |
+| Statistika | Davr bo‘yicha arizalar soni, konversiya, javob vaqti, qiziqish/holat/manba/sahifa kesimlari, xodimlar natijasi |
 | Kurslar | Kurs kartochkalari, kurs sahifasi, dastur, tariflar, SEO |
 | Xizmatlar / Xizmat tariflari | Buxgalteriya xizmati bloklari va narxlari |
 | Maqolalar / Kategoriyalar | Blog, matn muharriri, rasm yuklash |
@@ -20,15 +21,22 @@ Sayt manzili: **https://new.buxmchj.uz**, admin panel: **https://new.buxmchj.uz/
 | Hero slaydlar | Bosh sahifadagi slayder, suzuvchi kartochkalar |
 | Instagram postlar | Bosh sahifa va Aloqa sahifasidagi lenta |
 | Sahifa matnlari | Barcha sarlavha va matnlar (bo‘sh qolsa dizayndagi matn chiqadi) |
-| Sayt sozlamalari | Telefon, ijtimoiy tarmoqlar, Telegram bot, SEO, huquqiy matnlar, popuplar, Analytics kodi |
+| Sayt sozlamalari | Telefon, ijtimoiy tarmoqlar, arizalar xabarnomasi (Telegram + email), SEO, OG rasm, favicon, Google Analytics / Search Console, huquqiy matnlar, popuplar |
 | Foydalanuvchilar | Xodimlar, rollar (Bosh admin / Admin / Kontent muharriri / Menejer), bloklash, parol |
 | Faollik jurnali | Kim nimani qachon o‘zgartirgani |
 
-Yangi ariza kelganda Telegram'ga xabar keladi: *Sayt sozlamalari → Telegram bot* bo‘limiga bot token va chat ID kiritiladi.
+### Arizalar xabarnomasi
+
+*Sayt sozlamalari → Arizalar xabarnomasi* bo‘limida ikki kanal bor. Ikkalasini ham kartochkadagi tugma bilan yoqish yoki o‘chirish mumkin, “Sinov” tugmasi esa sozlama to‘g‘riligini darhol tekshiradi.
+
+- **Telegram bot:** @BotFather'da bot yarating, uni guruhga qo‘shing, bot token va chat ID ni kiriting. Bir nechta chat bo‘lsa vergul bilan ajratiladi.
+- **Email:** qabul qiluvchi manzillar (vergul bilan). Yuborish usuli — *Server pochtasi (Plesk)* yoki *SMTP*: Gmail uchun `smtp.gmail.com`, 587, TLS va ilova paroli; Plesk pochtasi uchun `buxmchj.uz`, 465, SSL.
+
+Arizalar statistikasi va manbasi (Google, Instagram, reklama kampaniyasi va h.k.) saytga birinchi kirishdagi UTM belgilar va qaysi saytdan kelgani bo‘yicha avtomatik aniqlanadi.
 
 ## Foydalanuvchilar va rollar
 
-Admin panel → **Tizim → Foydalanuvchilar** (faqat *Bosh admin* ko‘radi). Har bir xodimga alohida login beriladi.
+Admin panel → **Tizim → Foydalanuvchilar** (faqat *Bosh admin* ko‘radi). Har bir xodimga alohida **login** (masalan, `OxunjonAsrorov`) va parol beriladi; email ixtiyoriy. Panelga login yoki email bilan kirish mumkin. Eski foydalanuvchilarga login avtomatik beriladi: email’ning @ dan oldingi qismi (masalan, `admin@...` → `admin`).
 
 | Rol | Nimaga kira oladi |
 |---|---|
@@ -56,7 +64,7 @@ Yangilanishdan keyin birinchi `site:install` mavjud birinchi foydalanuvchini *Bo
    - Arguments: `site:install`
    - PHP: 8.3
    - **Run Now** ni bosing. Birinchi marta APP_KEY yaratiladi. **Run Now** ni yana bir marta bosing: migratsiyalar, boshlang‘ich kontent va admin yaratiladi.
-6. `https://new.buxmchj.uz/admin` ga `.env` dagi email va parol bilan kiring.
+6. `https://buxmchj.uz/admin` ga `.env` dagi email (yoki `admin` logini) va parol bilan kiring.
 
 ## Yangilash
 

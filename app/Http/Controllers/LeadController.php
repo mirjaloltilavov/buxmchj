@@ -22,6 +22,10 @@ class LeadController extends Controller
             'message' => ['nullable', 'string', 'max:2000'],
             'source' => ['nullable', 'string', 'max:255'],
             'locale' => ['nullable', 'in:uz,ru'],
+            'utm_source' => ['nullable', 'string', 'max:120'],
+            'utm_medium' => ['nullable', 'string', 'max:120'],
+            'utm_campaign' => ['nullable', 'string', 'max:160'],
+            'referrer' => ['nullable', 'string', 'max:255'],
         ]);
 
         $data['name'] = $data['name'] ?? null ?: '—';

@@ -16,6 +16,8 @@ class ListLeads extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('exportCsv')->label('Excel (CSV) yuklab olish')->icon('heroicon-o-arrow-down-tray')->color('gray')
+                ->action(fn () => \App\Support\LeadExport::download($this->getFilteredSortedTableQuery()->with('assignee')->get())),
             Actions\CreateAction::make()->label('Qo‘shish')->icon('heroicon-o-plus')->slideOver()->modalWidth('3xl'),
         ];
     }

@@ -34,7 +34,7 @@ class UserResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['name', 'email', 'phone'];
+        return ['name', 'username', 'email', 'phone'];
     }
 
     /** Oxirgi faol bosh adminni o'chirish / bloklash / pasaytirish mumkin emas */
@@ -55,7 +55,11 @@ class UserResource extends Resource
                 Forms\Components\FileUpload::make('avatar')->label('Rasm')->image()->avatar()->disk('public')->directory('avatars')->imageEditor()->columnSpanFull(),
                 Forms\Components\TextInput::make('name')->label('Ism familiya')->required()->maxLength(120),
                 Forms\Components\TextInput::make('phone')->label('Telefon')->tel()->maxLength(40)->placeholder('+998 90 123 45 67'),
-                Forms\Components\TextInput::make('email')->label('Email (login)')->email()->required()->unique(ignoreRecord: true)->columnSpanFull(),
+                Forms\Components\TextInput::make('username')->label('Login (panelga kirish uchun)')->required()->maxLength(60)->unique(ignoreRecord: true)
+                    ->regex('/^[A-Za-z0-9._-]+$/')->validationMessages(['regex' => 'Faqat lotin harflari, raqamlar va . _ - belgilari.', 'unique' => 'Bu login band.'])
+                    ->placeholder('OxunjonAsrorov')->helperText('Bo‘sh joysiz, lotin harflarida. Email bilan ham kirish mumkin.'),
+                Forms\Components\TextInput::make('email')->label('Email (ixtiyoriy)')->email()->maxLength(190)->unique(ignoreRecord: true)
+                    ->validationMessages(['unique' => 'Bu email boshqa foydalanuvchiga biriktirilgan.']),
             ]),
             Forms\Components\Section::make('Rol va huquqlar')->schema([
                 Forms\Components\Radio::make('role')->label('Rol')->options(User::ROLES)->descriptions(User::ROLE_HINTS)->required()->default('editor')
@@ -82,7 +86,8 @@ class UserResource extends Resource
                     ->defaultImageUrl(fn (User $r) => 'data:image/svg+xml;utf8,'.rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="48" fill="#ffd877"/><text x="48" y="60" font-family="Arial" font-size="38" font-weight="700" text-anchor="middle" fill="#16171a">'.e(mb_strtoupper(mb_substr($r->name, 0, 1))).'</text></svg>')),
                 I\Group::make([
                     I\TextEntry::make('name')->hiddenLabel()->weight('bold')->size('lg'),
-                    I\TextEntry::make('email')->hiddenLabel()->icon('heroicon-o-envelope')->copyable(),
+                    I\TextEntry::make('username')->hiddenLabel()->icon('heroicon-o-user')->prefix('@')->copyable()->placeholder('Login yo‘q'),
+                    I\TextEntry::make('email')->hiddenLabel()->icon('heroicon-o-envelope')->copyable()->placeholder('Email yo‘q'),
                     I\TextEntry::make('phone')->hiddenLabel()->icon('heroicon-o-phone')->placeholder('Telefon kiritilmagan'),
                 ])->columnSpan(['md' => 2]),
                 I\Group::make([
@@ -116,7 +121,7 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('avatar')->label('')->disk('public')->circular()->height(40)
                     ->defaultImageUrl(fn (User $r) => 'data:image/svg+xml;utf8,'.rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="20" fill="#ffd877"/><text x="20" y="26" font-family="Arial" font-size="16" font-weight="700" text-anchor="middle" fill="#16171a">'.e(mb_strtoupper(mb_substr($r->name, 0, 1))).'</text></svg>')),
-                Tables\Columns\TextColumn::make('name')->label('Ism')->searchable()->weight('bold')->description(fn (User $r) => $r->email),
+                Tables\Columns\TextColumn::make('name')->label('Ism')->searchable()->weight('bold')->description(fn (User $r) => collect(['@'.$r->username, $r->email])->filter(fn ($v) => $v && $v !== '@')->implode(' · ')),
                 Tables\Columns\TextColumn::make('role')->label('Rol')->badge()->formatStateUsing(fn ($state) => User::ROLES[$state] ?? $state)->color(fn ($state) => User::ROLE_COLORS[$state] ?? 'gray')->sortable(),
                 Tables\Columns\IconColumn::make('is_active')->label('Faol')->boolean(),
                 Tables\Columns\TextColumn::make('last_login_at')->label('Oxirgi kirish')->formatStateUsing(fn ($state) => ago($state))->placeholder('Hali kirmagan')->sortable(),
@@ -136,7 +141,7 @@ class UserResource extends Resource
                         ->action(function (User $record) {
                             $pass = Str::password(12, symbols: false);
                             $record->update(['password' => $pass]);
-                            Notification::make()->title('Yangi parol: '.$pass)->body($record->email.' uchun. Bu oyna yopilgach parol qayta ko‘rsatilmaydi.')->warning()->persistent()->send();
+                            Notification::make()->title('Yangi parol: '.$pass)->body(($record->username ?: $record->email).' uchun. Bu oyna yopilgach parol qayta ko‘rsatilmaydi.')->warning()->persistent()->send();
                         }),
                     Tables\Actions\Action::make('toggleActive')
                         ->label(fn (User $r) => $r->is_active ? 'Bloklash' : 'Faollashtirish')

@@ -407,6 +407,19 @@
     fail: ru ? 'Не удалось отправить. Попробуйте ещё раз или позвоните нам.' : 'Yuborib bo‘lmadi. Qayta urinib ko‘ring yoki bizga qo‘ng‘iroq qiling.'
   };
   var shake = function (el) { var box = el.closest('.input') || el; box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake'); };
+  /* Reklama manbasi: birinchi kirishdagi UTM va tashqi referrer saqlanadi, ariza bilan yuboriladi */
+  (function () {
+    try {
+      var q = new URLSearchParams(location.search), keep = {};
+      ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) keep[k] = q.get(k).slice(0, 150); });
+      if (document.referrer && document.referrer.indexOf(location.host) === -1) keep.referrer = document.referrer.slice(0, 250);
+      if (Object.keys(keep).length && !localStorage.getItem('bx_src')) localStorage.setItem('bx_src', JSON.stringify(keep));
+    } catch (e) {}
+  })();
+  var withTracking = function (fd) {
+    try { var src = JSON.parse(localStorage.getItem('bx_src') || '{}'); Object.keys(src).forEach(function (k) { fd.append(k, src[k]); }); } catch (e) {}
+    return fd;
+  };
   $$('[data-lead-form]').forEach(function (form) {
     var err = $('[data-form-error]', form);
     var showError = function (t) { if (err) { err.textContent = t; err.hidden = !t; } };
@@ -423,7 +436,7 @@
       fetch(form.action, {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-        body: new FormData(form),
+        body: withTracking(new FormData(form)),
         credentials: 'same-origin'
       }).then(function (r) {
         if (!r.ok) throw new Error(r.status);

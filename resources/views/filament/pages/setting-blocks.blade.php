@@ -61,6 +61,12 @@
                                 </div>
                             @endforeach
                         </dl>
+                        @if($b['test'])
+                            <footer class="bx-set__foot">
+                                <span>Sozlamani saqlagach, ishlashini tekshiring</span>
+                                <x-filament::button size="sm" color="gray" icon="heroicon-m-paper-airplane" wire:click="testBlock('{{ $b['key'] }}')" wire:target="testBlock('{{ $b['key'] }}')">{{ $b['test'] }}</x-filament::button>
+                            </footer>
+                        @endif
                     </article>
                 @endforeach
             </div>
