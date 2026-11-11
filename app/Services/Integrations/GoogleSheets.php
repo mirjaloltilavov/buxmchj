@@ -39,6 +39,20 @@ class GoogleSheets
 
     public static function row(Lead $l): array
     {
+        return array_map([self::class, 'cell'], self::rawRow($l));
+    }
+
+    /**
+     * Sheets "+998…", "=…", "-…", "@…" bilan boshlangan matnni formula deb tushunadi (#ERROR!).
+     * Boshiga ' qo'yiladi — jadvalda ko'rinmaydi, qiymat matn bo'lib qoladi (formula kiritishdan ham himoya).
+     */
+    public static function cell(mixed $v): mixed
+    {
+        return is_string($v) && $v !== '' && in_array($v[0], ['=', '+', '-', '@'], true) ? "'".$v : $v;
+    }
+
+    private static function rawRow(Lead $l): array
+    {
         return [
             $l->id, ($l->created_at ?? now())->format('d.m.Y H:i'), $l->name, $l->phone,
             Lead::INTERESTS[$l->interest] ?? '', (string) $l->message, Lead::STATUSES[$l->status] ?? (string) $l->status,
