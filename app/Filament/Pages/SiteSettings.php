@@ -65,6 +65,18 @@ class SiteSettings extends Page implements HasForms, HasActions
                     Tr::textarea('seo_description', 'Bosh sahifa tavsifi (description)', false, 2),
                 ]],
             ],
+            'Google: Analytics va Search Console' => [
+                'google' => ['title' => 'Google Analytics va saytni tasdiqlash', 'icon' => 'heroicon-o-chart-bar', 'description' => 'Tashrif statistikasi va qidiruv tizimlarida saytga egalikni tasdiqlash.', 'paths' => ['ga_id', 'gsc_meta', 'verify_files'], 'schema' => fn () => [
+                    Forms\Components\TextInput::make('ga_id')->label('Google Analytics o‘lchov ID')->placeholder('G-XXXXXXXXXX')
+                        ->regex('/^G-[A-Z0-9]{4,}$/')->validationMessages(['regex' => 'ID “G-” bilan boshlanadi, masalan G-AB12CD34EF.'])
+                        ->helperText('Analytics → Administrator → Ma’lumotlar oqimlari → veb-oqim → “O‘lchov ID”. Kiritilsa, kod hamma sahifaga avtomatik qo‘shiladi.'),
+                    Forms\Components\TextInput::make('gsc_meta')->label('Search Console meta-teg (ixtiyoriy)')->placeholder('masalan: abc123XYZ...')
+                        ->helperText('Search Console “HTML-teg” usulini bersa, content="..." ichidagi qiymatni shu yerga qo‘ying.'),
+                    Forms\Components\FileUpload::make('verify_files')->label('Tasdiqlash fayllari (Google, Yandex, Bing)')->multiple()->disk('local')->directory('verification')
+                        ->preserveFilenames()->acceptedFileTypes(['text/html', 'text/plain', 'application/xml', 'text/xml'])->maxSize(64)->downloadable()
+                        ->helperText('Search Console bergan google....html faylini shu yerga yuklang. U https://buxmchj.uz/fayl-nomi.html manzilida ochiladi, keyin Search Console’da “Tasdiqlash”ni bosing.'),
+                ]],
+            ],
             'Huquqiy matnlar' => [
                 'privacy' => ['title' => 'Maxfiylik siyosati', 'icon' => 'heroicon-o-shield-check', 'paths' => ['legal_privacy'], 'schema' => fn () => [Tr::rich('legal_privacy', 'Maxfiylik siyosati', 'legal')]],
                 'offer' => ['title' => 'Ommaviy oferta', 'icon' => 'heroicon-o-scale', 'paths' => ['legal_offer'], 'schema' => fn () => [Tr::rich('legal_offer', 'Ommaviy oferta', 'legal')]],

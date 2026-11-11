@@ -31,6 +31,13 @@
     <link rel="preload" href="{{ asset('fonts/golos-text-latin-700-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ filemtime(public_path('css/site.css')) }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(filled(setting('gsc_meta')))<meta name="google-site-verification" content="{{ setting('gsc_meta') }}">@endif
+    @php $gaId = trim((string) setting('ga_id')); @endphp
+    @if(preg_match('/^G-[A-Z0-9]{4,}$/', $gaId))
+        {{-- Google Analytics 4 (admin panel → Sayt sozlamalari → Google) --}}
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ $gaId }}');</script>
+    @endif
     {!! setting('head_code') !!}
 </head>
 <body class="@yield('body_class')">
