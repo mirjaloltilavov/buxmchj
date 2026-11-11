@@ -528,9 +528,10 @@ ul{margin:0;padding:0;list-style:none}
   .hero{height:auto;min-height:auto;max-height:none}
   .hero-inner{padding-top:120px;padding-bottom:0;display:flex;flex-direction:column}
   .hero-media{position:relative;inset:auto;height:560px;margin-top:40px}
-  .hero-portrait{left:50%;right:auto;transform:translateX(-50%);width:min(440px,90%);height:100%}
-  .float-card--1c{right:0;top:40px}
-  .float-card--dark{right:auto;left:0;bottom:40px}
+  /* Rasm markazda (transform animatsiyaga band — shuning uchun margin:auto); kartochkalar yuzni yopmasligi uchun pastki qismda */
+  .hero-portrait{left:0;right:0;margin-inline:auto;width:min(440px,100%);height:100%}
+  .float-card--1c{left:0;right:auto;top:auto;bottom:128px}
+  .float-card--dark{left:auto;right:0;bottom:24px}
   .hero-controls{position:relative;bottom:auto;padding-block:24px 32px}
   .hero-tab .bar{width:min(260px,36vw)}
   .section-head,.articles-head,.insta-head{flex-direction:column;align-items:flex-start;gap:16px}
@@ -549,7 +550,7 @@ ul{margin:0;padding:0;list-style:none}
   .hero-tabs{gap:16px;width:100%}
   .hero-tab{flex:1}
   .hero-tab .bar{width:100%}
-  .float-card--1c{top:16px;padding:8px 14px 8px 8px}
+  .float-card--1c{top:auto;bottom:104px;padding:8px 14px 8px 8px}
   .float-card--dark{bottom:16px}
   .bento-row1,.bento-row2{grid-template-columns:1fr}
   .tile--dark{flex-direction:column}
@@ -1516,7 +1517,8 @@ ul{margin:0;padding:0;list-style:none}
 ===================================================================== */
 .roll{display:inline-block;overflow:hidden;vertical-align:top;height:1.3em;line-height:1.3em}
 .roll > span{display:block;white-space:nowrap;text-shadow:0 1.3em currentColor;transition:transform .5s var(--ease)}
-.btn-pill:hover .roll > span,.btn:hover .roll > span,.btn-pill:focus-visible .roll > span,.btn:focus-visible .roll > span{transform:translateY(-1.3em)}
+@media (hover:hover){.btn-pill:hover .roll > span,.btn:hover .roll > span{transform:translateY(-1.3em)}}
+.btn-pill:focus-visible .roll > span,.btn:focus-visible .roll > span{transform:translateY(-1.3em)}
 .btn-pill:hover .label{transform:none}
 .btn-pill .arrow .icon{transform:rotate(-45deg);transition:transform .35s var(--ease)}
 .btn-pill:hover .arrow .icon{transform:rotate(0)}
