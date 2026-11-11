@@ -30,6 +30,12 @@
                                             @case('image')
                                                 @if(filled($v) && is_string($v))<img src="{{ media_url($v) }}" alt="" class="bx-set__img">@else<span class="bx-set__empty">Rasm yo‘q</span>@endif
                                                 @break
+                                            @case('files')
+                                                @php $files = collect(is_array($v) ? $v : [])->filter()->map(fn ($f) => basename((string) $f))->values(); @endphp
+                                                @if($files->isNotEmpty())
+                                                    <span class="bx-set__chips">@foreach($files as $fn)<a class="bx-pill is-yes" href="{{ url($fn) }}" target="_blank" rel="noopener">{{ $fn }}</a>@endforeach</span>
+                                                @else<span class="bx-set__empty">Fayl yuklanmagan</span>@endif
+                                                @break
                                             @case('bool')
                                                 <span class="bx-pill {{ $v ? 'is-yes' : '' }}">{{ $v ? 'Ha' : 'Yo‘q' }}</span>
                                                 @break

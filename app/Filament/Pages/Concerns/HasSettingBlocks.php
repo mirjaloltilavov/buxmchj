@@ -123,6 +123,7 @@ trait HasSettingBlocks
             }
             $v = data_get($data, $name);
             $kind = match (true) {
+                $c instanceof FileUpload && $c->isMultiple() => 'files',
                 $c instanceof FileUpload => 'image',
                 $c instanceof Toggle => 'bool',
                 $c instanceof RichEditor => 'html',
@@ -131,7 +132,7 @@ trait HasSettingBlocks
                 $c instanceof DatePicker => 'date',
                 default => 'text',
             };
-            $rows[] = ['label' => $label, 'kind' => $kind, 'value' => $v, 'wide' => in_array($kind, ['list', 'html', 'image'], true) || ($c instanceof \Filament\Forms\Components\Textarea)];
+            $rows[] = ['label' => $label, 'kind' => $kind, 'value' => $v, 'wide' => in_array($kind, ['list', 'html', 'image', 'files'], true) || ($c instanceof \Filament\Forms\Components\Textarea)];
         }
 
         return $rows;
