@@ -62,6 +62,11 @@ class LeadResource extends Resource
                     ->formatStateUsing(fn ($state, $record) => $state ? $state->format('d.m.Y H:i').' (javob: '.\App\Support\LeadPeriod::humanMinutes($record->created_at->diffInMinutes($state)).')' : null),
                 Infolists\Components\TextEntry::make('closed_at')->label('Yopilgan')->placeholder('—')->dateTime('d.m.Y H:i'),
                 Infolists\Components\TextEntry::make('ip')->label('IP manzil')->placeholder('—'),
+                Infolists\Components\TextEntry::make('sheets_synced_at')->label('Google Sheets')->placeholder('Yuborilmagan')->dateTime('d.m.Y H:i')
+                    ->visible(fn () => app(\App\Services\Integrations\GoogleSheets::class)->ready()),
+                Infolists\Components\TextEntry::make('amo_lead_id')->label('amoCRM')->placeholder('Yuborilmagan')
+                    ->formatStateUsing(fn ($state) => 'Sdelka #'.$state)->url(fn ($state) => $state ? (new \App\Services\Integrations\AmoCrm)->leadUrl((int) $state) : null, true)->color('primary')
+                    ->visible(fn () => (new \App\Services\Integrations\AmoCrm)->ready()),
             ]),
             Infolists\Components\Section::make('Admin izohi')->icon('heroicon-o-pencil')->schema([
                 Infolists\Components\TextEntry::make('note')->hiddenLabel()->placeholder('Izoh yo‘q. “Tahrirlash” orqali yozishingiz mumkin.')->prose(),
@@ -165,6 +170,12 @@ class LeadResource extends Resource
                     ->action(fn ($records) => $records->each->update(['status' => 'done']))->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('exportCsv')->label('Excel (CSV) yuklab olish')->icon('heroicon-o-arrow-down-tray')
                     ->action(fn ($records) => \App\Support\LeadExport::download($records)),
+                Tables\Actions\BulkAction::make('toSheets')->label('Google Sheets’ga yuborish')->icon('heroicon-o-table-cells')
+                    ->visible(fn () => app(\App\Services\Integrations\GoogleSheets::class)->ready())
+                    ->action(fn ($records) => \App\Support\LeadSync::toSheets($records)),
+                Tables\Actions\BulkAction::make('toAmo')->label('amoCRM’ga yuborish')->icon('heroicon-o-briefcase')
+                    ->visible(fn () => (new \App\Services\Integrations\AmoCrm)->ready())
+                    ->action(fn ($records) => \App\Support\LeadSync::toAmo($records)),
                 Tables\Actions\DeleteBulkAction::make()->label('O‘chirish'),
             ]),
         ]);

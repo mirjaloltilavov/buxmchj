@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Yangi ariza haqida xabar: Telegram va email (admin panel → Sayt sozlamalari → Arizalar xabarnomasi).
+ * Yangi ariza haqida xabar: Telegram, email, Google Sheets va amoCRM (admin panel → Sayt sozlamalari → Arizalar xabarnomasi).
  * Sozlanmagan kanal o'tkazib yuboriladi; ariza baribir bazada saqlanadi.
  */
 class LeadNotifier
@@ -25,6 +25,16 @@ class LeadNotifier
             } catch (\Throwable $e) {
                 Log::warning('Lead email failed: '.$e->getMessage());
             }
+        }
+        $sheets = app(\App\Services\Integrations\GoogleSheets::class);
+        if ($sheets->enabled()) {
+            [$ok, $msg] = $sheets->send([$lead]);
+            $ok || Log::warning('Lead → Google Sheets: '.$msg);
+        }
+        $amo = new \App\Services\Integrations\AmoCrm;
+        if ($amo->enabled()) {
+            [$ok, $msg] = $amo->push($lead);
+            $ok || Log::warning('Lead → amoCRM: '.$msg);
         }
     }
 

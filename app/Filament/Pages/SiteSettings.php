@@ -83,6 +83,51 @@ class SiteSettings extends Page implements HasForms, HasActions
                             Forms\Components\TextInput::make('mail_from_name')->label('Kimdan (nom)')->placeholder('Buxgalter MChJ'),
                         ]),
                     ]],
+                'sheets' => ['title' => 'Google Sheets', 'icon' => 'heroicon-o-table-cells', 'description' => 'Har bir yangi ariza Google jadvalga yangi qator bo‘lib yoziladi.', 'toggle' => 'sheets_enabled', 'paths' => ['sheets_url', 'sheets_tab'],
+                    'test' => ['label' => 'Sinov qatori', 'run' => fn () => app(\App\Services\Integrations\GoogleSheets::class)->test()],
+                    'schema' => fn () => [
+                        Forms\Components\Placeholder::make('sheets_help')->label('Qanday ulanadi (bir marta, 3 daqiqa)')->content(fn () => new \Illuminate\Support\HtmlString(
+                            '<ol style="list-style:decimal;padding-left:1.2rem;line-height:1.7">'
+                            .'<li>Google Sheets’da yangi jadval oching → <b>Kengaytmalar → Apps Script</b>.</li>'
+                            .'<li>U yerdagi kodni o‘chirib, pastdagi kodni to‘liq qo‘ying va saqlang (💾).</li>'
+                            .'<li><b>Joylashtirish (Deploy) → Yangi joylashtirish</b> → turi: <b>Veb-ilova</b>. “Kim kira oladi”: <b>Hamma (Anyone)</b> → Joylashtirish → Google ruxsat so‘rasa, ruxsat bering.</li>'
+                            .'<li>Chiqqan <b>Veb-ilova havolasini</b> (…/exec) quyidagi maydonga qo‘ying, saqlang va “Sinov qatori”ni bosing.</li></ol>'
+                        )),
+                        Forms\Components\Placeholder::make('sheets_code')->label('Apps Script kodi')->content(fn () => new \Illuminate\Support\HtmlString(
+                            '<div x-data="{ok:false}" style="position:relative">'
+                            .'<button type="button" x-on:click="navigator.clipboard.writeText($refs.code.innerText); ok=true; setTimeout(()=>ok=false,1500)" style="position:absolute;top:.5rem;right:.5rem;padding:.3rem .7rem;border-radius:.5rem;background:#f5a524;color:#16171a;font-size:.75rem;font-weight:600" x-text="ok ? \'Nusxalandi ✓\' : \'Nusxalash\'"></button>'
+                            .'<pre x-ref="code" style="max-height:260px;overflow:auto;padding:1rem;border-radius:.75rem;background:#16171a;color:#e8e8ea;font-size:.72rem;line-height:1.5;white-space:pre">'.e(\App\Services\Integrations\GoogleSheets::script()).'</pre></div>'
+                        )),
+                        Forms\Components\TextInput::make('sheets_url')->label('Veb-ilova havolasi')->url()->placeholder('https://script.google.com/macros/s/…/exec')
+                            ->regex('~^https://script\.google\.com/macros/s/[^/]+/exec~')->validationMessages(['regex' => 'Havola https://script.google.com/macros/s/…/exec ko‘rinishida bo‘lishi kerak.']),
+                        Forms\Components\TextInput::make('sheets_tab')->label('Varaq (list) nomi')->placeholder('Arizalar')->helperText('Bo‘lmasa avtomatik yaratiladi.'),
+                    ]],
+                'amo' => ['title' => 'amoCRM', 'icon' => 'heroicon-o-briefcase', 'description' => 'Har bir arizadan amoCRM’da sdelka va kontakt yaratiladi.', 'toggle' => 'amo_enabled', 'paths' => ['amo_domain', 'amo_token', 'amo_pipeline_id', 'amo_status_id', 'amo_responsible_id'],
+                    'test' => ['label' => 'Ulanishni tekshirish', 'run' => fn () => (new \App\Services\Integrations\AmoCrm)->test()],
+                    'schema' => fn () => [
+                        Forms\Components\Placeholder::make('amo_help')->label('Token qayerdan olinadi')->content(new \Illuminate\Support\HtmlString(
+                            '<ol style="list-style:decimal;padding-left:1.2rem;line-height:1.7">'
+                            .'<li>amoCRM → <b>Sozlamalar (Настройки) → Integratsiyalar (Интеграции)</b> → o‘ng yuqorida <b>Integratsiya yaratish (Создать интеграцию)</b> → “Внешняя интеграция”.</li>'
+                            .'<li>Hamma ruxsatlarni belgilang, nom bering (masalan, “Sayt”) va saqlang.</li>'
+                            .'<li>Integratsiyaning <b>Ключи и доступы</b> bo‘limida <b>Долгосрочный токен</b> yarating (muddati: 5 yil) va nusxalang.</li>'
+                            .'<li>Manzil va tokenni kiriting — shundan keyin voronka va bosqich ro‘yxati chiqadi.</li></ol>'
+                        )),
+                        Forms\Components\Grid::make(2)->schema([
+                            Forms\Components\TextInput::make('amo_domain')->label('amoCRM manzili')->placeholder('buxmchj.amocrm.ru')->live(onBlur: true)
+                                ->dehydrateStateUsing(fn ($state) => $state ? \App\Services\Integrations\AmoCrm::normalizeDomain($state) : null),
+                            Forms\Components\TextInput::make('amo_token')->label('Uzoq muddatli token')->password()->revealable()->live(onBlur: true),
+                        ]),
+                        Forms\Components\Grid::make(2)->schema([
+                            Forms\Components\Select::make('amo_pipeline_id')->label('Voronka')->live()->placeholder('Asosiy voronka')
+                                ->options(fn (Forms\Get $get) => collect((new \App\Services\Integrations\AmoCrm($get('amo_domain'), $get('amo_token')))->pipelines())->map(fn ($p) => $p['name'])->all())
+                                ->afterStateUpdated(fn (Forms\Set $set) => $set('amo_status_id', null)),
+                            Forms\Components\Select::make('amo_status_id')->label('Bosqich')->placeholder('Voronkaning birinchi bosqichi')
+                                ->options(fn (Forms\Get $get) => (new \App\Services\Integrations\AmoCrm($get('amo_domain'), $get('amo_token')))->pipelines()[(int) $get('amo_pipeline_id')]['statuses'] ?? []),
+                            Forms\Components\Select::make('amo_responsible_id')->label('Mas’ul xodim')->placeholder('Token egasi')->searchable()
+                                ->options(fn (Forms\Get $get) => (new \App\Services\Integrations\AmoCrm($get('amo_domain'), $get('amo_token')))->users())
+                                ->helperText('Ro‘yxat bo‘sh bo‘lsa — manzil yoki token xato, yoki hali kiritilmagan.')->columnSpanFull(),
+                        ]),
+                    ]],
             ],
             'SEO va brending' => [
                 'seo' => ['title' => 'SEO: bosh sahifa', 'icon' => 'heroicon-o-magnifying-glass', 'description' => 'Google natijalarida chiqadigan sarlavha va tavsif.', 'paths' => ['seo_title', 'seo_description'], 'schema' => fn () => [

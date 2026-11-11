@@ -32,6 +32,12 @@ Sayt manzili: **https://new.buxmchj.uz**, admin panel: **https://new.buxmchj.uz/
 - **Telegram bot:** @BotFather'da bot yarating, uni guruhga qo‘shing, bot token va chat ID ni kiriting. Bir nechta chat bo‘lsa vergul bilan ajratiladi.
 - **Email:** qabul qiluvchi manzillar (vergul bilan). Yuborish usuli — *Server pochtasi (Plesk)* yoki *SMTP*: Gmail uchun `smtp.gmail.com`, 587, TLS va ilova paroli; Plesk pochtasi uchun `buxmchj.uz`, 465, SSL.
 
+- **Google Sheets:** kartochkadagi yo‘riqnoma bo‘yicha jadvalga Apps Script qo‘yiladi (kod admin panelda tayyor, “Nusxalash” tugmasi bor) va “Veb-ilova” havolasi kiritiladi. Har bir ariza jadvalga yangi qator bo‘lib tushadi.
+- **amoCRM:** manzil (`sizning.amocrm.ru`) va uzoq muddatli token kiritiladi, so‘ng voronka, bosqich va mas’ul xodim ro‘yxatdan tanlanadi. Har bir arizadan sdelka, telefonli kontakt va izoh yaratiladi.
+- Eski arizalarni yuborish: *Arizalar → Integratsiyalar* tugmasi (yuborilmaganlarni) yoki belgilangan arizalar uchun ommaviy amal.
+
+Xabarnoma va integratsiyalar ariza saqlangandan keyin, mijozga javob qaytgach ishlaydi — biror xizmat ishlamay qolsa ham ariza saytda saqlanadi.
+
 Arizalar statistikasi va manbasi (Google, Instagram, reklama kampaniyasi va h.k.) saytga birinchi kirishdagi UTM belgilar va qaysi saytdan kelgani bo‘yicha avtomatik aniqlanadi.
 
 ## Foydalanuvchilar va rollar

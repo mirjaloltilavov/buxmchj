@@ -22,7 +22,7 @@ class Lead extends Model
         'guide' => 'Bepul qo‘llanma (popup)',
     ];
 
-    protected $casts = ['contacted_at' => 'datetime', 'closed_at' => 'datetime'];
+    protected $casts = ['contacted_at' => 'datetime', 'closed_at' => 'datetime', 'sheets_synced_at' => 'datetime'];
 
     /** Holat o'zgarganda vaqtlarni avtomatik qo'yadi (statistika uchun) */
     protected static function booted(): void

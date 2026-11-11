@@ -30,7 +30,8 @@ class LeadController extends Controller
 
         $data['name'] = $data['name'] ?? null ?: '—';
         $lead = Lead::create($data + ['ip' => $request->ip(), 'status' => 'new']);
-        $notifier->notify($lead);
+        // Telegram/email/Sheets/amoCRM — javob mijozga ketgandan keyin (forma kutib qolmaydi)
+        defer(fn () => $notifier->notify($lead->fresh() ?? $lead));
 
         // Admin panel ichidagi bildirishnoma (qo'ng'iroqcha)
         try {
