@@ -35,7 +35,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Buxgalter MChJ')
             ->brandLogo(fn () => view('filament.brand'))
             ->brandLogoHeight('2rem')
-            ->favicon(asset('img/logo-mark.jpg'))
+            ->favicon(fn () => brand_url('favicon_light', 'img/favicon-light.png'))
             ->font('Golos Text')
             ->colors([
                 'primary' => Color::hex('#f5a524'),

@@ -13,6 +13,14 @@
 
         return route(($to === 'ru' ? 'ru.' : '').$base, $route->parameters());
     };
+    // Admin → SEO: sahifa bo'yicha sarlavha va tavsif (bo'sh bo'lsa sahifaning o'zi beradi)
+    $seoBase = $route && $route->getName() ? preg_replace('/^ru\./', '', $route->getName()) : null;
+    $seoPage = $seoBase ? setting('seo_pages.'.$seoBase) : null;
+    if (is_array($seoPage)) {
+        $pageTitle = tr($seoPage['title'] ?? null) ?: $pageTitle;
+        $pageDesc = tr($seoPage['description'] ?? null) ?: $pageDesc;
+    }
+    $ogImage = trim($__env->yieldContent('og_image')) ?: brand_url('og_image', 'img/og.jpg');
 @endphp
 <!DOCTYPE html>
 <html lang="{{ $locale }}">
@@ -21,13 +29,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $pageTitle }}</title>
     @if($pageDesc)<meta name="description" content="{{ $pageDesc }}">@endif
+    <link rel="canonical" href="{{ url()->current() }}">
+    @if(setting('seo_noindex'))<meta name="robots" content="noindex, nofollow">@endif
+    <meta property="og:site_name" content="{{ $siteName }}">
     <meta property="og:title" content="{{ $pageTitle }}">
     @if($pageDesc)<meta property="og:description" content="{{ $pageDesc }}">@endif
-    <meta property="og:image" content="{{ trim($__env->yieldContent('og_image')) ?: asset('img/og.jpg') }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="{{ $locale === 'ru' ? 'ru_RU' : 'uz_UZ' }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ $ogImage }}">
     <link rel="alternate" hreflang="uz" href="{{ $altUrl('uz') }}">
     <link rel="alternate" hreflang="ru" href="{{ $altUrl('ru') }}">
-    <link rel="icon" href="{{ asset('img/logo-mark.jpg') }}">
+    <link rel="alternate" hreflang="x-default" href="{{ $altUrl('uz') }}">
+    {{-- Favicon: yorug' va qorong'i rejim uchun alohida (admin → SEO va brending) --}}
+    <link rel="icon" href="{{ brand_url('favicon_light', 'img/favicon-light.png') }}" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="{{ brand_url('favicon_dark', 'img/favicon-dark.png') }}" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+    <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}">
     <link rel="preload" href="{{ asset('fonts/golos-text-latin-700-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ filemtime(public_path('css/site.css')) }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">

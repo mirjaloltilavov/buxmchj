@@ -46,6 +46,7 @@ class ContentSeeder extends Seeder
     {
         (new IconSeeder)->run();
         $this->settings();
+        $this->brandAssets();
         $this->heroSlides();
         $this->courses();
         (new CourseContentSeeder)->run();
@@ -56,6 +57,16 @@ class ContentSeeder extends Seeder
         $this->faqs();
         $this->instagram();
         $this->branches();
+    }
+
+    /** Favicon va OG rasm: bo'sh bo'lsa standart fayllar yuklanadi (admin'da almashtiriladi) */
+    private function brandAssets(): void
+    {
+        foreach (['og_image' => 'img/og.jpg', 'favicon_light' => 'img/favicon-light.png', 'favicon_dark' => 'img/favicon-dark.png'] as $key => $src) {
+            if (blank(\App\Models\Setting::get($key))) {
+                \App\Models\Setting::put($key, $this->img($src, 'seo'));
+            }
+        }
     }
 
     private function settings(): void

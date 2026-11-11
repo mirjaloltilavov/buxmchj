@@ -156,3 +156,16 @@ if (! function_exists('ago')) {
         return \Illuminate\Support\Carbon::parse($date)->locale($loc === 'uz' ? 'uz_Latn' : $loc)->diffForHumans();
     }
 }
+
+if (! function_exists('brand_url')) {
+    /** Admin'da yuklangan brend fayli (favicon, OG rasm) yoki standart fayl manzili */
+    function brand_url(string $key, string $default): string
+    {
+        $v = setting($key);
+        if (is_array($v)) {
+            $v = reset($v) ?: null;
+        }
+
+        return filled($v) ? media_url($v) : asset($default);
+    }
+}

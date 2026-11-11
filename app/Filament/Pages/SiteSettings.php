@@ -60,9 +60,50 @@ class SiteSettings extends Page implements HasForms, HasActions
                     Forms\Components\TextInput::make('telegram_bot_token')->label('Bot token')->password()->revealable(),
                     Forms\Components\TextInput::make('telegram_chat_id')->label('Chat ID')->placeholder('-1001234567890'),
                 ]],
-                'seo' => ['title' => 'SEO (bosh sahifa)', 'icon' => 'heroicon-o-magnifying-glass', 'paths' => ['seo_title', 'seo_description'], 'schema' => fn () => [
-                    Tr::text('seo_title', 'Bosh sahifa sarlavhasi (title)'),
-                    Tr::textarea('seo_description', 'Bosh sahifa tavsifi (description)', false, 2),
+            ],
+            'SEO va brending' => [
+                'seo' => ['title' => 'SEO: bosh sahifa', 'icon' => 'heroicon-o-magnifying-glass', 'description' => 'Google natijalarida chiqadigan sarlavha va tavsif.', 'paths' => ['seo_title', 'seo_description'], 'schema' => fn () => [
+                    Tr::text('seo_title', 'Sarlavha (title, 50–60 belgi)'),
+                    Tr::textarea('seo_description', 'Tavsif (description, 140–160 belgi)', false, 3),
+                ]],
+                'seo_pages' => ['title' => 'SEO: ichki sahifalar', 'icon' => 'heroicon-o-document-magnifying-glass', 'description' => 'Bo‘sh qolsa, sahifaning standart sarlavhasi ishlatiladi. Kurs va maqolalarning SEO’si o‘z bo‘limida.', 'paths' => ['seo_pages'], 'schema' => fn () => [
+                    Forms\Components\Fieldset::make('Kurslar sahifasi')->columns(1)->schema([
+                        Tr::text('seo_pages.courses.title', 'Sarlavha (title)'),
+                        Tr::textarea('seo_pages.courses.description', 'Tavsif (description)', false, 2),
+                    ]),
+                    Forms\Components\Fieldset::make('Xizmatlar sahifasi')->columns(1)->schema([
+                        Tr::text('seo_pages.services.title', 'Sarlavha (title)'),
+                        Tr::textarea('seo_pages.services.description', 'Tavsif (description)', false, 2),
+                    ]),
+                    Forms\Components\Fieldset::make('Maqolalar sahifasi')->columns(1)->schema([
+                        Tr::text('seo_pages.blog.title', 'Sarlavha (title)'),
+                        Tr::textarea('seo_pages.blog.description', 'Tavsif (description)', false, 2),
+                    ]),
+                    Forms\Components\Fieldset::make('Aloqa sahifasi')->columns(1)->schema([
+                        Tr::text('seo_pages.contact.title', 'Sarlavha (title)'),
+                        Tr::textarea('seo_pages.contact.description', 'Tavsif (description)', false, 2),
+                    ]),
+                    Forms\Components\Fieldset::make('Maxfiylik siyosati')->columns(1)->schema([
+                        Tr::text('seo_pages.privacy.title', 'Sarlavha (title)'),
+                        Tr::textarea('seo_pages.privacy.description', 'Tavsif (description)', false, 2),
+                    ]),
+                    Forms\Components\Fieldset::make('Ommaviy oferta')->columns(1)->schema([
+                        Tr::text('seo_pages.offer.title', 'Sarlavha (title)'),
+                        Tr::textarea('seo_pages.offer.description', 'Tavsif (description)', false, 2),
+                    ]),
+                ]],
+                'og' => ['title' => 'Ulashish rasmi (OG)', 'icon' => 'heroicon-o-photo', 'description' => 'Telegram, Facebook va boshqalarda havola ulashilganda chiqadigan rasm.', 'paths' => ['og_image'], 'schema' => fn () => [
+                    Forms\Components\FileUpload::make('og_image')->label('OG rasm (1200×630 px, JPG yoki PNG)')->image()->disk('public')->directory('seo')->imageEditor()
+                        ->imageEditorAspectRatios(['1.91:1'])->maxSize(4096)->helperText('Kurs va maqola sahifalarida ularning o‘z rasmi ishlatiladi.'),
+                ]],
+                'favicon' => ['title' => 'Favicon (brauzer belgisi)', 'icon' => 'heroicon-o-sparkles', 'description' => 'Yorug‘ va qorong‘i rejim uchun alohida. Kvadrat PNG yoki SVG, kamida 192×192.', 'paths' => ['favicon_light', 'favicon_dark'], 'schema' => fn () => [
+                    Forms\Components\FileUpload::make('favicon_light')->label('Yorug‘ rejim uchun')->image()->disk('public')->directory('seo')->imageEditor()->imageEditorAspectRatios(['1:1'])
+                        ->acceptedFileTypes(['image/png', 'image/svg+xml', 'image/x-icon', 'image/vnd.microsoft.icon', 'image/jpeg', 'image/webp'])->maxSize(1024),
+                    Forms\Components\FileUpload::make('favicon_dark')->label('Qorong‘i rejim uchun')->image()->disk('public')->directory('seo')->imageEditor()->imageEditorAspectRatios(['1:1'])
+                        ->acceptedFileTypes(['image/png', 'image/svg+xml', 'image/x-icon', 'image/vnd.microsoft.icon', 'image/jpeg', 'image/webp'])->maxSize(1024),
+                ]],
+                'indexing' => ['title' => 'Qidiruv tizimlari', 'icon' => 'heroicon-o-eye-slash', 'description' => 'Sayt tayyor bo‘lmasa, Google’da ko‘rinmasligi uchun yoqing.', 'paths' => ['seo_noindex'], 'schema' => fn () => [
+                    Forms\Components\Toggle::make('seo_noindex')->label('Qidiruv tizimlaridan yashirish (noindex)')->helperText('Odatda O‘CHIQ bo‘lishi kerak. Yoqilsa, sayt Google natijalaridan chiqib ketadi.'),
                 ]],
             ],
             'Google: Analytics va Search Console' => [
