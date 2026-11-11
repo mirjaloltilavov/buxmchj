@@ -499,7 +499,9 @@ ul{margin:0;padding:0;list-style:none}
   .mobile-actions{display:flex}
   .site-header{padding-top:16px}
   .site-header.is-fixed{padding-top:8px}
-  .site-header.is-fixed .header-bar{padding:8px 8px 8px 16px;border-radius:16px;background:rgba(255,255,255,.85)}
+  /* Mobil: aylantirilganda header to'liq kenglikdagi yaxlit (shaffof emas) panel — orqadagi kontent ko'rinmaydi */
+  .site-header.is-fixed{padding-top:0;background:#fff;border-radius:0 0 20px 20px;box-shadow:0 8px 24px rgba(23,23,26,.10)}
+  .site-header.is-fixed .header-bar{padding:10px 0 10px 4px;border-radius:0;background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
   .logo,.site-header.is-fixed .logo{width:124px;height:28px}
   .mobile-menu{position:fixed;inset:0;z-index:60;background:#fff;padding:16px 20px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;overflow:auto;opacity:0;visibility:hidden;transition:opacity .39s var(--ease),visibility .39s}
   .mobile-menu.is-open{opacity:1;visibility:visible}
