@@ -23,6 +23,9 @@ $pages = function () {
 Route::group([], $pages);
 Route::prefix('ru')->name('ru.')->group($pages);
 
+Route::get('/robots.txt', [\App\Http\Controllers\SeoController::class, 'robots'])->name('robots');
+Route::get('/sitemap.xml', [\App\Http\Controllers\SeoController::class, 'sitemap'])->name('sitemap');
+
 Route::post('/lead', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('lead.store');
 
 /*

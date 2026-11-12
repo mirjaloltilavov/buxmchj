@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('popup', 'course')
+@push('schema'){!! \App\Support\Seo::graph(\App\Support\Seo::organization(), \App\Support\Seo::website()) !!}@endpush
 
 @section('content')
     @include('sections.hero')

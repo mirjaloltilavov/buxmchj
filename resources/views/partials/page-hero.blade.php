@@ -1,3 +1,4 @@
+@if(! empty($crumbs))@push('schema'){!! \App\Support\Seo::graph(\App\Support\Seo::breadcrumbs($crumbs)) !!}@endpush @endif
 <section class="page-hero">
     <div class="hero-clip" aria-hidden="true"><div class="hero-deco">{{ icon('hero-deco') }}</div></div>
     <div class="container">

@@ -3,6 +3,7 @@
 @section('title', ($course->tr('seo_title') ?: $course->tr('title')).' — Buxgalter MChJ')
 @section('description', $course->tr('seo_description') ?: $course->tr('excerpt'))
 @section('og_image', media_url($course->image))
+@push('schema'){!! \App\Support\Seo::graph(\App\Support\Seo::course($course)) !!}@endpush
 
 @php
     $m = $course->meta ?? [];

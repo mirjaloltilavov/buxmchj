@@ -40,6 +40,20 @@ Xabarnoma va integratsiyalar ariza saqlangandan keyin, mijozga javob qaytgach is
 
 Arizalar statistikasi va manbasi (Google, Instagram, reklama kampaniyasi va h.k.) saytga birinchi kirishdagi UTM belgilar va qaysi saytdan kelgani bo‘yicha avtomatik aniqlanadi.
 
+## SEO
+
+Avtomatik ishlaydi, qo‘shimcha sozlash shart emas:
+
+- **`/sitemap.xml`** — barcha sahifalar, faol kurslar va chop etilgan maqolalar (uz + ru, hreflang bilan, kurs/maqolada `lastmod`).
+- **`/robots.txt`** — `/admin` yopiq, sitemap ko‘rsatilgan, Yandex uchun `Clean-param` (utm belgilari bilan kelgan manzillar takror sahifa hisoblanmaydi).
+- **Canonical** — faqat ma’noli parametrlar qoladi (`page`, `category`); `utm_*` va boshqalar tushib qoladi. Blog qidiruvi (`?q=`) — `noindex, follow`.
+- **Schema.org (JSON-LD)** — bosh sahifa va Aloqa: tashkilot (`AccountingService`: manzil, telefon, koordinata — *Filiallar* dan, ijtimoiy tarmoqlar — sozlamalardan) + `WebSite`; kurs: `Course`; maqola: `BlogPosting`; ichki sahifalar: `BreadcrumbList`.
+- **404** — sayt dizaynidagi sahifa, asosiy bo‘limlarga havolalar bilan, `noindex`.
+
+Admin’dan: *Sayt sozlamalari → SEO va brending* (sarlavha, tavsif, OG rasm, favicon) va *Analytics va saytni tasdiqlash* (Google Analytics, Search Console, **Yandex Webmaster**, **Bing** meta-teglari va tasdiqlash fayllari).
+
+Ishga tushirilgach: Search Console va Yandex Webmaster’da saytni tasdiqlang va `https://buxmchj.uz/sitemap.xml` ni yuboring. `.env` da `APP_URL=https://buxmchj.uz` bo‘lishi kerak (havolalar https bilan chiqadi). Plesk’da *Hosting Settings → Preferred domain* ni bitta variantga (`buxmchj.uz`) qo‘ying — `www` bilan takror sahifa bo‘lmasin.
+
 ## Foydalanuvchilar va rollar
 
 Admin panel → **Tizim → Foydalanuvchilar** (faqat *Bosh admin* ko‘radi). Har bir xodimga alohida **login** (masalan, `OxunjonAsrorov`) va parol beriladi; email ixtiyoriy. Panelga login yoki email bilan kirish mumkin. Eski foydalanuvchilarga login avtomatik beriladi: email’ning @ dan oldingi qismi (masalan, `admin@...` → `admin`).

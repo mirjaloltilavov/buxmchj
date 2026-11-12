@@ -20,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // Production'da barcha havolalar (canonical, sitemap, hreflang) https bilan — APP_URL https bo'lsa
+        if ($this->app->environment('production') && str_starts_with((string) config('app.url'), 'https://')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         // Statistika sahifasi vidjetlari (panelda avto-topilmaydi) — lazy yuklanishi uchun Livewire'ga ro'yxatdan o'tkaziladi
         foreach (glob(app_path('Filament/Widgets/Stats/*.php')) as $file) {
             $class = 'App\\Filament\\Widgets\\Stats\\'.basename($file, '.php');

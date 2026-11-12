@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('popup', 'guide')
-@section('title', __('Maqolalar').' — Buxgalter MChJ')
+@php
+    $activeCat = $activeCategory ? $categories->firstWhere('slug', $activeCategory) : null;
+    $pageNo = (int) request('page') > 1 ? (int) request('page') : null;
+@endphp
+@section('title', ($activeCat ? $activeCat->tr('name').' — ' : '').__('Maqolalar').($pageNo ? ' — '.__(':n-sahifa', ['n' => $pageNo]) : '').' — Buxgalter MChJ')
 @section('description', hs('blog.lead', 'Soliq, 1C va buxgalteriya bo‘yicha amaliy maslahatlar — tadbirkorlar, buxgalterlar va o‘quvchilar uchun.'))
 
 @php

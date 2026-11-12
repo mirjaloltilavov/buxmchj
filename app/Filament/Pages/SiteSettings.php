@@ -177,12 +177,16 @@ class SiteSettings extends Page implements HasForms, HasActions
                 ]],
             ],
             'Google: Analytics va Search Console' => [
-                'google' => ['title' => 'Google Analytics va saytni tasdiqlash', 'icon' => 'heroicon-o-chart-bar', 'description' => 'Tashrif statistikasi va qidiruv tizimlarida saytga egalikni tasdiqlash.', 'paths' => ['ga_id', 'gsc_meta', 'verify_files'], 'schema' => fn () => [
+                'google' => ['title' => 'Analytics va saytni tasdiqlash', 'icon' => 'heroicon-o-chart-bar', 'description' => 'Tashrif statistikasi va Google, Yandex, Bing’da saytga egalikni tasdiqlash.', 'paths' => ['ga_id', 'gsc_meta', 'yandex_meta', 'bing_meta', 'verify_files'], 'schema' => fn () => [
                     Forms\Components\TextInput::make('ga_id')->label('Google Analytics o‘lchov ID')->placeholder('G-XXXXXXXXXX')
                         ->regex('/^G-[A-Z0-9]{4,}$/')->validationMessages(['regex' => 'ID “G-” bilan boshlanadi, masalan G-AB12CD34EF.'])
                         ->helperText('Analytics → Administrator → Ma’lumotlar oqimlari → veb-oqim → “O‘lchov ID”. Kiritilsa, kod hamma sahifaga avtomatik qo‘shiladi.'),
                     Forms\Components\TextInput::make('gsc_meta')->label('Search Console meta-teg (ixtiyoriy)')->placeholder('masalan: abc123XYZ...')
                         ->helperText('Search Console “HTML-teg” usulini bersa, content="..." ichidagi qiymatni shu yerga qo‘ying.'),
+                    Forms\Components\TextInput::make('yandex_meta')->label('Yandex Webmaster meta-teg (ixtiyoriy)')->placeholder('masalan: 1a2b3c4d5e6f7a8b')
+                        ->helperText('Yandex Webmaster → “Meta-teg” usuli: <meta name="yandex-verification" content="..."> ichidagi qiymat. O‘zbekistonda Yandex ham ko‘p ishlatiladi.'),
+                    Forms\Components\TextInput::make('bing_meta')->label('Bing Webmaster meta-teg (ixtiyoriy)')->placeholder('masalan: 0123ABCD...')
+                        ->helperText('Bing Webmaster Tools → “HTML Meta Tag”: msvalidate.01 ichidagi qiymat.'),
                     Forms\Components\FileUpload::make('verify_files')->label('Tasdiqlash fayllari (Google, Yandex, Bing)')->multiple()->disk('local')->directory('verification')
                         ->preserveFilenames()->acceptedFileTypes(['text/html', 'text/plain', 'application/xml', 'text/xml'])->maxSize(64)->downloadable()
                         ->helperText('Search Console bergan google....html faylini shu yerga yuklang. U https://buxmchj.uz/fayl-nomi.html manzilida ochiladi, keyin Search Console’da “Tasdiqlash”ni bosing.'),
