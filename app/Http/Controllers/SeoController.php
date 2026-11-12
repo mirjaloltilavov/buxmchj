@@ -42,6 +42,9 @@ class SeoController extends Controller
         foreach (Course::where('is_active', true)->orderBy('sort')->get(['slug', 'updated_at']) as $c) {
             $urls[] = ['course', ['course' => $c->slug], $c->updated_at];
         }
+        foreach (\App\Models\Page::active()->get(['slug', 'updated_at']) as $pg) {
+            $urls[] = ['page', ['page' => $pg->slug], $pg->updated_at];
+        }
         foreach (Article::published()->get(['slug', 'updated_at', 'published_at']) as $a) {
             $urls[] = ['article', ['article' => $a->slug], max($a->updated_at, $a->published_at)];
         }

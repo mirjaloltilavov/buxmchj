@@ -53,11 +53,10 @@ class SiteSettings extends Page implements HasForms, HasActions
 
         return [
             'Sayt' => [
-                'contacts' => ['title' => 'Kontaktlar va asosiy', 'icon' => 'heroicon-o-phone', 'paths' => ['site_name', 'phone', 'work_hours', 'footer_about', 'map_embed', 'map_tiles', 'hero_autoplay'], 'schema' => fn () => [
+                'contacts' => ['title' => 'Kontaktlar va asosiy', 'icon' => 'heroicon-o-phone', 'paths' => ['site_name', 'phone', 'work_hours', 'map_embed', 'map_tiles', 'hero_autoplay'], 'schema' => fn () => [
                     Forms\Components\TextInput::make('site_name')->label('Sayt nomi')->default('Buxgalter MChJ'),
                     Forms\Components\TextInput::make('phone')->label('Telefon')->placeholder('+998 55 500 37 37'),
                     Tr::text('work_hours', 'Ish vaqti'),
-                    Tr::textarea('footer_about', 'Footerdagi qisqa matn', false, 2),
                     Forms\Components\TextInput::make('map_tiles')->label('Xarita fon qatlami (ixtiyoriy)')->placeholder('Standart: OpenStreetMap')
                         ->helperText('Odatda bo‘sh qoldiring. Boshqa xarita uslubi kerak bo‘lsa, {z}/{x}/{y} li tile havolasini kiriting (masalan, kalitli Stadia yoki MapTiler).'),
                     Forms\Components\Textarea::make('map_embed')->label('Xarita (iframe kodi)')->rows(3)->helperText('Yandex yoki Google xaritadan “Встроить / Embed” kodini qo‘ying.'),

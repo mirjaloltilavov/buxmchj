@@ -1640,3 +1640,5 @@ html[lang="ru"] .hero h1,html[lang="ru"] .hero .hero-h{font-size:clamp(40px,3.9v
   .segmented{flex-direction:row;border-radius:100px}
   .segmented label > span{padding:10px 8px;font-size:13px;white-space:normal;text-align:center;line-height:1.2;gap:6px}
 }
+
+.cpage__img{display:block;width:100%;max-width:980px;max-height:520px;object-fit:cover;border-radius:32px;margin:0 0 40px}

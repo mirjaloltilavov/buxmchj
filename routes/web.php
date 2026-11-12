@@ -18,15 +18,9 @@ $pages = function () {
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
     Route::get('/maxfiylik-siyosati', [PageController::class, 'privacy'])->name('privacy');
     Route::get('/ommaviy-oferta', [PageController::class, 'offer'])->name('offer');
+    // Admin → Sahifalar: qo'shimcha sahifalar (eng oxirida — boshqa manzillarni egallamasin)
+    Route::get('/{page}', [PageController::class, 'page'])->where('page', '(?!(?:'.implode('|', \App\Models\Page::RESERVED).')$)[a-z0-9]+(?:-[a-z0-9]+)*')->name('page');
 };
-
-Route::group([], $pages);
-Route::prefix('ru')->name('ru.')->group($pages);
-
-Route::get('/robots.txt', [\App\Http\Controllers\SeoController::class, 'robots'])->name('robots');
-Route::get('/sitemap.xml', [\App\Http\Controllers\SeoController::class, 'sitemap'])->name('sitemap');
-
-Route::post('/lead', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('lead.store');
 
 /*
  | Qidiruv tizimlari uchun tasdiqlash fayllari (Google Search Console, Yandex, Bing).
@@ -39,3 +33,13 @@ Route::get('/{file}', function (string $file) {
 
     return response(\Illuminate\Support\Facades\Storage::disk('local')->get($path), 200, ['Content-Type' => $type.'; charset=UTF-8']);
 })->where('file', '(google[0-9a-f]+\.html|yandex_[0-9a-f]+\.html|BingSiteAuth\.xml|[A-Za-z0-9_-]+-verification\.(html|txt))')->name('verification.file');
+
+Route::group([], $pages);
+Route::prefix('ru')->name('ru.')->group($pages);
+
+Route::get('/robots.txt', [\App\Http\Controllers\SeoController::class, 'robots'])->name('robots');
+Route::get('/sitemap.xml', [\App\Http\Controllers\SeoController::class, 'sitemap'])->name('sitemap');
+
+Route::post('/lead', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('lead.store');
+
+

@@ -109,6 +109,14 @@ class PageController extends Controller
         ]);
     }
 
+    /** Admin'dan yaratilgan qo'shimcha sahifa */
+    public function page()
+    {
+        $page = \App\Models\Page::where('slug', $this->slugParam('page'))->where('is_active', true)->firstOrFail();
+
+        return view('pages.page', compact('page'));
+    }
+
     public function privacy()
     {
         return view('pages.legal', ['key' => 'privacy']);

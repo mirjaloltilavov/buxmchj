@@ -22,7 +22,23 @@
         @if(filled($v)){{ \Illuminate\Support\Str::limit(trim(strip_tags((string) $v)), 220) }}@else<span class="bx-set__empty">Kiritilmagan</span>@endif
         @break
     @case('list')
-        @php $items = collect(is_array($v) ? $v : [])->map(fn ($i) => is_array($i) ? ($i['text']['uz'] ?? $i['title']['uz'] ?? $i['name']['uz'] ?? (is_string($i['text'] ?? null) ? $i['text'] : null)) : $i)->filter()->values(); @endphp
+        @if(is_array($v) && collect($v)->contains(fn ($i) => is_array($i) && array_key_exists('links', $i)))
+            {{-- Ustunli menyu: har ustun — sarlavha va havolalari --}}
+            <div class="bx-cols">
+                @foreach($v as $col)
+                    <div class="bx-cols__c">
+                        <b>{{ $col['title']['uz'] ?? '—' }}</b>
+                        <span class="bx-set__chips">
+                            @if(($col['auto'] ?? null) === 'courses')<span class="bx-pill is-yes">+ barcha kurslar</span>@endif
+                            @foreach(($col['links'] ?? []) as $l)<span class="bx-pill">{{ $l['label']['uz'] ?? '—' }}</span>@endforeach
+                            @if(($col['auto'] ?? null) === 'socials')<span class="bx-pill is-yes">+ ijtimoiy tarmoqlar</span>@endif
+                        </span>
+                    </div>
+                @endforeach
+            </div>
+            @break
+        @endif
+        @php $items = collect(is_array($v) ? $v : [])->map(fn ($i) => is_array($i) ? ($i['text']['uz'] ?? $i['label']['uz'] ?? $i['title']['uz'] ?? $i['name']['uz'] ?? (is_string($i['text'] ?? null) ? $i['text'] : null)) : $i)->filter()->values(); @endphp
         @if($items->isNotEmpty())
             <span class="bx-set__chips">@foreach($items as $it)<span class="bx-pill">{{ $it }}</span>@endforeach</span>
         @else<span class="bx-set__empty">Kiritilmagan</span>@endif

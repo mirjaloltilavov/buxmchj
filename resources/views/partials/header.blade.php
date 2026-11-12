@@ -1,13 +1,8 @@
 @php
     $locale = app()->getLocale();
     $current = preg_replace('/^ru\./', '', request()->route()?->getName() ?? '');
-    $nav = [
-        ['home', __('Asosiy'), ['home']],
-        ['courses', __('Kurslar'), ['courses', 'course']],
-        ['services', __('Buxgalteriya xizmati'), ['services']],
-        ['blog', __('Maqolalar'), ['blog', 'article']],
-        ['contact', __('Aloqa'), ['contact']],
-    ];
+    // Admin → Menyular → Header menyusi
+    $nav = \App\Support\Menu::resolve(\App\Support\Menu::get('menu_header'));
     $phone = setting('phone', '+998 55 500 37 37');
     $phoneHref = 'tel:'.preg_replace('/[^0-9+]/', '', $phone);
 @endphp
@@ -19,8 +14,8 @@
 
             <nav class="nav" aria-label="{{ __('Asosiy menyu') }}" data-nav>
                 <span class="nav-pill" aria-hidden="true"></span>
-                @foreach($nav as [$name, $label, $active])
-                    <a href="{{ lroute($name) }}" @class(['is-active' => in_array($current, $active)]) @if(in_array($current, $active)) aria-current="page" @endif>{{ $label }}</a>
+                @foreach($nav as $m)
+                    <a href="{{ $m['href'] }}" @class(['is-active' => $m['active']]) @if($m['active']) aria-current="page" @endif @if($m['new_tab']) target="_blank" rel="noopener" @endif>{{ $m['label'] }}</a>
                 @endforeach
             </nav>
 
@@ -38,7 +33,7 @@
                 </details>
                 <a href="{{ $phoneHref }}" class="header-phone">{{ icon('call') }} {{ $phone }}</a>
                 <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--m header-cta" data-consult>
-                    <span class="label">{{ __('Konsultatsiya') }}</span>
+                    <span class="label">{{ hs('header.cta', 'Konsultatsiya') }}</span>
                     <span class="arrow">{{ icon('arrow-right') }}</span>
                 </a>
                 <div class="mobile-actions">
@@ -61,9 +56,9 @@
         </div>
     </div>
     <nav class="mm-links">
-        @foreach($nav as $i => [$name, $label, $active])
-            <a href="{{ lroute($name) }}" @class(['is-active' => in_array($current, $active)]) style="--d: {{ 80 + $i * 60 }}ms">
-                <span class="l">@if(in_array($current, $active))<i class="dot"></i>@endif{{ $label }}</span>
+        @foreach($nav as $i => $m)
+            <a href="{{ $m['href'] }}" @class(['is-active' => $m['active']]) style="--d: {{ 80 + $i * 60 }}ms" @if($m['new_tab']) target="_blank" rel="noopener" @endif>
+                <span class="l">@if($m['active'])<i class="dot"></i>@endif{{ $m['label'] }}</span>
                 {{ icon('arrow-right') }}
             </a>
         @endforeach
@@ -74,7 +69,7 @@
             <span><small>{{ __('Qo‘ng‘iroq qiling') }}</small><b>{{ $phone }}</b></span>
         </a>
         <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l mm-cta" data-consult data-burger-close>
-            <span class="label">{{ __('Bepul konsultatsiya') }}</span><span class="arrow">{{ icon('arrow-right') }}</span>
+            <span class="label">{{ hs('header.mobile_cta', 'Bepul konsultatsiya') }}</span><span class="arrow">{{ icon('arrow-right') }}</span>
         </a>
         <div class="mm-socials">
             <a class="icon-btn" href="{{ setting('instagram_url', 'https://instagram.com/buxgalter_mchj') }}" target="_blank" rel="noopener" aria-label="Instagram">{{ icon('instagram') }}</a>

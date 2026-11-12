@@ -122,6 +122,7 @@
     .bx-lang{flex:none;font-size:.62rem;font-weight:700;letter-spacing:.04em;padding:.12rem .35rem;border-radius:.35rem;background:rgba(120,120,130,.12);margin-top:.15rem}
     .bx-std{flex:none;font-size:.62rem;font-weight:600;padding:.12rem .4rem;border-radius:999px;border:1px solid rgba(120,120,130,.3);opacity:.6;margin-top:.15rem}
     @media (max-width:700px){.bx-row{grid-template-columns:1fr;gap:.25rem}}
+    .bx-cols{display:flex;flex-direction:column;gap:.6rem}.bx-cols__c{display:flex;flex-direction:column;gap:.3rem}.bx-cols__c b{font-size:.82rem}
     /* Sozlamalar: ichki yon menyu */
     .bx-shell{display:grid;grid-template-columns:15.5rem minmax(0,1fr);gap:1.5rem;align-items:start}
     .bx-nav{position:sticky;top:5rem}

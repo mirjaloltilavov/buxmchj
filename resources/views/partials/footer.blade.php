@@ -10,8 +10,8 @@
     <div class="container">
         <div class="f-top">
             <div class="h">
-                <h2>{{ __('Savolingiz bormi?') }}<br>{{ __('Biz bilan bog‘laning') }}</h2>
-                <p>{{ __('Kurs yoki buxgalteriya xizmati bo‘yicha mutaxassis bepul maslahat beradi.') }}</p>
+                <h2>{{ hs('footer.title1', 'Savolingiz bormi?') }}<br>{{ hs('footer.title2', 'Biz bilan bog‘laning') }}</h2>
+                <p>{{ hs('footer.lead', 'Kurs yoki buxgalteriya xizmati bo‘yicha mutaxassis bepul maslahat beradi.') }}</p>
             </div>
             <div class="f-contacts">
                 <a class="contact-tile contact-tile--acc" href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}">
@@ -34,7 +34,7 @@
         <div class="f-middle">
             <div class="f-brand">
                 <a href="{{ lroute('home') }}" class="logo">{{ icon('logo-white') }}</a>
-                <p>{{ tr(setting('footer_about')) ?: __('Buxgalteriya kurslari va tadbirkorlar uchun buxgalteriya xizmati. 10 yildan beri.') }}</p>
+                <p>{{ tr(setting('footer_about')) ?: hs('footer.about', 'Buxgalteriya kurslari va tadbirkorlar uchun buxgalteriya xizmati. 10 yildan beri.') }}</p>
                 @if($branch)
                     <div class="branch">
                         <span class="icon-tile icon-tile--ink">{{ icon('location') }}</span>
@@ -43,51 +43,42 @@
                     </div>
                 @endif
             </div>
+            {{-- Admin → Menyular → Footer ustunlari --}}
             <div class="f-cols">
-                <div class="f-col">
-                    <h4>{{ __('Kurslar') }}</h4>
-                    <ul>
-                        @foreach(\App\Models\Course::active()->get(['slug', 'title']) as $c)
-                            <li><a href="{{ lroute('course', ['course' => $c->slug]) }}">{{ $c->tr('title') }}</a></li>
-                        @endforeach
-                        <li><a href="{{ lroute('courses') }}#formats">{{ __('Kurs narxlari') }}</a></li>
-                    </ul>
-                </div>
-                <div class="f-col">
-                    <h4>{{ __('Buxgalteriya xizmati') }}</h4>
-                    <ul>
-                        <li><a href="{{ lroute('services') }}#plans">{{ __('YaTT uchun') }}</a></li>
-                        <li><a href="{{ lroute('services') }}#plans">{{ __('MChJ uchun') }}</a></li>
-                        <li><a href="{{ lroute('services') }}">{{ __('Hisobni tiklash') }}</a></li>
-                        <li><a href="{{ lroute('services') }}#plans">{{ __('Xizmat narxlari') }}</a></li>
-                    </ul>
-                </div>
-                <div class="f-col">
-                    <h4>{{ __('Kompaniya') }}</h4>
-                    <ul>
-                        <li><a href="{{ lroute('courses') }}#teachers">{{ __('Ustozlar') }}</a></li>
-                        <li><a href="{{ lroute('blog') }}">{{ __('Maqolalar') }}</a></li>
-                        <li><a href="{{ lroute('home') }}#faq">{{ __('Ko‘p so‘raladigan savollar') }}</a></li>
-                        <li><a href="{{ lroute('contact') }}">{{ __('Aloqa') }}</a></li>
-                    </ul>
-                </div>
-                <div class="f-col">
-                    <h4>{{ __('Ijtimoiy tarmoqlar') }}</h4>
-                    <ul>
-                        <li><a href="{{ $instagram }}" target="_blank" rel="noopener">Instagram</a></li>
-                        <li><a href="{{ $telegram }}" target="_blank" rel="noopener">Telegram</a></li>
-                        @if($youtube)<li><a href="{{ $youtube }}" target="_blank" rel="noopener">YouTube</a></li>@endif
-                    </ul>
-                </div>
+                @foreach(\App\Support\Menu::get('menu_footer') as $col)
+                    @php
+                        $links = \App\Support\Menu::resolve($col['links'] ?? []);
+                        $auto = $col['auto'] ?? null;
+                    @endphp
+                    <div class="f-col">
+                        <h4>{{ tr($col['title'] ?? null) }}</h4>
+                        <ul>
+                            @if($auto === 'courses')
+                                @foreach(\App\Models\Course::active()->get(['slug', 'title']) as $c)
+                                    <li><a href="{{ lroute('course', ['course' => $c->slug]) }}">{{ $c->tr('title') }}</a></li>
+                                @endforeach
+                            @endif
+                            @foreach($links as $l)
+                                <li><a href="{{ $l['href'] }}" @if($l['new_tab']) target="_blank" rel="noopener" @endif>{{ $l['label'] }}</a></li>
+                            @endforeach
+                            @if($auto === 'socials')
+                                <li><a href="{{ $instagram }}" target="_blank" rel="noopener">Instagram</a></li>
+                                <li><a href="{{ $telegram }}" target="_blank" rel="noopener">Telegram</a></li>
+                                @if($youtube)<li><a href="{{ $youtube }}" target="_blank" rel="noopener">YouTube</a></li>@endif
+                            @endif
+                        </ul>
+                    </div>
+                @endforeach
             </div>
         </div>
 
         <div class="f-divider"></div>
 
         <div class="f-bottom">
-            <p class="c">© {{ date('Y') }} Buxgalter MChJ. {{ __('Barcha huquqlar himoyalangan.') }}</p>
-            <a href="{{ lroute('privacy') }}">{{ __('Maxfiylik siyosati') }}</a>
-            <a href="{{ lroute('offer') }}">{{ __('Ommaviy oferta') }}</a>
+            <p class="c">© {{ date('Y') }} {{ setting('site_name', 'Buxgalter MChJ') }}. {{ hs('footer.copyright', 'Barcha huquqlar himoyalangan.') }}</p>
+            @foreach(\App\Support\Menu::resolve(\App\Support\Menu::get('menu_bottom')) as $l)
+                <a href="{{ $l['href'] }}" @if($l['new_tab']) target="_blank" rel="noopener" @endif>{{ $l['label'] }}</a>
+            @endforeach
             <a href="#top" class="glass-btn" aria-label="{{ __('Yuqoriga') }}" data-to-top>{{ icon('arrow-up') }}</a>
         </div>
     </div>
