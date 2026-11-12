@@ -129,6 +129,16 @@
     .bx-layout li em{font-style:normal;opacity:.6}
     .bx-layout li small{margin-left:auto;font-size:.7rem;opacity:.6}
     .bx-layout li.is-hidden{opacity:.5}
+    /* Yon menyu pastida: panel nomi, versiya, ishlab chiquvchi */
+    .bx-credit{padding:.9rem 1.5rem 1.1rem;border-top:1px solid rgba(120,120,130,.15);display:flex;flex-direction:column;gap:.45rem}
+    .bx-credit__app{font-size:.8rem;color:#4b5563}
+    .dark .bx-credit__app{color:#d1d5db}
+    .bx-credit__ver{display:inline-block;margin-left:.25rem;padding:.05rem .4rem;border-radius:999px;background:rgba(245,165,36,.15);color:#b86e00;font-size:.68rem;font-weight:600}
+    .bx-credit__dev{display:inline-flex;align-items:center;gap:.5rem;font-size:.68rem;color:#9ca3af;transition:color .2s}
+    .bx-credit__dev .seven-logo{color:#272a3d;opacity:.75;transition:opacity .2s}
+    .dark .bx-credit__dev .seven-logo{color:#fff}
+    .bx-credit__dev:hover{color:#6b7280}.bx-credit__dev:hover .seven-logo{opacity:1}
+    .bx-credit__dev--login{justify-content:center;width:100%;margin-top:.5rem}
     /* Sozlamalar: ichki yon menyu */
     .bx-shell{display:grid;grid-template-columns:15.5rem minmax(0,1fr);gap:1.5rem;align-items:start}
     .bx-nav{position:sticky;top:5rem}

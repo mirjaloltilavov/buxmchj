@@ -79,6 +79,11 @@
             @foreach(\App\Support\Menu::resolve(\App\Support\Menu::get('menu_bottom')) as $l)
                 <a href="{{ $l['href'] }}" @if($l['new_tab']) target="_blank" rel="noopener" @endif>{{ $l['label'] }}</a>
             @endforeach
+            {{-- Ishlab chiquvchi --}}
+            <a href="https://7design.uz" target="_blank" rel="noopener" class="f-credit" title="Seven Design Studio — 7design.uz">
+                <span>{{ __('Sayt “Seven Design Studio” tomonidan ishlab chiqilgan') }}</span>
+                @include('partials.seven-logo', ['w' => 96])
+            </a>
             <a href="#top" class="glass-btn" aria-label="{{ __('Yuqoriga') }}" data-to-top>{{ icon('arrow-up') }}</a>
         </div>
     </div>

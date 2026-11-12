@@ -15,6 +15,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    // Admin panel versiyasi (admin yon menyusining pastida ko'rinadi)
+    'version' => '2.0.0',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

@@ -64,6 +64,8 @@ class AdminPanelProvider extends PanelProvider
                 \App\Filament\Widgets\LatestLeads::class,
             ])
             ->renderHook(\Filament\View\PanelsRenderHook::HEAD_END, fn () => view('filament.admin-styles'))
+            ->renderHook(\Filament\View\PanelsRenderHook::SIDEBAR_FOOTER, fn () => view('filament.sidebar-credit'))
+            ->renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_AFTER, fn () => view('filament.login-credit'))
             ->darkMode(true)
             ->globalSearch()
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
