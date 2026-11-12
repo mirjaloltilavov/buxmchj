@@ -103,6 +103,25 @@
     .bx-set__card{display:flex;flex-direction:column}.bx-set__card>.bx-set__rows{flex:1 1 auto}
     .bx-set__foot{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.75rem 1.25rem;border-top:1px solid rgba(0,0,0,.06);font-size:.8rem;color:#868b94}
     .dark .bx-set__foot{border-color:rgba(255,255,255,.08)}
+    /* Kartochka ichi: bo'limlar va qatorlar (ierarxiya) */
+    .bx-set__grid{grid-template-columns:minmax(0,1fr)!important}
+    .bx-set__body{padding:.25rem 0}
+    .bx-set__body.is-off{opacity:.45}
+    .bx-sec{padding:.75rem 1.1rem}
+    .bx-sec + .bx-sec{border-top:1px dashed rgba(120,120,130,.25)}
+    .bx-sec__ttl{display:flex;align-items:center;gap:.45rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#b86e00;margin:.2rem 0 .5rem}
+    .dark .bx-sec__ttl{color:#ffc24d}
+    .bx-sec__ttl::before{content:"";width:.35rem;height:.35rem;border-radius:50%;background:#f5a524}
+    .bx-sec__rows{margin:0;display:flex;flex-direction:column}
+    .bx-row{display:grid;grid-template-columns:minmax(9rem,14rem) minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid rgba(120,120,130,.1)}
+    .bx-row:last-child{border-bottom:0}
+    .bx-row dt{font-size:.8rem;font-weight:600;opacity:.65;padding-top:.1rem}
+    .bx-row dd{margin:0;display:flex;flex-direction:column;gap:.35rem;min-width:0}
+    .bx-row__val{display:flex;align-items:flex-start;gap:.5rem;font-size:.88rem;line-height:1.45}
+    .bx-row__v{flex:1;min-width:0;overflow-wrap:anywhere}
+    .bx-lang{flex:none;font-size:.62rem;font-weight:700;letter-spacing:.04em;padding:.12rem .35rem;border-radius:.35rem;background:rgba(120,120,130,.12);margin-top:.15rem}
+    .bx-std{flex:none;font-size:.62rem;font-weight:600;padding:.12rem .4rem;border-radius:999px;border:1px solid rgba(120,120,130,.3);opacity:.6;margin-top:.15rem}
+    @media (max-width:700px){.bx-row{grid-template-columns:1fr;gap:.25rem}}
     /* Sozlamalar: ichki yon menyu */
     .bx-shell{display:grid;grid-template-columns:15.5rem minmax(0,1fr);gap:1.5rem;align-items:start}
     .bx-nav{position:sticky;top:5rem}

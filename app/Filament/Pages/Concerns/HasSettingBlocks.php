@@ -103,49 +103,119 @@ trait HasSettingBlocks
         Setting::put($root, $all);
     }
 
-    protected function blockData(array $block): array
+    /** Bo'sh maydon uchun saytda ko'rinadigan standart qiymat (masalan, shablondagi matn). Kalit — maydon nomi. */
+    protected function defaultFor(string $name): mixed
+    {
+        return null;
+    }
+
+    /** Maydon nomi bo'yicha standart: "x.title.uz" => standart['uz'] */
+    private function fieldDefault(string $name): mixed
+    {
+        if (preg_match('~^(.*)\.(uz|ru)$~', $name, $m)) {
+            $d = $this->defaultFor($m[1]);
+
+            return is_array($d) ? ($d[$m[2]] ?? null) : null;
+        }
+
+        return $this->defaultFor($name);
+    }
+
+    /** @return array<int, Field> forma ichidagi barcha ko'rinadigan maydonlar */
+    private function blockFields(array $block): array
+    {
+        return array_values(array_filter($this->makeForm()->schema(($block['schema'])())->getFlatComponents(), fn ($c) => $c instanceof Field && ! $c instanceof Placeholder));
+    }
+
+    protected function blockData(array $block, bool $withDefaults = true): array
     {
         $out = [];
         foreach ($block['paths'] as $path) {
             data_set($out, $path, $this->readPath($path));
         }
+        if ($withDefaults) {
+            foreach ($this->blockFields($block) as $c) {
+                if ($c instanceof FileUpload || filled(data_get($out, $c->getName()))) {
+                    continue; // rasm standarti faqat ko'rinishda (yuklanmagan fayl formaga qo'yilmaydi)
+                }
+                $d = $this->fieldDefault($c->getName());
+                if (filled($d) && (is_array($d) || is_string($d))) {
+                    data_set($out, $c->getName(), $d);
+                }
+            }
+        }
 
         return $out;
     }
 
-    /** Blokdagi maydonlarni o'qish uchun qulay qatorlarga aylantiradi. */
+    /**
+     * Kartochka uchun ierarxik ko'rinish: bo'limlar (Fieldset/Section) → qatorlar;
+     * UZ/RU juftligi bitta qatorda. @return array<int, array{title: ?string, rows: array}>
+     */
     protected function blockRows(array $block): array
     {
-        $data = $this->blockData($block);
-        $form = $this->makeForm()->schema(($block['schema'])());
-        $rows = [];
-        foreach ($form->getFlatComponents() as $c) {
-            if (! $c instanceof Field || $c instanceof Placeholder) {
-                continue;
-            }
-            $name = $c->getName();
-            $label = (string) $c->getLabel();
-            if (preg_match('~\.(uz|ru)$~', $name, $m) && ! str_contains($label, '(')) {
-                $label .= ' ('.strtoupper($m[1]).')';
-            }
-            $v = data_get($data, $name);
-            if ((($c instanceof \Filament\Forms\Components\Select && ! $c->isMultiple()) || $c instanceof \Filament\Forms\Components\Radio) && filled($v) && is_scalar($v)) {
-                $v = $c->getOptions()[$v] ?? $v;
-            }
-            $kind = match (true) {
-                $c instanceof FileUpload && $c->isMultiple() => 'files',
-                $c instanceof FileUpload => 'image',
-                $c instanceof Toggle => 'bool',
-                $c instanceof RichEditor => 'html',
-                $c instanceof TagsInput, $c instanceof \App\Filament\Forms\CardsField, $c instanceof \Filament\Forms\Components\Repeater => 'list',
-                $c instanceof TextInput && $c->isPassword() => 'secret',
-                $c instanceof DatePicker => 'date',
-                default => 'text',
-            };
-            $rows[] = ['label' => $label, 'kind' => $kind, 'value' => $v, 'wide' => in_array($kind, ['list', 'html', 'image', 'files'], true) || ($c instanceof \Filament\Forms\Components\Textarea)];
-        }
+        $raw = $this->blockData($block, false);
+        $sections = [['title' => null, 'rows' => []]];
+        $walk = function (array $components, int $sec) use (&$walk, &$sections, $raw) {
+            foreach ($components as $c) {
+                if ($c instanceof Placeholder) {
+                    continue;
+                }
+                if ($c instanceof Field) {
+                    $this->pushRow($sections[$sec]['rows'], $c, $raw);
 
-        return $rows;
+                    continue;
+                }
+                $target = $sec;
+                if (($c instanceof \Filament\Forms\Components\Fieldset || $c instanceof \Filament\Forms\Components\Section) && filled($c->getLabel() ?? ($c instanceof \Filament\Forms\Components\Section ? $c->getHeading() : null))) {
+                    $sections[] = ['title' => (string) ($c instanceof \Filament\Forms\Components\Section ? $c->getHeading() : $c->getLabel()), 'rows' => []];
+                    $target = array_key_last($sections);
+                }
+                foreach ($c->getChildComponentContainers() as $ct) {
+                    $walk($ct->getComponents(), $target);
+                }
+            }
+        };
+        $walk($this->makeForm()->schema(($block['schema'])())->getComponents(), 0);
+
+        return array_values(array_filter($sections, fn ($s) => $s['rows'] !== []));
+    }
+
+    private function pushRow(array &$rows, Field $c, array $raw): void
+    {
+        $name = $c->getName();
+        $lang = preg_match('~\.(uz|ru)$~', $name, $m) ? $m[1] : null;
+        $base = $lang ? substr($name, 0, -3) : $name;
+        $label = trim(preg_replace('~\s*\((UZ|RU)\)$~', '', (string) $c->getLabel()));
+        $v = data_get($raw, $name);
+        $isDefault = false;
+        if (blank($v)) {
+            $d = $this->fieldDefault($name);
+            if (filled($d)) {
+                [$v, $isDefault] = [$d, true];
+            }
+        }
+        if ((($c instanceof Select && ! $c->isMultiple()) || $c instanceof \Filament\Forms\Components\Radio) && filled($v) && is_scalar($v)) {
+            $v = $c->getOptions()[$v] ?? $v;
+        }
+        $kind = match (true) {
+            $c instanceof FileUpload && $c->isMultiple() => 'files',
+            $c instanceof FileUpload => 'image',
+            $c instanceof Toggle => 'bool',
+            $c instanceof RichEditor => 'html',
+            $c instanceof TagsInput, $c instanceof \App\Filament\Forms\CardsField, $c instanceof \Filament\Forms\Components\Repeater => 'list',
+            $c instanceof TextInput && $c->isPassword() => 'secret',
+            $c instanceof DatePicker => 'date',
+            default => 'text',
+        };
+        // UZ/RU juftligi: oldingi qator shu maydonning boshqa tili bo'lsa — birlashtiriladi
+        $last = array_key_last($rows);
+        if ($lang && $last !== null && ($rows[$last]['base'] ?? null) === $base) {
+            $rows[$last]['values'][$lang] = ['v' => $v, 'default' => $isDefault];
+
+            return;
+        }
+        $rows[] = ['base' => $base, 'label' => $label, 'kind' => $kind, 'values' => [($lang ?? '_') => ['v' => $v, 'default' => $isDefault]]];
     }
 
     public function editBlockAction(): Action
@@ -158,14 +228,16 @@ trait HasSettingBlocks
             ->action(function (array $data, array $arguments) {
                 $b = $this->findBlock($arguments['key']);
                 $changes = [];
+                $before = $this->blockData($b);
                 foreach ($b['paths'] as $path) {
-                    $old = $this->readPath($path);
+                    $old = data_get($before, $path);
                     $new = data_get($data, $path);
                     if ($old != $new) {
                         $changes[$path] = ['old' => $old, 'new' => $new];
                     }
                     $this->writePath($path, $new);
                 }
+                // jurnal uchun: standart matn o'zgarmasdan saqlangan bo'lsa — o'zgarish emas
                 if ($changes) {
                     \App\Models\ActivityLog::record('settings', null, $changes, static::$title.' → '.$b['title']);
                 }

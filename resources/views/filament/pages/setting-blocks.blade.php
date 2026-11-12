@@ -90,47 +90,29 @@
                             @endif
                             <x-filament::button size="sm" color="gray" icon="heroicon-m-pencil-square" wire:click="mountAction('editBlock', { key: '{{ $b['key'] }}' })">Tahrirlash</x-filament::button>
                         </header>
-                        <dl class="bx-set__rows {{ $b['toggle'] && ! $b['toggle']['on'] ? 'is-off' : '' }}">
-                            @foreach($b['rows'] as $r)
-                                <div class="bx-set__row {{ $r['wide'] ? 'is-wide' : '' }}">
-                                    <dt>{{ $r['label'] }}</dt>
-                                    <dd>
-                                        @php $v = $r['value']; @endphp
-                                        @switch($r['kind'])
-                                            @case('image')
-                                                @if(filled($v) && is_string($v))<img src="{{ media_url($v) }}" alt="" class="bx-set__img">@else<span class="bx-set__empty">Rasm yo‘q</span>@endif
-                                                @break
-                                            @case('files')
-                                                @php $files = collect(is_array($v) ? $v : [])->filter()->map(fn ($f) => basename((string) $f))->values(); @endphp
-                                                @if($files->isNotEmpty())
-                                                    <span class="bx-set__chips">@foreach($files as $fn)<a class="bx-pill is-yes" href="{{ url($fn) }}" target="_blank" rel="noopener">{{ $fn }}</a>@endforeach</span>
-                                                @else<span class="bx-set__empty">Fayl yuklanmagan</span>@endif
-                                                @break
-                                            @case('bool')
-                                                <span class="bx-pill {{ $v ? 'is-yes' : '' }}">{{ $v ? 'Ha' : 'Yo‘q' }}</span>
-                                                @break
-                                            @case('secret')
-                                                @if(filled($v))<span class="bx-pill is-yes">Kiritilgan ••••••</span>@else<span class="bx-set__empty">Kiritilmagan</span>@endif
-                                                @break
-                                            @case('date')
-                                                @if(filled($v)){{ \Illuminate\Support\Carbon::parse($v)->format('d.m.Y') }}@else<span class="bx-set__empty">—</span>@endif
-                                                @break
-                                            @case('html')
-                                                @if(filled($v)){{ \Illuminate\Support\Str::limit(trim(strip_tags((string) $v)), 220) }}@else<span class="bx-set__empty">Kiritilmagan</span>@endif
-                                                @break
-                                            @case('list')
-                                                @php $items = collect(is_array($v) ? $v : [])->map(fn ($i) => is_array($i) ? ($i['text']['uz'] ?? $i['title']['uz'] ?? $i['name']['uz'] ?? null) : $i)->filter()->values(); @endphp
-                                                @if($items->isNotEmpty())
-                                                    <span class="bx-set__chips">@foreach($items as $it)<span class="bx-pill">{{ $it }}</span>@endforeach</span>
-                                                @else<span class="bx-set__empty">Kiritilmagan</span>@endif
-                                                @break
-                                            @default
-                                                @if(filled($v) && ! is_array($v))<span class="bx-set__txt">{{ \Illuminate\Support\Str::limit((string) $v, 260) }}</span>@else<span class="bx-set__empty">{{ $emptyLabel }}</span>@endif
-                                        @endswitch
-                                    </dd>
+                        <div class="bx-set__body {{ $b['toggle'] && ! $b['toggle']['on'] ? 'is-off' : '' }}">
+                            @foreach($b['rows'] as $sec)
+                                <div class="bx-sec">
+                                    @if($sec['title'])<h4 class="bx-sec__ttl">{{ $sec['title'] }}</h4>@endif
+                                    <dl class="bx-sec__rows">
+                                        @foreach($sec['rows'] as $r)
+                                            <div class="bx-row">
+                                                <dt>{{ $r['label'] }}</dt>
+                                                <dd>
+                                                    @foreach($r['values'] as $lang => $val)
+                                                        <div class="bx-row__val">
+                                                            @if($lang !== '_')<span class="bx-lang">{{ strtoupper($lang) }}</span>@endif
+                                                            <div class="bx-row__v">@include('filament.pages.partials.setting-value', ['kind' => $r['kind'], 'v' => $val['v'], 'emptyLabel' => $emptyLabel])</div>
+                                                            @if($val['default'])<span class="bx-std" title="Admin’da o‘zgartirilmagan — saytda shu standart matn ko‘rinadi">standart</span>@endif
+                                                        </div>
+                                                    @endforeach
+                                                </dd>
+                                            </div>
+                                        @endforeach
+                                    </dl>
                                 </div>
                             @endforeach
-                        </dl>
+                        </div>
                         @if($b['test'])
                             <footer class="bx-set__foot">
                                 <span>Sozlamani saqlagach, ishlashini tekshiring</span>

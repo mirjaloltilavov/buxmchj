@@ -52,6 +52,12 @@ class PageTexts extends Page implements HasForms, HasActions
         return Forms\Components\FileUpload::make($name)->label($label)->image()->disk('public')->directory('pages')->imageEditor();
     }
 
+    /** Bo'sh maydonda saytda hozir ko'rinib turgan matn (shablondagi standart) */
+    protected function defaultFor(string $name): mixed
+    {
+        return \App\Support\TextDefaults::for($name);
+    }
+
     protected function groupIcons(): array
     {
         return ['Bosh sahifa' => 'heroicon-o-home', 'Ichki sahifalar' => 'heroicon-o-document-duplicate'];
