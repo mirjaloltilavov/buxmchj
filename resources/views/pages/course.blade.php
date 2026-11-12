@@ -21,8 +21,8 @@
         'crumbsRoot' => false,
     ])
         <div class="hero-ctas">
-            <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult><span class="label">{{ __('Kursga yozilish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
-            <a href="#plans" class="btn-pill btn-pill--white btn-pill--l"><span class="label">{{ __('Tariflarni ko‘rish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+            <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult><span class="label">{{ hs('course.kursga_yozilish', 'Kursga yozilish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+            <a href="#plans" class="btn-pill btn-pill--white btn-pill--l"><span class="label">{{ hs('course.tariflarni_korish', 'Tariflarni ko‘rish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
         </div>
         @if(! empty($m['stats']))
             <div class="stats">
@@ -69,7 +69,7 @@
             <div class="container program" data-program>
                 <div class="program__left">
                     <div class="program__text" data-reveal style="--d:120ms">
-                        <h2 class="h2">{{ __('Kurs dasturi') }}</h2>
+                        <h2 class="h2">{{ hs('course.kurs_dasturi', 'Kurs dasturi') }}</h2>
                         @if(tr($m['program_lead'] ?? null))<p>{{ tr($m['program_lead']) }}</p>@endif
                     </div>
                     <nav class="program__nav" data-reveal style="--d:240ms">
@@ -101,7 +101,7 @@
                 <div class="outcomes__img" data-reveal="clip-up">@if(! empty($m['outcomes_image']))<img src="{{ media_url($m['outcomes_image']) }}" alt="" loading="lazy">@endif</div>
                 <div class="outcomes__text">
                     <div class="outcomes__head" data-reveal>
-                        <h2 class="h2 h2--56">{{ __('Kurs yakunida siz') }}</h2>
+                        <h2 class="h2 h2--56">{{ hs('course.kurs_yakunida_siz', 'Kurs yakunida siz') }}</h2>
                         @if(tr($m['outcomes_lead'] ?? null))<p>{{ tr($m['outcomes_lead']) }}</p>@endif
                     </div>
                     <ul class="outcomes__list">
@@ -118,20 +118,20 @@
     <section class="section section--soft" id="plans" @if($course->outcomes) style="padding-top:0" @endif>
         <div class="container">
             @if($onRequest)
-                <div class="section-head"><h2 class="h2" data-reveal>{{ __('Tariflar') }}</h2></div>
+                <div class="section-head"><h2 class="h2" data-reveal>{{ hs('course.tariflar', 'Tariflar') }}</h2></div>
                 <div class="on-request" data-reveal>
                     <span class="icon-tile">{{ icon('receipt-text') }}</span>
-                    <div class="t"><b>{{ __('Narxi so‘rov bo‘yicha') }}</b><p>{{ __('Narx guruh va o‘qish formatiga qarab belgilanadi. Bepul konsultatsiyada aniq narx va to‘lov shartlarini aytamiz.') }}</p></div>
-                    <a href="#consultation" class="btn-pill btn-pill--yellow btn-pill--l shine" data-consult><span class="label">{{ __('Narxni bilish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                    <div class="t"><b>{{ hs('course.narxi_sorov_boyicha', 'Narxi so‘rov bo‘yicha') }}</b><p>{{ hs('course.narx_guruh_va_oqish_formatiga_qarab_belg', 'Narx guruh va o‘qish formatiga qarab belgilanadi. Bepul konsultatsiyada aniq narx va to‘lov shartlarini aytamiz.') }}</p></div>
+                    <a href="#consultation" class="btn-pill btn-pill--yellow btn-pill--l shine" data-consult><span class="label">{{ hs('course.narxni_bilish', 'Narxni bilish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
                 </div>
             @else
                 <div class="plans-head">
-                    <h2 class="h2" data-reveal>{{ __('Tariflar') }}</h2>
+                    <h2 class="h2" data-reveal>{{ hs('course.tariflar', 'Tariflar') }}</h2>
                     <div class="plans-head__right" data-reveal style="--d:120ms">
                         @if(tr($m['plans_lead'] ?? null))<p>{{ tr($m['plans_lead']) }}</p>@endif
                         <div class="segmented segmented--sm" data-pay-toggle>
-                            <label><input type="radio" name="pay" value="once" checked><span>{{ icon('book') }} {{ __('Bir martada −20%') }}</span></label>
-                            <label><input type="radio" name="pay" value="split"><span>{{ icon('briefcase') }} {{ __('Bo‘lib to‘lash') }}</span></label>
+                            <label><input type="radio" name="pay" value="once" checked><span>{{ icon('book') }} {{ hs('course.bir_martada_20', 'Bir martada −20%') }}</span></label>
+                            <label><input type="radio" name="pay" value="split"><span>{{ icon('briefcase') }} {{ hs('course.bolib_tolash', 'Bo‘lib to‘lash') }}</span></label>
                         </div>
                     </div>
                 </div>
@@ -141,13 +141,13 @@
                         <div @class(['pcard', 'pcard--hl' => $hl]) data-reveal="up40" style="--d: {{ $i * 80 + ($hl ? 120 : 0) }}ms">
                             <div class="pcard__head"><h3>{{ tr($p['name'] ?? null) }}</h3><p>{{ tr($p['subtitle'] ?? null) }}</p></div>
                             <div class="pcard__price" data-price data-once="{{ (int) ($p['price_once'] ?? 0) }}" data-split="{{ (int) ($p['price_split'] ?? 0) }}">
-                                <small data-price-label data-once-label="{{ __('Bir martada to‘lansa') }}" data-split-label="{{ __('Bo‘lib to‘lansa') }}">{{ __('Bir martada to‘lansa') }}</small>
+                                <small data-price-label data-once-label="{{ hs('course.bir_martada_tolansa', 'Bir martada to‘lansa') }}" data-split-label="{{ hs('course.bolib_tolansa', 'Bo‘lib to‘lansa') }}">{{ hs('course.bir_martada_tolansa', 'Bir martada to‘lansa') }}</small>
                                 <b><span data-price-value>{{ money_uz((int) ($p['price_once'] ?? 0)) }}</span> {{ __('so‘m') }}</b>
                                 @if(! empty($p['price_split']))
-                                    <div class="pcard__full"><span data-price-alt><s>{{ __('Bo‘lib to‘lansa') }}: {{ money_uz((int) $p['price_split']) }} {{ __('so‘m') }}</s></span><em class="badge-y @if($hl) badge-y--dark @endif" data-price-badge>−20%</em></div>
+                                    <div class="pcard__full"><span data-price-alt><s>{{ hs('course.bolib_tolansa', 'Bo‘lib to‘lansa') }}: {{ money_uz((int) $p['price_split']) }} {{ __('so‘m') }}</s></span><em class="badge-y @if($hl) badge-y--dark @endif" data-price-badge>−20%</em></div>
                                 @endif
                             </div>
-                            <a href="#consultation" class="btn-pill btn-pill--l {{ $hl ? 'btn-pill--ink' : 'btn-pill--outline' }} pcard__btn" data-consult><span class="label">{{ __('Tarifni tanlash') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                            <a href="#consultation" class="btn-pill btn-pill--l {{ $hl ? 'btn-pill--ink' : 'btn-pill--outline' }} pcard__btn" data-consult><span class="label">{{ hs('course.tarifni_tanlash', 'Tarifni tanlash') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
                             <hr>
                             <ul class="pcard__features">
                                 @foreach(($p['features'] ?? []) as $f)<li>{{ icon('tick-circle') }}<span>{{ tr($f['text'] ?? $f) }}</span></li>@endforeach

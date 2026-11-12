@@ -11,8 +11,8 @@
         'image' => setting('texts.courses_page.image') ?: 'img/courses-hero.jpg',
     ])
         <div class="hero-ctas">
-            <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult><span class="label">{{ __('Kursga yozilish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
-            <a href="#formats" class="btn-pill btn-pill--white btn-pill--l"><span class="label">{{ __('Kurslarni ko‘rish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+            <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult><span class="label">{{ hs('courses_page.kursga_yozilish', 'Kursga yozilish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+            <a href="#formats" class="btn-pill btn-pill--white btn-pill--l"><span class="label">{{ hs('courses_page.kurslarni_korish', 'Kurslarni ko‘rish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
         </div>
         <div class="stats">
             <div><b>{{ hs('courses_page.stat1', '10 yil') }}</b><span>{{ icon('calendar') }} {{ hs('courses_page.stat1_label', 'tajriba') }}</span></div>
@@ -21,12 +21,12 @@
         </div>
         @slot('cards')
             <div class="info-card info-card--dark" style="right:-20px;top:32px">
-                <span class="t"><small>{{ __('Toshkent · onlayn') }}</small><b>{{ __('Yangi guruhga qabul ochiq') }}</b></span>
+                <span class="t"><small>{{ hs('courses_page.toshkent_onlayn', 'Toshkent · onlayn') }}</small><b>{{ hs('courses_page.yangi_guruhga_qabul_ochiq', 'Yangi guruhga qabul ochiq') }}</b></span>
                 <span class="round">{{ icon('arrow-right') }}</span>
             </div>
             <div class="info-card info-card--tl" style="left:-40px;top:376px">
                 <span class="icon-tile">{{ icon('monitor') }}</span>
-                <span class="t"><b>{{ __('1C dasturi bepul') }}</b><small>{{ __('noutbukingizga o‘rnatiladi') }}</small></span>
+                <span class="t"><b>{{ hs('courses_page.1c_dasturi_bepul', '1C dasturi bepul') }}</b><small>{{ hs('courses_page.noutbukingizga_ornatiladi', 'noutbukingizga o‘rnatiladi') }}</small></span>
             </div>
         @endslot
     @endcomponent
@@ -64,7 +64,7 @@
                     </div>
                 @endforeach
             </div>
-            <p class="note">{{ __('Maosh miqdorlari bitiruvchilar tajribasiga asoslangan va ish joyiga qarab farq qiladi.') }}</p>
+            <p class="note">{{ hs('courses_page.maosh_miqdorlari_bitiruvchilar_tajribasi', 'Maosh miqdorlari bitiruvchilar tajribasiga asoslangan va ish joyiga qarab farq qiladi.') }}</p>
         </div>
     </section>
 

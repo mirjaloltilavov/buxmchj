@@ -104,12 +104,12 @@
                             <span class="badge-y"><i class="dot"></i><span data-b="name">{{ $first['name'] }}</span></span>
                             <div class="c-branch__lines">
                                 <div class="c-line"><span class="icon-tile icon-tile--line">{{ icon('location', 20) }}</span><div><small>{{ __('Manzil') }}</small><b data-b="address">{{ $first['address'] }}</b></div></div>
-                                <div class="c-line" @if(! $first['hours']) hidden @endif><span class="icon-tile icon-tile--line">{{ icon('clock', 20) }}</span><div><small>{{ __('Ish vaqti') }}</small><b data-b="hours">{{ $first['hours'] }}</b></div></div>
+                                <div class="c-line" @if(! $first['hours']) hidden @endif><span class="icon-tile icon-tile--line">{{ icon('clock', 20) }}</span><div><small>{{ hs('contact.ish_vaqti', 'Ish vaqti') }}</small><b data-b="hours">{{ $first['hours'] }}</b></div></div>
                                 <div class="c-line"><span class="icon-tile icon-tile--line">{{ icon('call', 20) }}</span><div><small>{{ __('Telefon') }}</small><b data-b="phone">{{ $first['phone'] }}</b></div></div>
                             </div>
                             <div class="c-branch__btns">
-                                <a href="{{ $first['route'] }}" target="_blank" rel="noopener" class="btn-pill btn-pill--yellow btn-pill--m btn-pill--block" data-b-href="route"><span class="label">{{ __('Yo‘l ko‘rsatish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
-                                <a href="{{ $first['tel'] }}" class="icon-btn icon-btn--line" aria-label="{{ __('Qo‘ng‘iroq qilish') }}" data-b-href="tel">{{ icon('call') }}</a>
+                                <a href="{{ $first['route'] }}" target="_blank" rel="noopener" class="btn-pill btn-pill--yellow btn-pill--m btn-pill--block" data-b-href="route"><span class="label">{{ hs('contact.yol_korsatish', 'Yo‘l ko‘rsatish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                                <a href="{{ $first['tel'] }}" class="icon-btn icon-btn--line" aria-label="{{ hs('contact.qongiroq_qilish', 'Qo‘ng‘iroq qilish') }}" data-b-href="tel">{{ icon('call') }}</a>
                             </div>
                         </div>
                     </div>

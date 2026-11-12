@@ -60,10 +60,98 @@ class PageTexts extends Page implements HasForms, HasActions
 
     protected function groupIcons(): array
     {
-        return ['Bosh sahifa' => 'heroicon-o-home', 'Ichki sahifalar' => 'heroicon-o-document-duplicate'];
+        return [
+            'Bosh sahifa' => 'heroicon-o-home', 'Kurslar sahifasi' => 'heroicon-o-academic-cap', 'Kurs sahifasi' => 'heroicon-o-book-open',
+            'Xizmat sahifasi' => 'heroicon-o-briefcase', 'Maqolalar sahifasi' => 'heroicon-o-newspaper', 'Maqola sahifasi' => 'heroicon-o-document-text',
+            'Aloqa sahifasi' => 'heroicon-o-phone',
+        ];
     }
 
+    /** Matn kaliti prefiksi => [bo'lim, yangi blok nomi, ikonka] (qo'lda yozilmagan matnlar shu yerga avtomatik tushadi) */
+    private const AUTO = [
+        'hero' => ['Bosh sahifa', 'Hero (birinchi ekran)', 'heroicon-o-photo'],
+        'graduates' => ['Bosh sahifa', 'Bitiruvchilar bloki', 'heroicon-o-user-group'],
+        'teachers' => ['Bosh sahifa', 'Ustozlar bloki', 'heroicon-o-users'],
+        'instagram' => ['Bosh sahifa', 'Instagram bloki', 'heroicon-o-camera'],
+        'home' => ['Bosh sahifa', 'Boshqa matnlar', 'heroicon-o-ellipsis-horizontal-circle'],
+        'courses_page' => ['Kurslar sahifasi', 'Kurslar sahifasi', 'heroicon-o-academic-cap'],
+        'career' => ['Kurslar sahifasi', 'Karyera bloki', 'heroicon-o-briefcase'],
+        'course' => ['Kurs sahifasi', 'Kurs sahifasi matnlari', 'heroicon-o-book-open'],
+        'services_page' => ['Xizmat sahifasi', 'Xizmat sahifasi', 'heroicon-o-briefcase'],
+        'blog' => ['Maqolalar sahifasi', 'Maqolalar sahifasi', 'heroicon-o-newspaper'],
+        'article' => ['Maqola sahifasi', 'Maqola sahifasi matnlari', 'heroicon-o-document-text'],
+        'contact' => ['Aloqa sahifasi', 'Aloqa sahifasi', 'heroicon-o-phone'],
+    ];
+
     protected function blocks(): array
+    {
+        static $built;
+
+        return $built ??= $this->withAutoFields($this->manualBlocks());
+    }
+
+    /**
+     * Shablonlardagi hs('...') matnlaridan qo'lda yozilmaganlari avtomatik maydon bo'ladi:
+     * shu prefiksli blok bo'lsa — uning "Boshqa matnlar" qismiga, bo'lmasa — yangi blok.
+     */
+    private function withAutoFields(array $groups): array
+    {
+        $covered = [];
+        $owner = [];
+        foreach ($groups as $g => $blocks) {
+            foreach ($blocks as $key => $b) {
+                foreach ($this->makeForm()->schema(($b['schema'])())->getFlatComponents(withHidden: true) as $c) {
+                    if ($c instanceof Forms\Components\Field) {
+                        $covered[preg_replace('~\.(uz|ru)$~', '', $c->getName())] = true;
+                    }
+                }
+                foreach ($b['paths'] as $path) {
+                    $owner[preg_replace('/^texts\./', '', $path)] ??= [$g, $key];
+                }
+            }
+        }
+        $extra = [];
+        foreach (\App\Support\TextDefaults::all() as $k => $default) {
+            $prefix = strtok($k, '.');
+            if (isset($covered['texts.'.$k]) || in_array($prefix, ['header', 'footer'], true)) {
+                continue;
+            }
+            $extra[$prefix][$k] = $default;
+        }
+        foreach ($extra as $prefix => $items) {
+            $fields = fn () => collect($items)->map(fn ($d, $k) => self::autoField('texts.'.$k, $d))->values()->all();
+            if (isset($owner[$prefix])) {
+                [$g, $key] = $owner[$prefix];
+                $old = $groups[$g][$key]['schema'];
+                $groups[$g][$key]['schema'] = fn () => [...$old(), Forms\Components\Section::make('Boshqa matnlar')->schema($fields())];
+
+                continue;
+            }
+            [$g, $title, $icon] = self::AUTO[$prefix] ?? ['Bosh sahifa', ucfirst(str_replace('_', ' ', $prefix)), 'heroicon-o-document-text'];
+            $groups[$g]['auto_'.$prefix] = ['title' => $title, 'icon' => $icon, 'paths' => ['texts.'.$prefix], 'schema' => $fields];
+        }
+        // bo'limlar tartibi
+        $order = array_keys($this->groupIcons());
+
+        return collect($groups)->sortBy(fn ($b, $g) => array_search($g, $order, true) === false ? 99 : array_search($g, $order, true))->all();
+    }
+
+    /** Avtomatik maydon: yorlig'i — saytdagi matnning o'zi (qaysi matn ekani darhol tushunarli) */
+    private static function autoField(string $name, mixed $default): Forms\Components\Component
+    {
+        if (is_string($default) && str_starts_with($default, 'img/')) {
+            return self::image($name, 'Rasm');
+        }
+        if (is_array($default) && array_is_list($default)) {
+            return self::list($name, 'Ro‘yxat');
+        }
+        $uz = is_array($default) ? (string) ($default['uz'] ?? '') : '';
+        $label = '«'.\Illuminate\Support\Str::limit($uz, 48).'»';
+
+        return mb_strlen($uz) > 70 ? Tr::textarea($name, $label, false, 2) : Tr::text($name, $label);
+    }
+
+    private function manualBlocks(): array
     {
         return [
             'Bosh sahifa' => [
@@ -124,18 +212,30 @@ class PageTexts extends Page implements HasForms, HasActions
                     ])->all(),
                 ]],
             ],
-            'Ichki sahifalar' => [
-                'pages' => ['title' => 'Sahifa sarlavhalari va izohlari', 'icon' => 'heroicon-o-document-duplicate', 'paths' => ['texts.courses_page', 'texts.services_page', 'texts.blog', 'texts.contact'], 'schema' => fn () => [
-                    Tr::text('texts.courses_page.title', 'Kurslar sahifasi sarlavhasi'),
-                    Tr::textarea('texts.courses_page.lead', 'Kurslar sahifasi izohi', false, 2),
-                    Forms\Components\Grid::make(3)->schema([
+            'Kurslar sahifasi' => [
+                'courses_page' => ['title' => 'Sarlavha, izoh va raqamlar', 'icon' => 'heroicon-o-academic-cap', 'paths' => ['texts.courses_page'], 'schema' => fn () => [
+                    Tr::text('texts.courses_page.title', 'Sarlavha'),
+                    Tr::textarea('texts.courses_page.lead', 'Izoh', false, 2),
+                    Forms\Components\Fieldset::make('Raqamlar')->columns(1)->schema([
                         Tr::text('texts.courses_page.stat1', 'Raqam 1'), Tr::text('texts.courses_page.stat1_label', 'Raqam 1 izohi'),
                         Tr::text('texts.courses_page.stat2', 'Raqam 2'), Tr::text('texts.courses_page.stat2_label', 'Raqam 2 izohi'),
                         Tr::text('texts.courses_page.stat3', 'Raqam 3'), Tr::text('texts.courses_page.stat3_label', 'Raqam 3 izohi'),
                     ]),
-                    Tr::textarea('texts.services_page.lead', 'Xizmat sahifasi izohi', false, 2),
-                    Tr::textarea('texts.blog.lead', 'Maqolalar sahifasi izohi', false, 2),
-                    Tr::textarea('texts.contact.lead', 'Aloqa sahifasi izohi', false, 2),
+                ]],
+            ],
+            'Xizmat sahifasi' => [
+                'services_page' => ['title' => 'Xizmat sahifasi', 'icon' => 'heroicon-o-briefcase', 'paths' => ['texts.services_page'], 'schema' => fn () => [
+                    Tr::textarea('texts.services_page.lead', 'Sarlavha ostidagi izoh', false, 2),
+                ]],
+            ],
+            'Maqolalar sahifasi' => [
+                'blog' => ['title' => 'Maqolalar sahifasi', 'icon' => 'heroicon-o-newspaper', 'paths' => ['texts.blog'], 'schema' => fn () => [
+                    Tr::textarea('texts.blog.lead', 'Sarlavha ostidagi izoh', false, 2),
+                ]],
+            ],
+            'Aloqa sahifasi' => [
+                'contact' => ['title' => 'Aloqa sahifasi', 'icon' => 'heroicon-o-phone', 'paths' => ['texts.contact'], 'schema' => fn () => [
+                    Tr::textarea('texts.contact.lead', 'Sarlavha ostidagi izoh', false, 2),
                 ]],
             ],
         ];

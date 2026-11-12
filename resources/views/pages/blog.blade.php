@@ -22,10 +22,10 @@
         <div class="container p-hero__body p-hero__body--end">
             <div class="p-hero__left">
                 <nav class="crumbs" aria-label="breadcrumb">
-                    <a href="{{ lroute('home') }}">{{ __('Asosiy') }}</a>{{ icon('arrow-right') }}<b>{{ __('Maqolalar') }}</b>
+                    <a href="{{ lroute('home') }}">{{ __('Asosiy') }}</a>{{ icon('arrow-right') }}<b>{{ hs('blog.maqolalar', 'Maqolalar') }}</b>
                 </nav>
                 <div class="p-hero__text">
-                    <h1>{{ __('Maqolalar') }}</h1>
+                    <h1>{{ hs('blog.maqolalar', 'Maqolalar') }}</h1>
                     <p class="p-hero__lead">{{ hs('blog.lead', 'Soliq, 1C va buxgalteriya bo‘yicha amaliy maslahatlar — tadbirkorlar, buxgalterlar va o‘quvchilar uchun.') }}</p>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     {{ icon('search-normal') }}
                     @if($activeCategory)<input type="hidden" name="category" value="{{ $activeCategory }}">@endif
                     <input id="bsearch-q" type="search" name="q" value="{{ $search }}" autocomplete="off"
-                           placeholder="{{ __('Maqola nomi yoki mavzu') }}" data-hints='@json(array_map(fn ($h) => $h.'…', $hints))'>
+                           placeholder="{{ hs('blog.maqola_nomi_yoki_mavzu', 'Maqola nomi yoki mavzu') }}" data-hints='@json(array_map(fn ($h) => $h.'…', $hints))'>
                     <span class="bsearch__ph" aria-hidden="true"></span>
                 </div>
             </form>
@@ -59,7 +59,7 @@
                             <h2><a href="{{ $furl }}">{{ $featured->tr('title') }}</a></h2>
                             @if($featured->tr('excerpt'))<p>{{ $featured->tr('excerpt') }}</p>@endif
                         </div>
-                        <a href="{{ $furl }}" class="read-link">{{ __('Maqolani o‘qish') }} {{ icon('arrow-right') }}</a>
+                        <a href="{{ $furl }}" class="read-link">{{ hs('blog.maqolani_oqish', 'Maqolani o‘qish') }} {{ icon('arrow-right') }}</a>
                     </div>
                 </article>
             </div>
@@ -71,7 +71,7 @@
         <div class="container ball__in">
             <div class="bfilter" data-bfilter>
                 <div class="bfilter__chips" role="tablist">
-                    <a href="{{ lroute('blog', array_filter(['q' => $search ?: null])) }}#all" @class(['fchip', 'is-active' => ! $activeCategory]) data-fchip>{{ __('Barchasi') }} <small>{{ $total }}</small></a>
+                    <a href="{{ lroute('blog', array_filter(['q' => $search ?: null])) }}#all" @class(['fchip', 'is-active' => ! $activeCategory]) data-fchip>{{ hs('blog.barchasi', 'Barchasi') }} <small>{{ $total }}</small></a>
                     @foreach($categories as $cat)
                         @continue(! $cat->articles_count)
                         <a href="{{ lroute('blog', array_filter(['category' => $cat->slug, 'q' => $search ?: null])) }}#all" @class(['fchip', 'is-active' => $activeCategory === $cat->slug]) data-fchip>{{ $cat->tr('name') }} <small>{{ $cat->articles_count }}</small></a>
@@ -82,13 +82,13 @@
 
             <div data-bresults>
                 @if($search !== '')
-                    <p class="bsearch-note">{{ __('Qidiruv natijalari') }}: «{{ $search }}» · <a href="{{ lroute('blog', array_filter(['category' => $activeCategory])) }}#all">{{ __('Tozalash') }}</a></p>
+                    <p class="bsearch-note">{{ hs('blog.qidiruv_natijalari', 'Qidiruv natijalari') }}: «{{ $search }}» · <a href="{{ lroute('blog', array_filter(['category' => $activeCategory])) }}#all">{{ hs('blog.tozalash', 'Tozalash') }}</a></p>
                 @endif
                 @if($articles->isEmpty())
                     <div class="bempty">
                         <span class="icon-tile">{{ icon('search-normal') }}</span>
-                        <b>{{ __('Hech narsa topilmadi.') }}</b>
-                        <p>{{ __('Boshqa so‘z bilan qidirib ko‘ring yoki barcha maqolalarni ko‘ring.') }}</p>
+                        <b>{{ hs('blog.hech_narsa_topilmadi', 'Hech narsa topilmadi.') }}</b>
+                        <p>{{ hs('blog.boshqa_soz_bilan_qidirib_koring_yoki_bar', 'Boshqa so‘z bilan qidirib ko‘ring yoki barcha maqolalarni ko‘ring.') }}</p>
                     </div>
                 @else
                     <div class="agrid" data-bgrid>
@@ -99,7 +99,7 @@
                 @endif
                 @if($articles->hasMorePages())
                     <div class="bmore">
-                        <a href="{{ $articles->nextPageUrl() }}#all" class="btn-pill btn-pill--outline btn-pill--l" data-bmore><span class="label">{{ __('Ko‘proq maqolalar') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                        <a href="{{ $articles->nextPageUrl() }}#all" class="btn-pill btn-pill--outline btn-pill--l" data-bmore><span class="label">{{ hs('blog.koproq_maqolalar', 'Ko‘proq maqolalar') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
                     </div>
                 @endif
             </div>
@@ -115,7 +115,7 @@
                     <h2>{{ hs('blog.tg_title', 'Yangi maqolalarni Telegram’da o‘qing') }}</h2>
                     <p>{{ hs('blog.tg_text', 'Soliq yangiliklari va amaliy maslahatlar — haftasiga bir necha marta.') }}</p>
                 </div>
-                <a href="{{ setting('telegram_url', 'https://t.me/buxgalter_mchj') }}" target="_blank" rel="noopener" class="btn-pill btn-pill--blue btn-pill--l"><span class="label">{{ __('Kanalga obuna bo‘lish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                <a href="{{ setting('telegram_url', 'https://t.me/buxgalter_mchj') }}" target="_blank" rel="noopener" class="btn-pill btn-pill--blue btn-pill--l"><span class="label">{{ hs('blog.kanalga_obuna_bolish', 'Kanalga obuna bo‘lish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
             </div>
         </div>
     </section>

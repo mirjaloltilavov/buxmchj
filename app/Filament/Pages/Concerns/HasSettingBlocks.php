@@ -124,7 +124,7 @@ trait HasSettingBlocks
     /** @return array<int, Field> forma ichidagi barcha ko'rinadigan maydonlar */
     private function blockFields(array $block): array
     {
-        return array_values(array_filter($this->makeForm()->schema(($block['schema'])())->getFlatComponents(), fn ($c) => $c instanceof Field && ! $c instanceof Placeholder));
+        return array_values(array_filter($this->makeForm()->schema(($block['schema'])())->getFlatComponents(withHidden: true), fn ($c) => $c instanceof Field && ! $c instanceof Placeholder));
     }
 
     protected function blockData(array $block, bool $withDefaults = true): array
@@ -227,17 +227,21 @@ trait HasSettingBlocks
             ->form(fn (array $arguments) => ($this->findBlock($arguments['key'])['schema'])())
             ->action(function (array $data, array $arguments) {
                 $b = $this->findBlock($arguments['key']);
-                $changes = [];
                 $before = $this->blockData($b);
-                foreach ($b['paths'] as $path) {
-                    $old = data_get($before, $path);
-                    $new = data_get($data, $path);
-                    if ($old != $new) {
-                        $changes[$path] = ['old' => $old, 'new' => $new];
+                $changes = [];
+                // Faqat formadagi maydonlar yoziladi: shu bo'lim ostidagi boshqa blok matnlari va kartochkadagi tugma holati saqlanib qoladi
+                foreach ($this->blockFields($b) as $field) {
+                    $name = $field->getName();
+                    if (! \Illuminate\Support\Arr::has($data, $name)) {
+                        continue; // yashirin (shartli) maydon — eski qiymati saqlanadi
                     }
-                    $this->writePath($path, $new);
+                    $old = data_get($before, $name);
+                    $new = data_get($data, $name);
+                    if ($old != $new) {
+                        $changes[$name] = ['old' => $old, 'new' => $new];
+                    }
+                    $this->writePath($name, $new);
                 }
-                // jurnal uchun: standart matn o'zgarmasdan saqlangan bo'lsa — o'zgarish emas
                 if ($changes) {
                     \App\Models\ActivityLog::record('settings', null, $changes, static::$title.' → '.$b['title']);
                 }

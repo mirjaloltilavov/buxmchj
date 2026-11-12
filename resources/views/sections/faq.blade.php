@@ -5,7 +5,7 @@
         <div class="left">
             <h2 class="h2">{{ hs('faq.title', 'Ko‘p so‘raladigan savollar') }}</h2>
             <p>{{ hs('faq.lead', 'Javob topmadingizmi? Telegram’da yozing yoki qo‘ng‘iroq qiling.') }}</p>
-            <a href="{{ setting('telegram_url', 'https://t.me/buxgalter_mchj') }}" target="_blank" rel="noopener" class="btn btn--blue">{{ icon('send-2') }} {{ __('Telegram’da yozish') }}</a>
+            <a href="{{ setting('telegram_url', 'https://t.me/buxgalter_mchj') }}" target="_blank" rel="noopener" class="btn btn--blue">{{ icon('send-2') }} {{ hs('faq.telegramda_yozish', 'Telegram’da yozish') }}</a>
         </div>
         <div class="accordion" data-accordion>
             @foreach($faqs as $i => $faq)

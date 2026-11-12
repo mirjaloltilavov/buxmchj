@@ -21,7 +21,7 @@
         <div class="container a-hero__body">
             <nav class="crumbs" aria-label="breadcrumb">
                 <a href="{{ lroute('home') }}">{{ __('Asosiy') }}</a>{{ icon('arrow-right') }}
-                <a href="{{ lroute('blog') }}">{{ __('Maqolalar') }}</a>
+                <a href="{{ lroute('blog') }}">{{ hs('article.maqolalar', 'Maqolalar') }}</a>
                 @if($article->category){{ icon('arrow-right') }}<a href="{{ lroute('blog', ['category' => $article->category->slug]) }}#all"><b>{{ $article->category->tr('name') }}</b></a>@endif
             </nav>
             <h1 class="a-hero__title">@foreach(preg_split('/\s+/u', trim($shareTitle)) as $wi => $w)<span class="w" style="--i:{{ $wi }}">{{ $w }}</span> @endforeach</h1>
@@ -29,7 +29,7 @@
                 @if($article->category)<span class="tag">{{ $article->category->tr('name') }}</span>@endif
                 <span>{{ icon('user') }} {{ $author }}</span>
                 <span>{{ icon('calendar') }} {{ $article->dateLabel() }}</span>
-                <span>{{ icon('clock') }} {{ $article->read_minutes }} {{ __('daqiqa o‘qish') }}</span>
+                <span>{{ icon('clock') }} {{ $article->read_minutes }} {{ hs('article.daqiqa_oqish', 'daqiqa o‘qish') }}</span>
             </div>
         </div>
         @if($article->cover)
@@ -44,12 +44,12 @@
         <div class="container a-body__grid">
             <aside class="a-share">
                 <div class="a-share__in">
-                    <span class="a-share__label">{{ __('Ulashish') }}</span>
+                    <span class="a-share__label">{{ hs('article.ulashish', 'Ulashish') }}</span>
                     <div class="a-share__btns">
                         <a class="icon-btn icon-btn--line" href="https://t.me/share/url?url={{ urlencode($shareUrl) }}&text={{ urlencode($shareTitle) }}" target="_blank" rel="noopener" aria-label="Telegram">{{ icon('send-2') }}</a>
                         <a class="icon-btn icon-btn--line" href="{{ setting('instagram_url', 'https://instagram.com/buxgalter_mchj') }}" target="_blank" rel="noopener" aria-label="Instagram" data-share-native>{{ icon('instagram') }}</a>
                         <a class="icon-btn icon-btn--line" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}" target="_blank" rel="noopener" aria-label="Facebook">{{ icon('facebook') }}</a>
-                        <button class="icon-btn icon-btn--line" type="button" data-copy="{{ $shareUrl }}" aria-label="{{ __('Havolani nusxalash') }}">{{ icon('link') }}<span class="tip" role="status">{{ __('Nusxalandi') }}</span></button>
+                        <button class="icon-btn icon-btn--line" type="button" data-copy="{{ $shareUrl }}" aria-label="{{ hs('article.havolani_nusxalash', 'Havolani nusxalash') }}">{{ icon('link') }}<span class="tip" role="status">{{ hs('article.nusxalandi', 'Nusxalandi') }}</span></button>
                     </div>
                 </div>
             </aside>
@@ -74,7 +74,7 @@
                         <b>{{ hs('article.cta_title', 'Buxgalteriyani bizga topshiring') }}</b>
                         <p>{{ hs('article.cta_text', 'YaTT uchun oylik xizmat — 1 500 000 so‘mdan.') }}</p>
                     </div>
-                    <a href="#consultation" class="btn-pill btn-pill--yellow btn-pill--m btn-pill--block" data-consult><span class="label">{{ __('Konsultatsiya') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                    <a href="#consultation" class="btn-pill btn-pill--yellow btn-pill--m btn-pill--block" data-consult><span class="label">{{ hs('article.konsultatsiya', 'Konsultatsiya') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
                 </div>
             </aside>
         </div>
@@ -85,8 +85,8 @@
         <section class="section section--soft a-related">
             <div class="container">
                 <div class="a-related__head">
-                    <h2 class="h2 h2--56" data-reveal>{{ __('O‘xshash maqolalar') }}</h2>
-                    <a href="{{ lroute('blog') }}" class="btn-pill btn-pill--outline btn-pill--l" data-reveal style="--d:120ms"><span class="label">{{ __('Barcha maqolalar') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                    <h2 class="h2 h2--56" data-reveal>{{ hs('article.oxshash_maqolalar', 'O‘xshash maqolalar') }}</h2>
+                    <a href="{{ lroute('blog') }}" class="btn-pill btn-pill--outline btn-pill--l" data-reveal style="--d:120ms"><span class="label">{{ hs('article.barcha_maqolalar', 'Barcha maqolalar') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
                 </div>
                 <div class="agrid agrid--row" data-snap>
                     @foreach($related as $i => $item)

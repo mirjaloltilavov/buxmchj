@@ -18,7 +18,7 @@
                     </ul>
                     <div class="direction-foot">
                         <div><p class="price-label">{{ __('Narxi') }}</p><p class="price-value">{{ hs('directions.courses_price', '1 512 000 so‘mdan') }}</p></div>
-                        <a href="{{ lroute('courses') }}" class="btn btn--acc">{{ __('Kurslar haqida') }} {{ icon('arrow-right') }}</a>
+                        <a href="{{ lroute('courses') }}" class="btn btn--acc">{{ hs('directions.kurslar_haqida', 'Kurslar haqida') }} {{ icon('arrow-right') }}</a>
                     </div>
                 </div>
             </article>
@@ -33,8 +33,8 @@
                         @endforeach
                     </ul>
                     <div class="direction-foot">
-                        <div><p class="price-label">{{ __('Oylik narx') }}</p><p class="price-value">{{ hs('directions.services_price', '1 500 000 so‘mdan') }}</p></div>
-                        <a href="{{ lroute('services') }}" class="btn btn--blue">{{ __('Xizmat haqida') }} {{ icon('arrow-right') }}</a>
+                        <div><p class="price-label">{{ hs('directions.oylik_narx', 'Oylik narx') }}</p><p class="price-value">{{ hs('directions.services_price', '1 500 000 so‘mdan') }}</p></div>
+                        <a href="{{ lroute('services') }}" class="btn btn--blue">{{ hs('directions.xizmat_haqida', 'Xizmat haqida') }} {{ icon('arrow-right') }}</a>
                     </div>
                 </div>
             </article>

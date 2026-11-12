@@ -30,17 +30,17 @@
             @endforeach
         </ul>
         <div class="hero-ctas">
-            <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult><span class="label">{{ __('Bepul konsultatsiya') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
-            <a href="#calculator" class="btn-pill btn-pill--white btn-pill--l"><span class="label">{{ __('Narxni hisoblash') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+            <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult><span class="label">{{ hs('services_page.bepul_konsultatsiya', 'Bepul konsultatsiya') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+            <a href="#calculator" class="btn-pill btn-pill--white btn-pill--l"><span class="label">{{ hs('services_page.narxni_hisoblash', 'Narxni hisoblash') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
         </div>
         @slot('cards')
             <div class="info-card info-card--dark" style="right:-20px;top:32px">
-                <span class="t"><small>{{ __('Oylik xizmat') }}</small><b>{{ price_from($base['yatt']) }}</b></span>
+                <span class="t"><small>{{ hs('services_page.oylik_xizmat', 'Oylik xizmat') }}</small><b>{{ price_from($base['yatt']) }}</b></span>
                 <span class="round">{{ icon('arrow-right') }}</span>
             </div>
             <div class="info-card" style="left:-40px;top:416px">
                 <span class="icon-tile">{{ icon('document-text') }}</span>
-                <span class="t"><b>{{ __('Hisobotlar o‘z vaqtida') }}</b><small>{{ __('soliq organiga topshiriladi') }}</small></span>
+                <span class="t"><b>{{ hs('services_page.hisobotlar_oz_vaqtida', 'Hisobotlar o‘z vaqtida') }}</b><small>{{ hs('services_page.soliq_organiga_topshiriladi', 'soliq organiga topshiriladi') }}</small></span>
             </div>
         @endslot
     @endcomponent
@@ -79,13 +79,13 @@
                         <div @class(['pcard', 'pcard--sm', 'pcard--hl' => $plan->is_highlighted]) data-reveal="up40" style="--d: {{ $i * 80 + ($plan->is_highlighted ? 120 : 0) }}ms">
                             <div class="pcard__head"><h3>{{ $plan->tr('name') }}</h3><p>{{ $plan->tr('subtitle') }}</p></div>
                             <div class="pcard__price"><small>{{ __('Oyiga') }}</small><b>{{ money_uz($plan->price) }} {{ __('so‘m') }}</b></div>
-                            <a href="#consultation" class="btn-pill btn-pill--l {{ $plan->is_highlighted ? 'btn-pill--ink' : 'btn-pill--outline' }} pcard__btn" data-consult><span class="label">{{ __('Ariza qoldirish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                            <a href="#consultation" class="btn-pill btn-pill--l {{ $plan->is_highlighted ? 'btn-pill--ink' : 'btn-pill--outline' }} pcard__btn" data-consult><span class="label">{{ hs('services_page.ariza_qoldirish', 'Ariza qoldirish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
                             <hr>
                             <ul class="pcard__features">@foreach(($plan->features ?? []) as $f)<li>{{ icon('tick-circle') }}<span>{{ tr($f['text'] ?? $f) }}</span></li>@endforeach</ul>
                         </div>
                     @endforeach
                 </div>
-                <p class="note">{{ __('Narxlar taxminiy. Korxona hajmi va oylik operatsiyalar soniga qarab o‘zgarishi mumkin.') }}</p>
+                <p class="note">{{ hs('services_page.narxlar_taxminiy_korxona_hajmi_va_oylik', 'Narxlar taxminiy. Korxona hajmi va oylik operatsiyalar soniga qarab o‘zgarishi mumkin.') }}</p>
             </div>
         </section>
     @endif
@@ -97,26 +97,26 @@
             <div class="calc" data-calc data-base='@json($base)' data-som="{{ __('so‘m') }}">
                 <div class="calc__q" data-reveal>
                     <div class="calc__row">
-                        <p class="calc__lbl"><i>1</i>{{ __('Tashkilot shakli') }}</p>
+                        <p class="calc__lbl"><i>1</i>{{ hs('services_page.tashkilot_shakli', 'Tashkilot shakli') }}</p>
                         <div class="segmented"><label><input type="radio" name="org" value="yatt"><span>{{ __('YaTT') }}</span></label><label><input type="radio" name="org" value="llc" checked><span>{{ __('MChJ') }}</span></label></div>
                     </div>
                     <div class="calc__row">
-                        <p class="calc__lbl"><i>2</i>{{ __('QQS to‘lovchisimisiz?') }}</p>
+                        <p class="calc__lbl"><i>2</i>{{ hs('services_page.qqs_tolovchisimisiz', 'QQS to‘lovchisimisiz?') }}</p>
                         <div class="segmented"><label><input type="radio" name="vat" value="0"><span>{{ __('Yo‘q') }}</span></label><label><input type="radio" name="vat" value="1" checked><span>{{ __('Ha') }}</span></label></div>
                     </div>
                     <div class="calc__row">
-                        <p class="calc__lbl"><i>3</i>{{ __('Faoliyat turi') }}</p>
-                        <div class="segmented"><label><input type="radio" name="kind" value="local" checked><span>{{ __('Ichki savdo va xizmat') }}</span></label><label><input type="radio" name="kind" value="import"><span>{{ __('Import-eksport') }}</span></label></div>
+                        <p class="calc__lbl"><i>3</i>{{ hs('services_page.faoliyat_turi', 'Faoliyat turi') }}</p>
+                        <div class="segmented"><label><input type="radio" name="kind" value="local" checked><span>{{ hs('services_page.ichki_savdo_va_xizmat', 'Ichki savdo va xizmat') }}</span></label><label><input type="radio" name="kind" value="import"><span>{{ hs('services_page.import_eksport', 'Import-eksport') }}</span></label></div>
                     </div>
                     <div class="calc__row">
-                        <p class="calc__lbl"><i>4</i>{{ __('Korxona hajmi') }}</p>
+                        <p class="calc__lbl"><i>4</i>{{ hs('services_page.korxona_hajmi', 'Korxona hajmi') }}</p>
                         <label class="range">
-                            <span class="range__top"><b>{{ __('Xodimlar soni') }}</b><em data-out="emp">10 {{ __('kishi') }}</em></span>
+                            <span class="range__top"><b>{{ hs('services_page.xodimlar_soni', 'Xodimlar soni') }}</b><em data-out="emp">10 {{ __('kishi') }}</em></span>
                             <input type="range" name="emp" min="1" max="50" value="10" step="1">
                             <span class="range__minmax"><span>1</span><span>50+</span></span>
                         </label>
                         <label class="range">
-                            <span class="range__top"><b>{{ __('Oylik operatsiyalar soni') }}</b><em data-out="ops">~120 {{ __('ta') }}</em></span>
+                            <span class="range__top"><b>{{ hs('services_page.oylik_operatsiyalar_soni', 'Oylik operatsiyalar soni') }}</b><em data-out="ops">~120 {{ __('ta') }}</em></span>
                             <input type="range" name="ops" min="0" max="500" value="120" step="10">
                             <span class="range__minmax"><span>0</span><span>500+</span></span>
                         </label>
@@ -124,19 +124,19 @@
                 </div>
                 <div class="calc__res" data-reveal="card" style="--d:120ms">
                     <div class="calc__top">
-                        <span class="badge-n" data-res="badge">{{ __('MChJ') }} · {{ __('QQS to‘lovchisi') }}</span>
-                        <p class="calc__cap">{{ __('Taxminiy oylik narx') }}</p>
+                        <span class="badge-n" data-res="badge">{{ __('MChJ') }} · {{ hs('services_page.qqs_tolovchisi', 'QQS to‘lovchisi') }}</span>
+                        <p class="calc__cap">{{ hs('services_page.taxminiy_oylik_narx', 'Taxminiy oylik narx') }}</p>
                         <p class="calc__sum"><span data-res="sum">{{ money_uz($base['llc_vat']) }}</span> {{ __('so‘m') }}</p>
-                        <p class="calc__hint">{{ __('Aniq narx korxonangiz holatini o‘rgangach aytiladi.') }}</p>
+                        <p class="calc__hint">{{ hs('services_page.aniq_narx_korxonangiz_holatini_organgach', 'Aniq narx korxonangiz holatini o‘rgangach aytiladi.') }}</p>
                         <dl class="calc__sum-list">
-                            <div data-row="org"><dt>{{ __('Tashkilot') }}</dt><dd data-res="org">{{ __('MChJ') }}</dd></div>
+                            <div data-row="org"><dt>{{ hs('services_page.tashkilot', 'Tashkilot') }}</dt><dd data-res="org">{{ __('MChJ') }}</dd></div>
                             <div data-row="vat"><dt>{{ __('QQS') }}</dt><dd data-res="vat">{{ __('Ha') }}</dd></div>
-                            <div data-row="kind"><dt>{{ __('Faoliyat') }}</dt><dd data-res="kind">{{ __('Ichki savdo va xizmat') }}</dd></div>
-                            <div data-row="emp"><dt>{{ __('Xodimlar') }}</dt><dd data-res="emp">10 {{ __('kishi') }}</dd></div>
-                            <div data-row="ops"><dt>{{ __('Operatsiyalar') }}</dt><dd data-res="ops">~120 {{ __('ta / oy') }}</dd></div>
+                            <div data-row="kind"><dt>{{ hs('services_page.faoliyat', 'Faoliyat') }}</dt><dd data-res="kind">{{ hs('services_page.ichki_savdo_va_xizmat', 'Ichki savdo va xizmat') }}</dd></div>
+                            <div data-row="emp"><dt>{{ hs('services_page.xodimlar', 'Xodimlar') }}</dt><dd data-res="emp">10 {{ __('kishi') }}</dd></div>
+                            <div data-row="ops"><dt>{{ hs('services_page.operatsiyalar', 'Operatsiyalar') }}</dt><dd data-res="ops">~120 {{ __('ta / oy') }}</dd></div>
                         </dl>
                     </div>
-                    <a href="#consultation" class="btn-pill btn-pill--yellow btn-pill--l calc__btn" data-consult><span class="label">{{ __('Maxsus taklif oling') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                    <a href="#consultation" class="btn-pill btn-pill--yellow btn-pill--l calc__btn" data-consult><span class="label">{{ hs('services_page.maxsus_taklif_oling', 'Maxsus taklif oling') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
                 </div>
             </div>
         </div>
@@ -147,10 +147,10 @@
         <div class="container sticky2" data-steps>
             <div class="sticky2__left">
                 <div class="program__text" data-reveal>
-                    <h2 class="h2">{{ __('Ishni qanday boshlaymiz') }}</h2>
-                    <p>{{ __('Buxgalteriyani bizga topshirish to‘rt bosqichda bo‘ladi. Birinchi konsultatsiya bepul.') }}</p>
+                    <h2 class="h2">{{ hs('services_page.ishni_qanday_boshlaymiz', 'Ishni qanday boshlaymiz') }}</h2>
+                    <p>{{ hs('services_page.buxgalteriyani_bizga_topshirish_tort_bos', 'Buxgalteriyani bizga topshirish to‘rt bosqichda bo‘ladi. Birinchi konsultatsiya bepul.') }}</p>
                 </div>
-                <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult data-reveal style="--d:120ms"><span class="label">{{ __('Ariza qoldirish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult data-reveal style="--d:120ms"><span class="label">{{ hs('services_page.ariza_qoldirish', 'Ariza qoldirish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
             </div>
             <div class="sticky2__steps">
                 <div class="steps-line" aria-hidden="true"><i></i></div>
