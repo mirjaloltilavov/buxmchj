@@ -22,6 +22,16 @@
         @if(filled($v)){{ \Illuminate\Support\Str::limit(trim(strip_tags((string) $v)), 220) }}@else<span class="bx-set__empty">Kiritilmagan</span>@endif
         @break
     @case('list')
+        @if(is_array($v) && collect($v)->contains(fn ($i) => is_array($i) && array_key_exists('type', $i)))
+            {{-- Sahifa tuzilishi: seksiyalar tartib bilan --}}
+            <ol class="bx-layout">
+                @foreach(array_values($v) as $n => $it)
+                    @php $t = tr($it['data']['title'] ?? null); @endphp
+                    <li @class(['is-hidden' => ! empty($it['data']['hidden'])])><i>{{ $n + 1 }}</i>{{ \App\Support\Blocks::label($it['type'] ?? '') }}@if($t)<em>— {{ \Illuminate\Support\Str::limit($t, 40) }}</em>@endif @if(! empty($it['data']['hidden']))<small>yashirilgan</small>@endif</li>
+                @endforeach
+            </ol>
+            @break
+        @endif
         @if(is_array($v) && collect($v)->contains(fn ($i) => is_array($i) && array_key_exists('links', $i)))
             {{-- Ustunli menyu: har ustun — sarlavha va havolalari --}}
             <div class="bx-cols">

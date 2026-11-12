@@ -123,6 +123,12 @@
     .bx-std{flex:none;font-size:.62rem;font-weight:600;padding:.12rem .4rem;border-radius:999px;border:1px solid rgba(120,120,130,.3);opacity:.6;margin-top:.15rem}
     @media (max-width:700px){.bx-row{grid-template-columns:1fr;gap:.25rem}}
     .bx-cols{display:flex;flex-direction:column;gap:.6rem}.bx-cols__c{display:flex;flex-direction:column;gap:.3rem}.bx-cols__c b{font-size:.82rem}
+    .bx-layout{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.3rem}
+    .bx-layout li{display:flex;align-items:center;gap:.55rem;padding:.4rem .6rem;border-radius:.6rem;background:rgba(120,120,130,.07);font-size:.85rem;font-weight:500}
+    .bx-layout li i{font-style:normal;display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;background:#f5a524;color:#16171a;font-size:.7rem;font-weight:700;flex:none}
+    .bx-layout li em{font-style:normal;opacity:.6}
+    .bx-layout li small{margin-left:auto;font-size:.7rem;opacity:.6}
+    .bx-layout li.is-hidden{opacity:.5}
     /* Sozlamalar: ichki yon menyu */
     .bx-shell{display:grid;grid-template-columns:15.5rem minmax(0,1fr);gap:1.5rem;align-items:start}
     .bx-nav{position:sticky;top:5rem}

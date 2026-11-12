@@ -1,0 +1,89 @@
+{{-- Figma: Maqolalar — Hero (qidiruv o‘ng tomonda) --}}
+<section class="p-hero p-hero--blog" data-page-hero>
+    <div class="hero-clip" aria-hidden="true"><div class="hero-deco">{{ icon('hero-deco') }}</div></div>
+    <div class="container p-hero__body p-hero__body--end">
+        <div class="p-hero__left">
+            <nav class="crumbs" aria-label="breadcrumb">
+                <a href="{{ lroute('home') }}">{{ __('Asosiy') }}</a>{{ icon('arrow-right') }}<b>{{ hs('blog.maqolalar', 'Maqolalar') }}</b>
+            </nav>
+            <div class="p-hero__text">
+                <h1>{{ hs('blog.maqolalar', 'Maqolalar') }}</h1>
+                <p class="p-hero__lead">{{ hs('blog.lead', 'Soliq, 1C va buxgalteriya bo‘yicha amaliy maslahatlar — tadbirkorlar, buxgalterlar va o‘quvchilar uchun.') }}</p>
+            </div>
+        </div>
+        <form class="bsearch" method="get" action="{{ lroute('blog') }}" role="search" data-bsearch>
+            <label for="bsearch-q">{{ __('Qidiruv') }}</label>
+            <div class="bsearch__field">
+                {{ icon('search-normal') }}
+                @if($activeCategory)<input type="hidden" name="category" value="{{ $activeCategory }}">@endif
+                <input id="bsearch-q" type="search" name="q" value="{{ $search }}" autocomplete="off"
+                       placeholder="{{ hs('blog.maqola_nomi_yoki_mavzu', 'Maqola nomi yoki mavzu') }}" data-hints='@json(array_map(fn ($h) => $h.'…', $hints))'>
+                <span class="bsearch__ph" aria-hidden="true"></span>
+            </div>
+        </form>
+    </div>
+</section>
+
+{{-- Figma: Tanlangan maqola --}}
+@if($featured)
+    @php $furl = lroute('article', ['article' => $featured->slug]); @endphp
+    <section class="section bfeat-sec">
+        <div class="container">
+            <article class="bfeat" data-bfeat>
+                <a href="{{ $furl }}" class="bfeat__img" tabindex="-1" aria-hidden="true"><img src="{{ media_url($featured->cover) }}" alt="" fetchpriority="high"></a>
+                <div class="bfeat__body">
+                    <div class="bfeat__top">
+                        <div class="meta">
+                            @if($featured->category)<span class="cat cat--y">{{ $featured->category->tr('name') }}</span>@endif
+                            <span>{{ icon('calendar') }} {{ $featured->dateLabel() }}</span>
+                            <span>{{ icon('clock') }} {{ $featured->read_minutes }} {{ __('daqiqa') }}</span>
+                        </div>
+                        <h2><a href="{{ $furl }}">{{ $featured->tr('title') }}</a></h2>
+                        @if($featured->tr('excerpt'))<p>{{ $featured->tr('excerpt') }}</p>@endif
+                    </div>
+                    <a href="{{ $furl }}" class="read-link">{{ hs('blog.maqolani_oqish', 'Maqolani o‘qish') }} {{ icon('arrow-right') }}</a>
+                </div>
+            </article>
+        </div>
+    </section>
+@endif
+
+{{-- Figma: Barcha maqolalar — filtr + grid --}}
+<section class="section ball" id="all" data-blog>
+    <div class="container ball__in">
+        <div class="bfilter" data-bfilter>
+            <div class="bfilter__chips" role="tablist">
+                <a href="{{ lroute('blog', array_filter(['q' => $search ?: null])) }}#all" @class(['fchip', 'is-active' => ! $activeCategory]) data-fchip>{{ hs('blog.barchasi', 'Barchasi') }} <small>{{ $total }}</small></a>
+                @foreach($categories as $cat)
+                    @continue(! $cat->articles_count)
+                    <a href="{{ lroute('blog', array_filter(['category' => $cat->slug, 'q' => $search ?: null])) }}#all" @class(['fchip', 'is-active' => $activeCategory === $cat->slug]) data-fchip>{{ $cat->tr('name') }} <small>{{ $cat->articles_count }}</small></a>
+                @endforeach
+            </div>
+            <span class="bfilter__count" data-bcount>{{ $countLabel($shown) }}</span>
+        </div>
+
+        <div data-bresults>
+            @if($search !== '')
+                <p class="bsearch-note">{{ hs('blog.qidiruv_natijalari', 'Qidiruv natijalari') }}: «{{ $search }}» · <a href="{{ lroute('blog', array_filter(['category' => $activeCategory])) }}#all">{{ hs('blog.tozalash', 'Tozalash') }}</a></p>
+            @endif
+            @if($articles->isEmpty())
+                <div class="bempty">
+                    <span class="icon-tile">{{ icon('search-normal') }}</span>
+                    <b>{{ hs('blog.hech_narsa_topilmadi', 'Hech narsa topilmadi.') }}</b>
+                    <p>{{ hs('blog.boshqa_soz_bilan_qidirib_koring_yoki_bar', 'Boshqa so‘z bilan qidirib ko‘ring yoki barcha maqolalarni ko‘ring.') }}</p>
+                </div>
+            @else
+                <div class="agrid" data-bgrid>
+                    @foreach($articles as $i => $article)
+                        @include('partials.acard', ['article' => $article, 'i' => $i % 3])
+                    @endforeach
+                </div>
+            @endif
+            @if($articles->hasMorePages())
+                <div class="bmore">
+                    <a href="{{ $articles->nextPageUrl() }}#all" class="btn-pill btn-pill--outline btn-pill--l" data-bmore><span class="label">{{ hs('blog.koproq_maqolalar', 'Ko‘proq maqolalar') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>
+                </div>
+            @endif
+        </div>
+    </div>
+</section>

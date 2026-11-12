@@ -16,13 +16,23 @@ class Page extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'title' => 'array', 'lead' => 'array', 'content' => 'array', 'seo_title' => 'array', 'seo_description' => 'array',
+        'title' => 'array', 'lead' => 'array', 'content' => 'array', 'sections' => 'array', 'seo_title' => 'array', 'seo_description' => 'array',
         'show_consult' => 'boolean', 'is_active' => 'boolean',
     ];
 
     public function scopeActive(Builder $q): Builder
     {
         return $q->where('is_active', true)->orderBy('sort')->orderBy('id');
+    }
+
+    /** Yangi sahifaning boshlang'ich tuzilishi: sarlavha, matn, ariza formasi */
+    public static function starterSections(): array
+    {
+        return [
+            ['type' => 'page_head', 'data' => []],
+            ['type' => 'text', 'data' => []],
+            ['type' => 'consultation', 'data' => ['interest' => 'course']],
+        ];
     }
 
     public function url(?string $locale = null): string

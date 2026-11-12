@@ -203,7 +203,7 @@ trait HasSettingBlocks
             $c instanceof FileUpload => 'image',
             $c instanceof Toggle => 'bool',
             $c instanceof RichEditor => 'html',
-            $c instanceof TagsInput, $c instanceof \App\Filament\Forms\CardsField, $c instanceof \Filament\Forms\Components\Repeater => 'list',
+            $c instanceof TagsInput, $c instanceof \App\Filament\Forms\CardsField, $c instanceof \Filament\Forms\Components\Repeater, $c instanceof \Filament\Forms\Components\Builder => 'list',
             $c instanceof TextInput && $c->isPassword() => 'secret',
             $c instanceof DatePicker => 'date',
             default => 'text',
@@ -220,7 +220,7 @@ trait HasSettingBlocks
 
     public function editBlockAction(): Action
     {
-        return Action::make('editBlock')->slideOver()->modalWidth('3xl')
+        return Action::make('editBlock')->slideOver()->modalWidth(fn (array $arguments) => $this->findBlock($arguments['key'] ?? '')['width'] ?? '3xl')
             ->modalHeading(fn (array $arguments) => $this->findBlock($arguments['key'] ?? '')['title'] ?? 'Tahrirlash')
             ->modalSubmitActionLabel('Saqlash')->modalCancelActionLabel('Bekor qilish')
             ->fillForm(fn (array $arguments) => $this->blockData($this->findBlock($arguments['key'])))

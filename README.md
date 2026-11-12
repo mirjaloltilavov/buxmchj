@@ -42,7 +42,9 @@ Arizalar statistikasi va manbasi (Google, Instagram, reklama kampaniyasi va h.k.
 
 ## Sahifalar, menyular va matnlar
 
-- **Kontent → Sahifalar** — yangi sahifa (masalan, “Biz haqimizda”): sarlavha, manzil (`/biz-haqimizda`), matn, rasm, SEO. Sitemap’ga avtomatik qo‘shiladi.
+- **Bosh sahifa → Sahifa tuzilishi** — konstruktor: har bir sahifa (bosh, kurslar, xizmat, aloqa, blog, kurs, maqola) seksiyalardan yig‘iladi. Seksiya qo‘shish, sudrab tartiblash, vaqtincha yashirish, o‘chirish. Tanlov: saytning tayyor seksiyalari (hero, yo‘nalishlar, nega biz, tariflar, kalkulyator, ustozlar, bitiruvchilar, FAQ, maqolalar, ariza formasi, Instagram, xarita…) va erkin bloklar (sarlavha, matn, rasm + matn, kartochkalar, raqamlar, qadamlar, CTA). Har bir seksiya istalgan sahifaga qo‘yiladi.
+
+- **Kontent → Sahifalar** — yangi sahifa (masalan, “Biz haqimizda”): sarlavha, manzil (`/biz-haqimizda`), SEO va o‘sha konstruktor bilan seksiyalar. Sitemap’ga avtomatik qo‘shiladi.
 - **Sozlamalar → Menyular** — header havolalari, footer ustunlari, eng pastki havolalar, header tugmasi va footer matnlari. Havola sayt sahifasiga, qo‘shimcha sahifaga, kursga yoki istalgan manzilga olib boradi; tartibi sudrab o‘zgartiriladi.
 - **Bosh sahifa → Sahifa matnlari** — har bir sahifa alohida bo‘lim. Bo‘sh maydon o‘rnida saytda hozir ko‘rinib turgan matn chiqadi (“standart” belgisi bilan). Shablondagi har bir `hs('kalit', 'matn')` avtomatik tahrirlanadigan maydon bo‘ladi.
 

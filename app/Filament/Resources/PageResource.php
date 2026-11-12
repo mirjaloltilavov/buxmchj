@@ -48,17 +48,16 @@ class PageResource extends Resource
                     ->helperText('Masalan: biz-haqimizda. Bo‘sh joy va katta harf avtomatik tuzatiladi.')
                     // brauzerda tuzatiladi: "Biz Haqimizda" -> "biz-haqimizda" (serverga so'rovsiz)
                     ->extraInputAttributes(['x-on:blur' => "\$el.value = \$el.value.toLowerCase().replace(/[‘’ʻʼ'`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+\$/g, ''); \$el.dispatchEvent(new Event('input'))"]),
-                Tr::textarea('lead', 'Qisqa izoh (sarlavha ostida)', false, 2),
-                Forms\Components\FileUpload::make('image')->label('Rasm (ixtiyoriy)')->image()->disk('public')->directory('pages')->imageEditor(),
-                Tr::rich('content', 'Matn', 'pages'),
             ]),
+            Forms\Components\Section::make('Tuzilishi (seksiyalar)')->icon('heroicon-o-rectangle-group')
+                ->description('Sahifa shu seksiyalardan yig‘iladi: saytdagi tayyor seksiyalar (FAQ, ariza formasi, ustozlar, tariflar…) yoki erkin bloklar (matn, rasm + matn, kartochkalar, raqamlar, qadamlar, CTA). Sudrab tartibini o‘zgartiring.')
+                ->schema([\App\Support\Blocks::builder('sections', 'page')->default(Page::starterSections())]),
             Forms\Components\Section::make('SEO')->description('Bo‘sh qolsa, sarlavha va qisqa izoh ishlatiladi.')->collapsible()->collapsed()->schema([
                 Tr::text('seo_title', 'Google sarlavhasi (title)'),
                 Tr::textarea('seo_description', 'Google tavsifi (description)', false, 2),
             ]),
-            Forms\Components\Section::make('Holat')->columns(3)->schema([
+            Forms\Components\Section::make('Holat')->columns(2)->schema([
                 Forms\Components\Toggle::make('is_active')->label('Saytda ko‘rinadi')->default(true),
-                Forms\Components\Toggle::make('show_consult')->label('Pastida ariza bloki')->default(true),
                 Forms\Components\TextInput::make('sort')->label('Tartib')->numeric()->default(0),
             ]),
         ]);
@@ -79,7 +78,7 @@ class PageResource extends Resource
                 Tables\Actions\Action::make('open')->label('Saytda ochish')->icon('heroicon-o-arrow-top-right-on-square')->color('gray')
                     ->url(fn (Page $record) => $record->url('uz'), true),
                 Tables\Actions\ViewAction::make()->label('Ko‘rish')->slideOver()->modalWidth('3xl'),
-                Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('4xl'),
+                Tables\Actions\EditAction::make()->label('Tahrirlash')->slideOver()->modalWidth('5xl'),
                 Tables\Actions\DeleteAction::make()->label('O‘chirish'),
             ]);
     }
@@ -90,9 +89,8 @@ class PageResource extends Resource
             I\Section::make('Sahifa')->schema([
                 Info::tr('title', 'Sarlavha'),
                 I\TextEntry::make('slug')->label('Manzil')->formatStateUsing(fn (Page $record) => $record->url('uz'))->url(fn (Page $record) => $record->url('uz'), true)->color('primary')->icon('heroicon-o-link'),
-                Info::tr('lead', 'Qisqa izoh', true),
-                Info::img('image', 'Rasm', 180),
-                I\TextEntry::make('content.uz')->label('Matn (UZ)')->html()->placeholder('—')->prose(),
+                I\TextEntry::make('sections')->label('Seksiyalar')->listWithLineBreaks()->bulleted()->placeholder('—')
+                    ->state(fn (Page $record) => collect($record->sections ?? [])->map(fn ($s) => \App\Support\Blocks::label($s['type'] ?? '').(tr($s['data']['title'] ?? null) ? ' — '.tr($s['data']['title']) : ''))->values()->all()),
             ]),
             Info::status(),
         ]);

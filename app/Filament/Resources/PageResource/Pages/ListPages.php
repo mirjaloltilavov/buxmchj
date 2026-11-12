@@ -15,7 +15,7 @@ class ListPages extends ManageRecords
     {
         return [
             Actions\Action::make('menus')->label('Menyuga qo‘shish')->icon('heroicon-o-bars-3')->color('gray')->url(fn () => \App\Filament\Pages\Menus::getUrl()),
-            Actions\CreateAction::make()->label('Yangi sahifa')->icon('heroicon-o-plus')->slideOver()->modalWidth('4xl')
+            Actions\CreateAction::make()->label('Yangi sahifa')->icon('heroicon-o-plus')->slideOver()->modalWidth('5xl')
                 ->mutateFormDataUsing(function (array $data) {
                     $data['slug'] = Str::slug($data['slug'] ?: ($data['title']['uz'] ?? ''));
 

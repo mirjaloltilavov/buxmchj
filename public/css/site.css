@@ -1642,3 +1642,31 @@ html[lang="ru"] .hero h1,html[lang="ru"] .hero .hero-h{font-size:clamp(40px,3.9v
 }
 
 .cpage__img{display:block;width:100%;max-width:980px;max-height:520px;object-fit:cover;border-radius:32px;margin:0 0 40px}
+
+/* ===== Sahifa konstruktori: erkin bloklar ===== */
+.block-anchor{display:block;position:relative;top:-100px;visibility:hidden}
+.btext{max-width:900px}
+.btext > .h2{margin-bottom:24px}
+.itxt{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.itxt--right .itxt__img{order:2}
+.itxt__img img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:32px}
+.itxt__body{display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.itxt__body p{font-size:18px;line-height:1.6;color:var(--ink-2)}
+.bcards{grid-template-columns:repeat(var(--n,4),minmax(0,1fr))}
+.bstats__title{margin-bottom:32px}
+.bstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.bstats__i{display:flex;flex-direction:column;gap:6px;padding:32px;border-radius:28px;background:#fff;border:1px solid var(--line)}
+.section--soft .bstats__i{border-color:transparent}
+.bstats__i b{font-size:48px;font-weight:700;line-height:1.1;letter-spacing:-.02em}
+.bstats__i span{color:var(--ink-2)}
+.bsteps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;counter-reset:s}
+.bsteps__i{display:flex;flex-direction:column;gap:16px;padding:32px;border-radius:28px;background:#fff;border:1px solid var(--line)}
+.bsteps__n{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--g-yellow);font-weight:700}
+.bsteps__i h3{font-size:20px;margin-bottom:6px}
+.bsteps__i p{color:var(--ink-2)}
+.bcta{display:flex;align-items:center;justify-content:space-between;gap:32px;padding:48px;border-radius:40px;background:var(--g-yellow-x)}
+.bcta h2{font-size:clamp(28px,3vw,44px);line-height:1.15;letter-spacing:-.02em;margin-bottom:8px}
+.bcta p{font-size:18px;color:#3d2e08}
+@media (max-width:1024px){.bcards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){.itxt{grid-template-columns:1fr;gap:32px}.itxt--right .itxt__img{order:0}.bcta{flex-direction:column;align-items:flex-start;padding:32px}}
+@media (max-width:640px){.bcards{grid-template-columns:1fr}.bstats__i b{font-size:40px}}
