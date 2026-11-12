@@ -32,6 +32,12 @@ class SiteSettings extends Page implements HasForms, HasActions
         return 'Har bir blok yonidagi “Tahrirlash” tugmasi o‘ng tomondan oyna ochadi. Popuplarni kartochkaning o‘zidagi tugma bilan yoqish yoki o‘chirish mumkin.';
     }
 
+    /** Bo'sh maydonda saytda amalda ishlayotgan qiymat */
+    protected function defaultFor(string $name): mixed
+    {
+        return ['calc.emp_free' => '10', 'calc.emp_step' => '60000', 'calc.ops_free' => '150', 'calc.ops_step' => '60000', 'site_name' => 'Buxgalter MChJ', 'hero_autoplay' => '6', 'mail_method' => 'server'][$name] ?? null;
+    }
+
     protected function groupIcons(): array
     {
         return [
@@ -41,6 +47,7 @@ class SiteSettings extends Page implements HasForms, HasActions
             'Analytics va tasdiqlash' => 'heroicon-o-chart-bar',
             'Huquqiy matnlar' => 'heroicon-o-scale',
             'Popuplar (maxsus takliflar)' => 'heroicon-o-megaphone',
+            'Xizmat kalkulyatori' => 'heroicon-o-calculator',
             'Qo‘shimcha' => 'heroicon-o-adjustments-horizontal',
         ];
     }
@@ -240,6 +247,16 @@ class SiteSettings extends Page implements HasForms, HasActions
                     Forms\Components\Textarea::make('popups.guide.text.ru')->label('Matn (RU)')->rows(2),
                     Forms\Components\FileUpload::make('popups.guide.image')->label('Rasm')->image()->disk('public')->directory('popups'),
                 ]),
+            ],
+            'Xizmat kalkulyatori' => [
+                'calc' => ['title' => 'Narx kalkulyatori qoidalari', 'icon' => 'heroicon-o-calculator', 'description' => 'Asosiy narxlar “Xizmat tariflari”dan olinadi. Bu yerda — qo‘shimcha xodim va operatsiyalar uchun ustama.', 'paths' => ['calc'], 'schema' => fn () => [
+                    Forms\Components\Grid::make(2)->schema([
+                        Forms\Components\TextInput::make('calc.emp_free')->label('Narxga kiradigan xodimlar soni')->numeric()->minValue(0)->placeholder('10')->suffix('kishi'),
+                        Forms\Components\TextInput::make('calc.emp_step')->label('Har bir qo‘shimcha xodim uchun')->numeric()->minValue(0)->placeholder('60000')->suffix('so‘m'),
+                        Forms\Components\TextInput::make('calc.ops_free')->label('Narxga kiradigan oylik operatsiyalar')->numeric()->minValue(0)->placeholder('150')->suffix('ta'),
+                        Forms\Components\TextInput::make('calc.ops_step')->label('Har 10 ta qo‘shimcha operatsiya uchun')->numeric()->minValue(0)->placeholder('60000')->suffix('so‘m'),
+                    ]),
+                ]],
             ],
             'Qo‘shimcha' => [
                 'code' => ['title' => 'Qo‘shimcha kod (Analytics, Pixel)', 'icon' => 'heroicon-o-code-bracket', 'paths' => ['head_code', 'body_code'], 'schema' => fn () => [

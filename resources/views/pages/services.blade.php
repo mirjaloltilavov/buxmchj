@@ -12,6 +12,10 @@
         'llc' => (int) ($planList[1]->price ?? 3000000),
         'llc_vat' => (int) ($planList[2]->price ?? 5000000),
         'import' => (int) ($planList[3]->price ?? 8000000),
+        'emp_free' => (int) (setting('calc.emp_free') ?: 10),
+        'emp_step' => (int) (setting('calc.emp_step') ?: 60000),
+        'ops_free' => (int) (setting('calc.ops_free') ?: 150),
+        'ops_step' => (int) (setting('calc.ops_step') ?: 60000),
     ];
 @endphp
 

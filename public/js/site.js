@@ -579,7 +579,8 @@
     var base = {};
     try { base = JSON.parse(calc.getAttribute('data-base')); } catch (e) {}
     // Qo'shimcha: 10 kishidan ortiq har bir xodim va 150 dan ortiq har 10 operatsiya uchun (taxminiy)
-    var EMP_FREE = 10, EMP_STEP = 60000, OPS_FREE = 150, OPS_STEP = 60000;
+    // admin → Sayt sozlamalari → Xizmat kalkulyatori (bo'lmasa — standart)
+    var EMP_FREE = +base.emp_free || 10, EMP_STEP = +base.emp_step || 60000, OPS_FREE = +base.ops_free || 150, OPS_STEP = +base.ops_step || 60000;
     var T = ru
       ? { yatt: 'ИП', llc: 'ООО', yes: 'Да', no: 'Нет', vat: 'плательщик НДС', novat: 'без НДС', local: 'Внутренняя торговля и услуги', imp: 'Импорт-экспорт', ppl: 'чел.', ops: 'в мес.' }
       : { yatt: 'YaTT', llc: 'MChJ', yes: 'Ha', no: 'Yo‘q', vat: 'QQS to‘lovchisi', novat: 'QQSsiz', local: 'Ichki savdo va xizmat', imp: 'Import-eksport', ppl: 'kishi', ops: 'ta / oy' };
