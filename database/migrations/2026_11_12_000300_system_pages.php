@@ -26,7 +26,7 @@ return new class extends Migration
         }
         $old = DB::table('settings')->where('key', 'layouts')->value('value');
         $old = $old ? json_decode($old, true) : [];
-        $sort = -100;
+        $sort = 0; // sort — unsigned (MySQL): tizim sahifalari baribir ro'yxat boshida turadi
         foreach (self::SYSTEM as $key => [$uz, $ru]) {
             if (DB::table('pages')->where('system', $key)->exists()) {
                 continue;
