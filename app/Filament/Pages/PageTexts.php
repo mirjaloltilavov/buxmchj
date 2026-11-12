@@ -52,6 +52,11 @@ class PageTexts extends Page implements HasForms, HasActions
         return Forms\Components\FileUpload::make($name)->label($label)->image()->disk('public')->directory('pages')->imageEditor();
     }
 
+    protected function groupIcons(): array
+    {
+        return ['Bosh sahifa' => 'heroicon-o-home', 'Ichki sahifalar' => 'heroicon-o-document-duplicate'];
+    }
+
     protected function blocks(): array
     {
         return [

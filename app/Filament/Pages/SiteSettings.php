@@ -32,6 +32,19 @@ class SiteSettings extends Page implements HasForms, HasActions
         return 'Har bir blok yonidagi “Tahrirlash” tugmasi o‘ng tomondan oyna ochadi. Popuplarni kartochkaning o‘zidagi tugma bilan yoqish yoki o‘chirish mumkin.';
     }
 
+    protected function groupIcons(): array
+    {
+        return [
+            'Sayt' => 'heroicon-o-globe-alt',
+            'Arizalar xabarnomasi' => 'heroicon-o-bell-alert',
+            'SEO va brending' => 'heroicon-o-magnifying-glass',
+            'Analytics va tasdiqlash' => 'heroicon-o-chart-bar',
+            'Huquqiy matnlar' => 'heroicon-o-scale',
+            'Popuplar (maxsus takliflar)' => 'heroicon-o-megaphone',
+            'Qo‘shimcha' => 'heroicon-o-adjustments-horizontal',
+        ];
+    }
+
     protected function blocks(): array
     {
         $popup = fn (string $key, string $title, string $icon, string $desc, \Closure $schema) => [
@@ -176,7 +189,7 @@ class SiteSettings extends Page implements HasForms, HasActions
                     Forms\Components\Toggle::make('seo_noindex')->label('Qidiruv tizimlaridan yashirish (noindex)')->helperText('Odatda O‘CHIQ bo‘lishi kerak. Yoqilsa, sayt Google natijalaridan chiqib ketadi.'),
                 ]],
             ],
-            'Google: Analytics va Search Console' => [
+            'Analytics va tasdiqlash' => [
                 'google' => ['title' => 'Analytics va saytni tasdiqlash', 'icon' => 'heroicon-o-chart-bar', 'description' => 'Tashrif statistikasi va Google, Yandex, Bing’da saytga egalikni tasdiqlash.', 'paths' => ['ga_id', 'gsc_meta', 'yandex_meta', 'bing_meta', 'verify_files'], 'schema' => fn () => [
                     Forms\Components\TextInput::make('ga_id')->label('Google Analytics o‘lchov ID')->placeholder('G-XXXXXXXXXX')
                         ->regex('/^G-[A-Z0-9]{4,}$/')->validationMessages(['regex' => 'ID “G-” bilan boshlanadi, masalan G-AB12CD34EF.'])

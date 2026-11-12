@@ -37,6 +37,12 @@ trait HasSettingBlocks
         return null;
     }
 
+    /** Ichki yon menyudagi bo'lim ikonkalari: ['Guruh nomi' => 'heroicon-o-...'] */
+    protected function groupIcons(): array
+    {
+        return [];
+    }
+
     protected function emptyLabel(): string
     {
         return 'Kiritilmagan';
@@ -61,7 +67,7 @@ trait HasSettingBlocks
             }
         }
 
-        return ['groups' => $groups, 'hint' => $this->hint(), 'emptyLabel' => $this->emptyLabel()];
+        return ['groups' => $groups, 'groupIcons' => $this->groupIcons(), 'hint' => $this->hint(), 'emptyLabel' => $this->emptyLabel()];
     }
 
     protected function findBlock(string $key): ?array
