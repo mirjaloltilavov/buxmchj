@@ -8,7 +8,7 @@
         <div class="bento">
             <div class="bento-row1">
                 <div class="bento-photo">
-                    <img src="{{ media_url(setting('texts.why.image') ?: 'img/why.jpg') }}" alt="" loading="lazy">
+                    <img src="{{ media_url(hs_img('why.image', 'img/why.jpg')) }}" alt="" loading="lazy">
                     <div class="bento-caption">
                         <span class="icon-tile icon-tile--52">{{ icon('location') }}</span>
                         <span><span class="fc-title" style="display:block">{{ hs('why.place_title', 'Toshkentda') }}</span><span class="fc-sub">{{ hs('why.place_sub', 'Oflayn guruhlar va onlayn format') }}</span></span>

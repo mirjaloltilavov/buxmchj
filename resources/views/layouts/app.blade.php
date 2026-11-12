@@ -1,8 +1,10 @@
 @php
     $locale = app()->getLocale();
     $siteName = setting('site_name', 'Buxgalter MChJ');
-    $pageTitle = trim($__env->yieldContent('title')) ?: tr(setting('seo_title')) ?: $siteName;
-    $pageDesc = trim($__env->yieldContent('description')) ?: tr(setting('seo_description'));
+    // Zaxira SEO — Bosh sahifaning SEO'si (admin → Sahifalar → Bosh sahifa → SEO)
+    $homeSeo = \App\Models\Page::forSystem('home');
+    $pageTitle = trim($__env->yieldContent('title')) ?: tr($homeSeo?->seo_title) ?: tr(setting('seo_title')) ?: $siteName;
+    $pageDesc = trim($__env->yieldContent('description')) ?: tr($homeSeo?->seo_description) ?: tr(setting('seo_description'));
     // Joriy sahifaning boshqa tildagi manzili
     $route = request()->route();
     $altUrl = function (string $to) use ($route) {
@@ -16,6 +18,11 @@
     // Admin → SEO: sahifa bo'yicha sarlavha va tavsif (bo'sh bo'lsa sahifaning o'zi beradi)
     $seoBase = $route && $route->getName() ? preg_replace('/^ru\./', '', $route->getName()) : null;
     $seoPage = $seoBase ? setting('seo_pages.'.$seoBase) : null;
+    // Admin → Sahifalar: tizim sahifasining SEO maydonlari (eng ustun)
+    $sysPage = $seoBase ? \App\Models\Page::forSystem($seoBase) : null;
+    if ($sysPage) {
+        $seoPage = ['title' => tr($sysPage->seo_title) ?: (is_array($seoPage) ? ($seoPage['title'] ?? null) : null), 'description' => tr($sysPage->seo_description) ?: (is_array($seoPage) ? ($seoPage['description'] ?? null) : null)];
+    }
     if (is_array($seoPage)) {
         $pageTitle = tr($seoPage['title'] ?? null) ?: $pageTitle;
         $pageDesc = tr($seoPage['description'] ?? null) ?: $pageDesc;

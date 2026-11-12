@@ -8,7 +8,7 @@
     'title' => hs('services_page.buxgalteriya_xizmati', 'Buxgalteriya xizmati'),
     'lead' => hs('services_page.lead', 'Hisob yuritish, soliq hisobotlari, ish haqi va bank operatsiyalari — tajribali jamoaga topshiring, o‘zingiz biznesingizga e’tibor bering.'),
     'crumbs' => [__('Buxgalteriya xizmati') => null],
-    'image' => setting('texts.services_page.image') ?: 'img/dir-services.jpg',
+    'image' => hs_img('services_page.image', 'img/dir-services.jpg'),
     'imgTall' => true,
 ])
     <ul class="checks checks--blue">

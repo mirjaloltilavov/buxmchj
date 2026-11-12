@@ -56,7 +56,7 @@ class Seo
             'url' => url('/'),
             'logo' => asset('img/apple-touch-icon.png'),
             'image' => brand_url('og_image', 'img/og.jpg'),
-            'description' => tr(setting('seo_description')),
+            'description' => tr(\App\Models\Page::forSystem('home')?->seo_description) ?: tr(setting('seo_description')),
             'telephone' => $phone,
             'address' => $branch ? [
                 '@type' => 'PostalAddress',

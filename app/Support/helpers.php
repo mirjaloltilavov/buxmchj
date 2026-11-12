@@ -73,14 +73,25 @@ if (! function_exists('icon')) {
 
 if (! function_exists('hs')) {
     /**
-     * Sahifa matni: admin paneldagi "Sahifa matnlari"dan oladi (setting "texts"),
+     * Seksiya matni: konstruktordagi seksiyaning o'zidan, so'ng umumiy sozlamadan (setting "texts"),
      * bo'sh bo'lsa standart matnni tarjima qilib qaytaradi.
      */
     function hs(string $key, string $default = ''): string
     {
-        $value = tr(data_get(setting('texts', []), $key));
+        // 1) joriy seksiyaning o'z matni (konstruktor), 2) umumiy matn (eski sozlama), 3) shablondagi standart
+        $value = tr(\App\Support\TextScope::get($key)) ?: tr(data_get(setting('texts', []), $key));
 
         return filled($value) ? $value : __($default);
+    }
+}
+
+if (! function_exists('hs_img')) {
+    /** Seksiya rasmi: seksiyaning o'zidan, umumiy sozlamadan yoki standart rasm */
+    function hs_img(string $key, string $default): string
+    {
+        $v = \App\Support\TextScope::get($key) ?: data_get(setting('texts', []), $key);
+
+        return is_string($v) && $v !== '' ? $v : $default;
     }
 }
 
@@ -88,7 +99,8 @@ if (! function_exists('hs_list')) {
     /** Ro'yxat ko'rinishidagi matnlar (masalan, belgilar ro'yxati). */
     function hs_list(string $key, array $default = []): array
     {
-        $items = data_get(setting('texts', []), $key);
+        $items = \App\Support\TextScope::get($key);
+        $items = is_array($items) && $items !== [] ? $items : data_get(setting('texts', []), $key);
         if (is_array($items) && $items !== []) {
             return array_values(array_filter(array_map(fn ($i) => tr($i['text'] ?? $i), $items)));
         }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Cache;
 
 /**
  * Sahifa shablonlaridagi standart matnlar: hs('kalit', 'matn'), hs_list('kalit', [...]),
- * setting('texts.kalit') ?: 'img/...'. Admin "Sahifa matnlari"da bo'sh maydon o'rniga
+ * setting('texts.kalit') ?: 'img/...'. Konstruktordagi seksiya matnlarida bo'sh maydon o'rniga
  * saytda hozir ko'rinib turgan matn chiqishi uchun ishlatiladi.
  */
 class TextDefaults
@@ -36,8 +36,8 @@ class TextDefaults
                         $out[$x[1]] ??= array_map(fn ($s) => ['text' => ['uz' => stripcslashes($s), 'ru' => self::ru(stripcslashes($s))]], $items[1]);
                     }
                 }
-                // setting('texts.kalit') ?: 'img/...'
-                if (preg_match_all("~setting\\('texts\\.([^']+)'\\)\\s*\\?:\\s*'([^']+)'~u", $src, $m, PREG_SET_ORDER)) {
+                // hs_img('kalit', 'img/...')
+                if (preg_match_all("~\\bhs_img\\(\\s*'([^']+)'\\s*,\\s*'([^']+)'\\s*\\)~u", $src, $m, PREG_SET_ORDER)) {
                     foreach ($m as $x) {
                         $out[$x[1]] ??= $x[2];
                     }
@@ -46,6 +46,37 @@ class TextDefaults
 
             return $out;
         });
+    }
+
+    /**
+     * View fayli (masalan, "sections.why") ichida ishlatilgan kalitlar — ichiga @include qilingan
+     * sections/blocks fayllari bilan birga, yozilish tartibida.
+     *
+     * @return array<int, string>
+     */
+    public static function keysInView(string $view, array &$seen = []): array
+    {
+        if (isset($seen[$view])) {
+            return [];
+        }
+        $seen[$view] = true;
+        $file = resource_path('views/'.str_replace('.', '/', $view).'.blade.php');
+        if (! is_file($file)) {
+            return [];
+        }
+        $src = file_get_contents($file);
+        $keys = [];
+        // @include('sections.x') va boshqalar — kalitlar tartibini saqlash uchun matn bo'yicha ketma-ket
+        preg_match_all("~\\bhs(?:_list|_img)?\\(\\s*'([^']+)'|@include\\('((?:sections|blocks)\\.[^']+)'~u", $src, $m, PREG_SET_ORDER);
+        foreach ($m as $x) {
+            if (! empty($x[2])) {
+                array_push($keys, ...self::keysInView($x[2], $seen));
+            } else {
+                $keys[] = $x[1];
+            }
+        }
+
+        return array_values(array_unique($keys));
     }
 
     private static function ru(string $uz): string

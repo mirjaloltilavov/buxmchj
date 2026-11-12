@@ -43,8 +43,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make('Mijozlar'),
+                NavigationGroup::make('Sahifalar'),
                 NavigationGroup::make('Kontent'),
-                NavigationGroup::make('Bosh sahifa'),
                 NavigationGroup::make('Sozlamalar'),
                 NavigationGroup::make('Tizim'),
             ])

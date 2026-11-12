@@ -15,7 +15,7 @@
         </div>
         <div class="right">
             <div class="services-media">
-                <img src="{{ media_url(setting('texts.services.image') ?: 'img/services.jpg') }}" alt="" loading="lazy">
+                <img src="{{ media_url(hs_img('services.image', 'img/services.jpg')) }}" alt="" loading="lazy">
                 <div class="price-float">
                     <span class="fc-sub" style="font-weight:500">{{ hs('services.oylik_xizmat', 'Oylik xizmat') }}</span>
                     <span class="n">{{ hs('services.price_big', '1 500 000') }}<small>{{ __('so‘mdan') }}</small></span>

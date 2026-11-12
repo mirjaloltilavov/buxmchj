@@ -25,6 +25,35 @@ class Page extends Model
         return $q->where('is_active', true)->orderBy('sort')->orderBy('id');
     }
 
+    /** Admin yaratgan (tizimniki bo'lmagan) sahifalar */
+    public function scopeCustom(Builder $q): Builder
+    {
+        return $q->whereNull('system');
+    }
+
+    public function isSystem(): bool
+    {
+        return filled($this->system);
+    }
+
+    /** Tizim sahifasi yozuvi (home, courses, …) — so'rov ichida keshlanadi */
+    public static function forSystem(string $key): ?self
+    {
+        static $cache = [];
+
+        return array_key_exists($key, $cache) ? $cache[$key] : ($cache[$key] = static::where('system', $key)->first());
+    }
+
+    /** Saytdagi manzil (kurs va maqola shablonlarida — yo'q) */
+    public function publicUrl(?string $locale = null): ?string
+    {
+        if (! $this->isSystem()) {
+            return $this->url($locale);
+        }
+
+        return in_array($this->system, ['course', 'article'], true) ? null : lroute($this->system, [], $locale);
+    }
+
     /** Yangi sahifaning boshlang'ich tuzilishi: sarlavha, matn, ariza formasi */
     public static function starterSections(): array
     {

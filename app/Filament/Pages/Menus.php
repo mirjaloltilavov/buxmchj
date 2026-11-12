@@ -16,10 +16,10 @@ class Menus extends Page implements HasForms, HasActions
     use HasSettingBlocks;
 
     protected static ?string $navigationIcon = 'heroicon-o-bars-3';
-    protected static ?string $navigationGroup = 'Sozlamalar';
+    protected static ?string $navigationGroup = 'Sahifalar';
     protected static ?string $navigationLabel = 'Menyular';
     protected static ?string $title = 'Menyular (header va footer)';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
     protected static ?string $slug = 'menus';
 
     public static function canAccess(): bool
@@ -29,7 +29,7 @@ class Menus extends Page implements HasForms, HasActions
 
     protected function hint(): ?string
     {
-        return 'Saytning yuqori menyusi (header), pastki qismi (footer) havolalari va matnlari. Havolani sudrab tartibini o‘zgartirasiz. Yangi sahifa avval “Kontent → Sahifalar”da yaratiladi, keyin shu yerda menyuga qo‘shiladi.';
+        return 'Saytning yuqori menyusi (header), pastki qismi (footer) havolalari va matnlari. Havolani sudrab tartibini o‘zgartirasiz. Yangi sahifa avval “Sahifalar” bo‘limida yaratiladi, keyin shu yerda menyuga qo‘shiladi.';
     }
 
     protected function groupIcons(): array

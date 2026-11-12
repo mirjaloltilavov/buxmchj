@@ -20,7 +20,7 @@ Sayt manzili: **https://new.buxmchj.uz**, admin panel: **https://new.buxmchj.uz/
 | Ustozlar, Savol-javoblar, Filiallar | Tegishli bloklar |
 | Hero slaydlar | Bosh sahifadagi slayder, suzuvchi kartochkalar |
 | Instagram postlar | Bosh sahifa va Aloqa sahifasidagi lenta |
-| Sahifa matnlari | Barcha sarlavha va matnlar (bo‘sh qolsa dizayndagi matn chiqadi) |
+| Sahifalar | Barcha sahifalar (tizim va qo‘shimcha): seksiyalar, ularning matnlari, SEO |
 | Sayt sozlamalari | Telefon, ijtimoiy tarmoqlar, arizalar xabarnomasi (Telegram + email), SEO, OG rasm, favicon, Google Analytics / Search Console, huquqiy matnlar, popuplar |
 | Foydalanuvchilar | Xodimlar, rollar (Bosh admin / Admin / Kontent muharriri / Menejer), bloklash, parol |
 | Faollik jurnali | Kim nimani qachon o‘zgartirgani |
@@ -40,13 +40,17 @@ Xabarnoma va integratsiyalar ariza saqlangandan keyin, mijozga javob qaytgach is
 
 Arizalar statistikasi va manbasi (Google, Instagram, reklama kampaniyasi va h.k.) saytga birinchi kirishdagi UTM belgilar va qaysi saytdan kelgani bo‘yicha avtomatik aniqlanadi.
 
-## Sahifalar, menyular va matnlar
+## Sahifalar (konstruktor)
 
-- **Bosh sahifa → Sahifa tuzilishi** — konstruktor: har bir sahifa (bosh, kurslar, xizmat, aloqa, blog, kurs, maqola) seksiyalardan yig‘iladi. Seksiya qo‘shish, sudrab tartiblash, vaqtincha yashirish, o‘chirish. Tanlov: saytning tayyor seksiyalari (hero, yo‘nalishlar, nega biz, tariflar, kalkulyator, ustozlar, bitiruvchilar, FAQ, maqolalar, ariza formasi, Instagram, xarita…) va erkin bloklar (sarlavha, matn, rasm + matn, kartochkalar, raqamlar, qadamlar, CTA). Har bir seksiya istalgan sahifaga qo‘yiladi.
+Hammasi bitta joyda — **Sahifalar → Sahifalar**:
 
-- **Kontent → Sahifalar** — yangi sahifa (masalan, “Biz haqimizda”): sarlavha, manzil (`/biz-haqimizda`), SEO va o‘sha konstruktor bilan seksiyalar. Sitemap’ga avtomatik qo‘shiladi.
-- **Sozlamalar → Menyular** — header havolalari, footer ustunlari, eng pastki havolalar, header tugmasi va footer matnlari. Havola sayt sahifasiga, qo‘shimcha sahifaga, kursga yoki istalgan manzilga olib boradi; tartibi sudrab o‘zgartiriladi.
-- **Bosh sahifa → Sahifa matnlari** — har bir sahifa alohida bo‘lim. Bo‘sh maydon o‘rnida saytda hozir ko‘rinib turgan matn chiqadi (“standart” belgisi bilan). Shablondagi har bir `hs('kalit', 'matn')` avtomatik tahrirlanadigan maydon bo‘ladi.
+- Ro‘yxatda saytning **tizim sahifalari** (Bosh, Kurslar, Xizmat, Aloqa, Maqolalar, kurs va maqola shablonlari — o‘chirilmaydi, manzili o‘zgarmaydi) va siz yaratgan **qo‘shimcha sahifalar** (“Yangi sahifa”).
+- **Tahrirlash** → sahifa seksiyalardan yig‘iladi: “Seksiya qo‘shish”, sudrab tartiblash, vaqtincha yashirish, o‘chirish. Tanlov: saytning tayyor seksiyalari (hero, yo‘nalishlar, nega biz, tariflar, kalkulyator, ustozlar, bitiruvchilar, FAQ, maqolalar, ariza formasi, Instagram, xarita…) va erkin bloklar (sarlavha, matn, rasm + matn, kartochkalar, raqamlar, qadamlar, CTA).
+- **Seksiyaning matnlari seksiyaning o‘zida** (“Matnlar” bo‘limi) — saytda hozir turgan matn bilan to‘ldirilgan. Har bir seksiya o‘z matniga ega: bitta seksiya turli sahifalarda turli matn bilan chiqishi mumkin.
+- **SEO** (Google sarlavhasi va tavsifi) ham sahifaning o‘zida. Bosh sahifaning SEO’si — boshqa sahifalar uchun zaxira.
+- “Standartga qaytarish” — tizim sahifasini dastlabki tuzilishiga qaytaradi.
+
+**Sahifalar → Menyular** — header havolalari, footer ustunlari, eng pastki havolalar, header tugmasi va footer matnlari.
 
 ## SEO
 

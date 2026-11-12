@@ -79,7 +79,7 @@ class Menu
     public static function linkOptions(): array
     {
         $opts = ['Sayt sahifalari' => collect(self::ROUTES)->mapWithKeys(fn ($r, $name) => ['route:'.$name => $r[0]])->all()];
-        $pages = Page::orderBy('sort')->get(['id', 'title', 'slug']);
+        $pages = Page::custom()->orderBy('sort')->get(['id', 'title', 'slug']);
         if ($pages->isNotEmpty()) {
             $opts['Qo‘shimcha sahifalar'] = $pages->mapWithKeys(fn ($p) => ['page:'.$p->id => $p->tr('title', 'uz').'  (/'.$p->slug.')'])->all();
         }
@@ -144,6 +144,6 @@ class Menu
     {
         static $cache;
 
-        return $cache ??= Page::where('is_active', true)->get()->keyBy('id')->all();
+        return $cache ??= Page::custom()->where('is_active', true)->get()->keyBy('id')->all();
     }
 }

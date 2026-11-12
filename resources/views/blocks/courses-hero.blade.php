@@ -2,7 +2,7 @@
     'title' => hs('courses_page.title', 'Buxgalteriya kurslari'),
     'lead' => hs('courses_page.lead', 'Noldan boshlab buxgalteriya hisobi, 1C va soliq hisobotlarini o‘rganing. Toshkentda oflayn hamda onlayn formatda.'),
     'crumbs' => [__('Kurslar') => null],
-    'image' => setting('texts.courses_page.image') ?: 'img/courses-hero.jpg',
+    'image' => hs_img('courses_page.image', 'img/courses-hero.jpg'),
 ])
     <div class="hero-ctas">
         <a href="#consultation" class="btn-pill btn-pill--ink btn-pill--l" data-consult><span class="label">{{ hs('courses_page.kursga_yozilish', 'Kursga yozilish') }}</span><span class="arrow">{{ icon('arrow-right') }}</span></a>

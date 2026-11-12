@@ -5,6 +5,6 @@
 
 
 @section('content')
-    {{-- Sahifa konstruktori: admin → Sozlamalar → Sahifa tuzilishi --}}
+    {{-- Sahifa konstruktori: admin → Sahifalar → shu sahifa → Tahrirlash --}}
     @include('blocks.render', ['items' => \App\Support\Blocks::layout('services'), 'ctx' => 'services'])
 @endsection

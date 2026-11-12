@@ -151,36 +151,6 @@ class SiteSettings extends Page implements HasForms, HasActions
                     ]],
             ],
             'SEO va brending' => [
-                'seo' => ['title' => 'SEO: bosh sahifa', 'icon' => 'heroicon-o-magnifying-glass', 'description' => 'Google natijalarida chiqadigan sarlavha va tavsif.', 'paths' => ['seo_title', 'seo_description'], 'schema' => fn () => [
-                    Tr::text('seo_title', 'Sarlavha (title, 50–60 belgi)'),
-                    Tr::textarea('seo_description', 'Tavsif (description, 140–160 belgi)', false, 3),
-                ]],
-                'seo_pages' => ['title' => 'SEO: ichki sahifalar', 'icon' => 'heroicon-o-document-magnifying-glass', 'description' => 'Bo‘sh qolsa, sahifaning standart sarlavhasi ishlatiladi. Kurs va maqolalarning SEO’si o‘z bo‘limida.', 'paths' => ['seo_pages'], 'schema' => fn () => [
-                    Forms\Components\Fieldset::make('Kurslar sahifasi')->columns(1)->schema([
-                        Tr::text('seo_pages.courses.title', 'Sarlavha (title)'),
-                        Tr::textarea('seo_pages.courses.description', 'Tavsif (description)', false, 2),
-                    ]),
-                    Forms\Components\Fieldset::make('Xizmatlar sahifasi')->columns(1)->schema([
-                        Tr::text('seo_pages.services.title', 'Sarlavha (title)'),
-                        Tr::textarea('seo_pages.services.description', 'Tavsif (description)', false, 2),
-                    ]),
-                    Forms\Components\Fieldset::make('Maqolalar sahifasi')->columns(1)->schema([
-                        Tr::text('seo_pages.blog.title', 'Sarlavha (title)'),
-                        Tr::textarea('seo_pages.blog.description', 'Tavsif (description)', false, 2),
-                    ]),
-                    Forms\Components\Fieldset::make('Aloqa sahifasi')->columns(1)->schema([
-                        Tr::text('seo_pages.contact.title', 'Sarlavha (title)'),
-                        Tr::textarea('seo_pages.contact.description', 'Tavsif (description)', false, 2),
-                    ]),
-                    Forms\Components\Fieldset::make('Maxfiylik siyosati')->columns(1)->schema([
-                        Tr::text('seo_pages.privacy.title', 'Sarlavha (title)'),
-                        Tr::textarea('seo_pages.privacy.description', 'Tavsif (description)', false, 2),
-                    ]),
-                    Forms\Components\Fieldset::make('Ommaviy oferta')->columns(1)->schema([
-                        Tr::text('seo_pages.offer.title', 'Sarlavha (title)'),
-                        Tr::textarea('seo_pages.offer.description', 'Tavsif (description)', false, 2),
-                    ]),
-                ]],
                 'og' => ['title' => 'Ulashish rasmi (OG)', 'icon' => 'heroicon-o-photo', 'description' => 'Telegram, Facebook va boshqalarda havola ulashilganda chiqadigan rasm.', 'paths' => ['og_image'], 'schema' => fn () => [
                     Forms\Components\FileUpload::make('og_image')->label('OG rasm (1200×630 px, JPG yoki PNG)')->image()->disk('public')->directory('seo')->imageEditor()
                         ->imageEditorAspectRatios(['1.91:1'])->maxSize(4096)->helperText('Kurs va maqola sahifalarida ularning o‘z rasmi ishlatiladi.'),

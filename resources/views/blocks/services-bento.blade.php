@@ -12,7 +12,7 @@
                 @php $sl = $slots[$i] ?? 'plain'; @endphp
                 <div class="sb sb--{{ $sl }} sb--n{{ $i + 1 }}" data-reveal="scale">
                     @if($sl === 'big')
-                        <div class="sb__img"><img src="{{ media_url(setting('texts.services_page.bento_image') ?: 'img/services-bento.jpg') }}" alt="" loading="lazy"></div>
+                        <div class="sb__img"><img src="{{ media_url(hs_img('services_page.bento_image', 'img/services-bento.jpg')) }}" alt="" loading="lazy"></div>
                         <div class="sb__body">
                             <div class="sb__head"><span class="icon-tile">{{ icon($service->icon) }}</span><h3>{{ $service->tr('title') }}</h3></div>
                             <p>{{ $service->tr('description') }}</p>

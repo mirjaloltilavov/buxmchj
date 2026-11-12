@@ -23,10 +23,10 @@ class InstagramPostResource extends Resource
 
     protected static ?string $model = InstagramPost::class;
     protected static ?string $navigationIcon = 'heroicon-o-camera';
-    protected static ?string $navigationGroup = 'Bosh sahifa';
+    protected static ?string $navigationGroup = 'Kontent';
     protected static ?string $modelLabel = 'post';
     protected static ?string $pluralModelLabel = 'Instagram postlar';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 11;
 
     public static function form(Form $form): Form
     {

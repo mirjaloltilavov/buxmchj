@@ -9,7 +9,7 @@ use Filament\Forms\Components\Builder;
 /**
  * Sahifa konstruktori: saytdagi tayyor seksiyalar va erkin bloklar ro'yxati.
  * Har bir sahifa (bosh, kurslar, xizmat, aloqa, blog, kurs, maqola va qo'shimcha sahifalar)
- * shu bloklardan yig'iladi. Tartib: admin → Sahifa tuzilishi (yoki Sahifalar → Tuzilishi).
+ * shu bloklardan yig'iladi. Tartib: admin → Sahifalar → (sahifa) → Tahrirlash.
  */
 class Blocks
 {
@@ -33,7 +33,7 @@ class Blocks
 
     /**
      * Bloklar: kalit => [nomi, guruh, ikonka, view, izoh, (faqat shu sahifalarda)].
-     * "texts" — matnlari qayerda tahrirlanadi (Sahifa matnlari).
+     * Tayyor seksiyalarning matnlari seksiyaning o‘zida ("Matnlar" bo‘limi).
      */
     public static function all(): array
     {
@@ -46,31 +46,31 @@ class Blocks
             'stats' => ['Raqamlar', 'Erkin bloklar', 'heroicon-o-chart-bar', 'blocks.free.stats', 'Katta raqamlar va izohlari (10 yil, 36+ guruh…).'],
             'steps' => ['Qadamlar', 'Erkin bloklar', 'heroicon-o-list-bullet', 'blocks.free.steps', 'Raqamlangan bosqichlar (qanday ishlaymiz).'],
             'cta' => ['Chaqiruv (CTA) banneri', 'Erkin bloklar', 'heroicon-o-megaphone', 'blocks.free.cta', 'Sariq banner: sarlavha, matn va tugma.'],
-            // ---- Saytning tayyor seksiyalari (matnlari: Sahifa matnlari) ----
+            // ---- Saytning tayyor seksiyalari (matnlari seksiyaning o'zida — "Matnlar" bo'limi) ----
             'hero' => ['Bosh slayder (hero)', 'Bosh sahifa seksiyalari', 'heroicon-o-photo', 'blocks.sec.hero', 'Slaydlar: Bosh sahifa → Hero slaydlar.'],
-            'directions' => ['Yo‘nalishlar (kurs / xizmat)', 'Bosh sahifa seksiyalari', 'heroicon-o-squares-2x2', 'blocks.sec.directions', 'Matnlar: Sahifa matnlari → Bosh sahifa → Yo‘nalishlar.'],
-            'why' => ['Nega biz', 'Bosh sahifa seksiyalari', 'heroicon-o-star', 'blocks.sec.why', 'Matnlar: Sahifa matnlari → Bosh sahifa → Nega biz.'],
+            'directions' => ['Yo‘nalishlar (kurs / xizmat)', 'Bosh sahifa seksiyalari', 'heroicon-o-squares-2x2', 'blocks.sec.directions', ''],
+            'why' => ['Nega biz', 'Bosh sahifa seksiyalari', 'heroicon-o-star', 'blocks.sec.why', ''],
             'courses_overview' => ['Kurslar ro‘yxati', 'Bosh sahifa seksiyalari', 'heroicon-o-academic-cap', 'blocks.sec.courses-overview', 'Kurslar: Kontent → Kurslar.'],
             'services_overview' => ['Xizmatlar (qisqa)', 'Bosh sahifa seksiyalari', 'heroicon-o-briefcase', 'blocks.sec.services-overview', 'Xizmatlar: Kontent → Xizmatlar (“bosh sahifada” belgilanganlari).'],
             'faq' => ['Savol-javoblar (FAQ)', 'Umumiy seksiyalar', 'heroicon-o-question-mark-circle', 'blocks.sec.faq', 'Savollar: Kontent → Savol-javoblar.'],
             'articles' => ['So‘nggi maqolalar', 'Umumiy seksiyalar', 'heroicon-o-newspaper', 'blocks.sec.articles', 'Maqolalar: Kontent → Maqolalar.'],
-            'consultation' => ['Ariza formasi (konsultatsiya)', 'Umumiy seksiyalar', 'heroicon-o-chat-bubble-left-right', 'blocks.sec.consultation', 'Matnlar: Sahifa matnlari → Bosh sahifa → ariza bloki.'],
+            'consultation' => ['Ariza formasi (konsultatsiya)', 'Umumiy seksiyalar', 'heroicon-o-chat-bubble-left-right', 'blocks.sec.consultation', ''],
             'instagram' => ['Instagram lentasi', 'Umumiy seksiyalar', 'heroicon-o-camera', 'blocks.sec.instagram', 'Postlar: Bosh sahifa → Instagram postlar.'],
             'teachers' => ['Ustozlar', 'Umumiy seksiyalar', 'heroicon-o-users', 'blocks.sec.teachers', 'Ustozlar: Kontent → Ustozlar.'],
             'graduates' => ['Bitiruvchilar fikri', 'Umumiy seksiyalar', 'heroicon-o-user-group', 'blocks.sec.graduates', 'Videolar: Kontent → Bitiruvchilar fikri.'],
-            'courses_hero' => ['Kurslar: sarlavha', 'Kurslar sahifasi seksiyalari', 'heroicon-o-academic-cap', 'blocks.courses-hero', 'Matnlar: Sahifa matnlari → Kurslar sahifasi.'],
+            'courses_hero' => ['Kurslar: sarlavha', 'Kurslar sahifasi seksiyalari', 'heroicon-o-academic-cap', 'blocks.courses-hero', ''],
             'courses_formats' => ['Kurs formatlari (kartochkalar)', 'Kurslar sahifasi seksiyalari', 'heroicon-o-rectangle-stack', 'blocks.courses-formats', 'Kurslar: Kontent → Kurslar.'],
-            'courses_career' => ['Kursdan keyingi yo‘l (karyera)', 'Kurslar sahifasi seksiyalari', 'heroicon-o-arrow-trending-up', 'blocks.courses-career', 'Matnlar: Sahifa matnlari → Kurslar sahifasi.'],
+            'courses_career' => ['Kursdan keyingi yo‘l (karyera)', 'Kurslar sahifasi seksiyalari', 'heroicon-o-arrow-trending-up', 'blocks.courses-career', ''],
             'courses_start' => ['O‘qish qanday boshlanadi', 'Kurslar sahifasi seksiyalari', 'heroicon-o-list-bullet', 'blocks.courses-start', ''],
-            'services_hero' => ['Xizmat: sarlavha', 'Xizmat sahifasi seksiyalari', 'heroicon-o-briefcase', 'blocks.services-hero', 'Matnlar: Sahifa matnlari → Xizmat sahifasi.'],
+            'services_hero' => ['Xizmat: sarlavha', 'Xizmat sahifasi seksiyalari', 'heroicon-o-briefcase', 'blocks.services-hero', ''],
             'services_bento' => ['Nimalarni o‘z zimmamizga olamiz', 'Xizmat sahifasi seksiyalari', 'heroicon-o-squares-plus', 'blocks.services-bento', 'Xizmatlar: Kontent → Xizmatlar.'],
             'services_plans' => ['Xizmat tariflari', 'Xizmat sahifasi seksiyalari', 'heroicon-o-banknotes', 'blocks.services-plans', 'Tariflar: Kontent → Xizmat tariflari.'],
             'services_calc' => ['Narx kalkulyatori', 'Xizmat sahifasi seksiyalari', 'heroicon-o-calculator', 'blocks.services-calc', 'Qoidalar: Sayt sozlamalari → Xizmat kalkulyatori.'],
             'services_start' => ['Ishni qanday boshlaymiz', 'Xizmat sahifasi seksiyalari', 'heroicon-o-list-bullet', 'blocks.services-start', ''],
             'contact_hero' => ['Aloqa: sarlavha va kontaktlar', 'Aloqa sahifasi seksiyalari', 'heroicon-o-phone', 'blocks.contact-hero', 'Telefon va tarmoqlar: Sayt sozlamalari.'],
-            'contact_form' => ['Aloqa: ariza formasi', 'Aloqa sahifasi seksiyalari', 'heroicon-o-pencil-square', 'blocks.contact-form', 'Matnlar: Sahifa matnlari → Aloqa sahifasi.'],
+            'contact_form' => ['Aloqa: ariza formasi', 'Aloqa sahifasi seksiyalari', 'heroicon-o-pencil-square', 'blocks.contact-form', ''],
             'contact_branches' => ['Manzil va xarita', 'Aloqa sahifasi seksiyalari', 'heroicon-o-map-pin', 'blocks.contact-branches', 'Filiallar: Kontent → Filiallar.'],
-            'blog_telegram' => ['Telegram kanalga chaqiruv', 'Umumiy seksiyalar', 'heroicon-o-paper-airplane', 'blocks.blog-telegram', 'Matnlar: Sahifa matnlari → Maqolalar sahifasi.'],
+            'blog_telegram' => ['Telegram kanalga chaqiruv', 'Umumiy seksiyalar', 'heroicon-o-paper-airplane', 'blocks.blog-telegram', ''],
             // ---- Asosiy (faqat o'z sahifasida, olib tashlanmaydi) ----
             'blog_main' => ['Maqolalar ro‘yxati (asosiy)', 'Asosiy qism', 'heroicon-o-lock-closed', 'blocks.blog-main', 'Blog sahifasining asosiy qismi: qidiruv, kategoriyalar, maqolalar.', ['blog']],
             'course_main' => ['Kurs ma’lumoti (asosiy)', 'Asosiy qism', 'heroicon-o-lock-closed', 'blocks.course-main', 'Kurs sahifasining asosiy qismi: Kontent → Kurslar’dan.', ['course']],
@@ -92,7 +92,7 @@ class Blocks
     /** Sahifaning tuzilishi: admin'da saqlangan, bo'lmasa standart */
     public static function layout(string $page): array
     {
-        $saved = setting('layouts.'.$page);
+        $saved = \App\Models\Page::forSystem($page)?->sections;
 
         return is_array($saved) && $saved !== [] ? array_values($saved) : self::defaultLayout($page);
     }
@@ -136,6 +136,7 @@ class Blocks
         }
 
         return Builder::make($name)->label('Seksiyalar')->hiddenLabel()->blocks($blocks)->blockNumbers(false)
+            ->afterStateHydrated(fn (Builder $component, $state) => $component->state(self::hydrateTexts($state)))
             ->addActionLabel('Seksiya qo‘shish')->addBetweenActionLabel('Shu yerga qo‘shish')
             ->blockPickerColumns(['md' => 2])->blockPickerWidth('3xl')
             ->reorderableWithDragAndDrop()->reorderableWithButtons()->collapsible()->collapsed()->cloneable()
@@ -209,6 +210,78 @@ class Blocks
             default => [],
         };
 
-        return [...$note, ...$own, ...$common];
+        $texts = self::textFields($type);
+
+        return [...$note, ...$own, ...$texts, ...$common];
+    }
+
+    /** Seksiya shablonida ishlatilgan matn kalitlari (why.title, …) */
+    public static function textKeys(string $type): array
+    {
+        static $cache = [];
+        $def = self::get($type);
+
+        return $cache[$type] ??= $def ? \App\Support\TextDefaults::keysInView($def[3]) : [];
+    }
+
+    /** Seksiyaning "Matnlar" bo'limi: har bir matn — shu seksiyaning o'zida tahrirlanadi */
+    private static function textFields(string $type): array
+    {
+        $keys = self::textKeys($type);
+        if ($keys === []) {
+            return [];
+        }
+        static $labels;
+        $labels ??= require __DIR__.'/text-labels.php';
+        $fields = [];
+        foreach ($keys as $k) {
+            $d = \App\Support\TextDefaults::for($k);
+            $name = 'texts.'.$k;
+            $uz = is_array($d) && ! array_is_list($d) ? (string) ($d['uz'] ?? '') : '';
+            $label = $labels[$k] ?? ($uz !== '' ? '«'.\Illuminate\Support\Str::limit($uz, 48).'»' : str_replace('_', ' ', \Illuminate\Support\Str::afterLast($k, '.')));
+            if (is_string($d) && str_starts_with($d, 'img/')) {
+                $fields[] = Forms\Components\FileUpload::make($name)->label($label)->image()->disk('public')->directory('pages')->imageEditor()
+                    ->helperText('Bo‘sh qolsa — dizayndagi standart rasm.');
+            } elseif (is_array($d) && array_is_list($d)) {
+                $fields[] = Forms\Components\Repeater::make($name)->label($label)->schema([Tr::text('text', 'Band', true)])
+                    ->addActionLabel('Band qo‘shish')->reorderableWithDragAndDrop()->collapsible()->itemLabel(fn (array $state) => $state['text']['uz'] ?? null)->defaultItems(0);
+            } else {
+                $fields[] = mb_strlen($uz) > 70 ? Tr::textarea($name, $label, false, 2) : Tr::text($name, $label);
+            }
+        }
+
+        return [Forms\Components\Section::make('Matnlar')->icon('heroicon-o-language')->description('Shu seksiyadagi barcha yozuvlar. Saytda hozir turgan matn bilan to‘ldirilgan.')->collapsible()->compact()->schema($fields)];
+    }
+
+    /** Matnning amaldagi qiymati: umumiy (eski) sozlama yoki shablondagi standart */
+    public static function effectiveText(string $key): mixed
+    {
+        $v = data_get(setting('texts', []), $key);
+        if (filled($v)) {
+            return $v;
+        }
+        $d = \App\Support\TextDefaults::for($key);
+
+        return is_string($d) && str_starts_with($d, 'img/') ? null : $d;
+    }
+
+    /** Konstruktor ochilganda: seksiyalardagi bo'sh matnlarni amaldagi qiymat bilan to'ldirish */
+    public static function hydrateTexts(?array $state): ?array
+    {
+        if (! is_array($state)) {
+            return $state;
+        }
+        foreach ($state as $uuid => $item) {
+            foreach (self::textKeys($item['type'] ?? '') as $k) {
+                if (blank(data_get($item, 'data.texts.'.$k))) {
+                    $v = self::effectiveText($k);
+                    if (filled($v)) {
+                        data_set($state[$uuid], 'data.texts.'.$k, $v);
+                    }
+                }
+            }
+        }
+
+        return $state;
     }
 }

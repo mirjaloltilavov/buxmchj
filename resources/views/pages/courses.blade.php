@@ -4,6 +4,6 @@
 @section('description', hs('courses_page.lead', 'Noldan boshlab buxgalteriya hisobi, 1C va soliq hisobotlarini o‘rganing. Toshkentda oflayn hamda onlayn formatda.'))
 
 @section('content')
-    {{-- Sahifa konstruktori: admin → Sozlamalar → Sahifa tuzilishi --}}
+    {{-- Sahifa konstruktori: admin → Sahifalar → shu sahifa → Tahrirlash --}}
     @include('blocks.render', ['items' => \App\Support\Blocks::layout('courses'), 'ctx' => 'courses'])
 @endsection

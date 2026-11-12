@@ -7,7 +7,7 @@
         </div>
         <div class="directions">
             <article class="direction direction--courses">
-                <div class="direction-img"><img src="{{ media_url(setting('texts.directions.courses_image') ?: 'img/dir-courses.jpg') }}" alt="" loading="lazy"></div>
+                <div class="direction-img"><img src="{{ media_url(hs_img('directions.courses_image', 'img/dir-courses.jpg')) }}" alt="" loading="lazy"></div>
                 <div class="direction-body">
                     <h3>{{ hs('directions.courses_title', 'Buxgalteriya kurslari') }}</h3>
                     <p>{{ hs('directions.courses_text', 'Noldan boshlab buxgalteriya hisobi, 1C va soliq hisobotlarini o‘rganasiz. Amaliy mashg‘ulotlar birinchi oydan boshlanadi.') }}</p>
@@ -23,7 +23,7 @@
                 </div>
             </article>
             <article class="direction direction--services">
-                <div class="direction-img"><img src="{{ media_url(setting('texts.directions.services_image') ?: 'img/dir-services.jpg') }}" alt="" loading="lazy"></div>
+                <div class="direction-img"><img src="{{ media_url(hs_img('directions.services_image', 'img/dir-services.jpg')) }}" alt="" loading="lazy"></div>
                 <div class="direction-body">
                     <h3>{{ hs('directions.services_title', 'Buxgalteriya xizmati') }}</h3>
                     <p>{{ hs('directions.services_text', 'YaTT va MChJ buxgalteriyasini to‘liq yuritamiz: hisobotlar, soliqlar, kadrlar va bank operatsiyalari.') }}</p>
