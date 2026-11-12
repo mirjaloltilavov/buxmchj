@@ -1673,7 +1673,5 @@ html[lang="ru"] .hero h1,html[lang="ru"] .hero .hero-h{font-size:clamp(40px,3.9v
 
 /* Ishlab chiquvchi (footer) */
 .f-bottom a.f-credit{display:inline-flex;align-items:center;gap:10px;background:none;padding:0;color:var(--muted-3);transition:color .2s}
-.f-credit .seven-logo{display:block;color:#fff;opacity:.85;transition:opacity .2s}
 .f-bottom a.f-credit:hover{color:#fff}
-.f-credit:hover .seven-logo{opacity:1}
-@media (max-width:640px){.f-bottom a.f-credit{flex-basis:100%;order:3;flex-direction:column;align-items:flex-start;gap:8px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}}
+@media (max-width:640px){.f-bottom a.f-credit{flex-basis:100%;order:3}}
