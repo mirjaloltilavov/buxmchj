@@ -15,8 +15,8 @@ return new class extends Migration
                 $table->uuid('uuid')->unique();
                 $table->uuid('visitor')->index();
                 $table->boolean('is_new')->default(true);
-                $table->timestamp('started_at')->index();
-                $table->timestamp('last_seen_at')->index();
+                $table->dateTime('started_at')->index();
+                $table->dateTime('last_seen_at')->index();
                 $table->unsignedSmallInteger('pageviews')->default(0);
                 $table->unsignedInteger('duration')->default(0);
                 $table->string('landing', 255)->nullable();
@@ -42,7 +42,7 @@ return new class extends Migration
                 $table->string('path', 255)->index();
                 $table->string('title', 255)->nullable();
                 $table->unsignedInteger('duration')->default(0);
-                $table->timestamp('created_at')->index();
+                $table->dateTime('created_at')->index();
             });
         }
     }
