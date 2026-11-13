@@ -52,6 +52,16 @@ Hammasi bitta joyda — **Sahifalar → Sahifalar**:
 
 **Sahifalar → Menyular** — header havolalari, footer ustunlari, eng pastki havolalar, header tugmasi va footer matnlari.
 
+## Sayt faolligi (tashriflar statistikasi)
+
+**Mijozlar → Sayt faolligi** — saytning o‘z analitikasi (tashqi xizmatsiz, ma’lumot o‘z bazangizda):
+
+- **Hozir saytda** — oxirgi 3 daqiqada faol bo‘lganlar: qaysi sahifada, qaysi davlatdan, qurilma, manba (har 15 soniyada yangilanadi).
+- Ko‘rsatkichlar: tashrif buyuruvchilar, tashriflar, sahifa ko‘rishlar, o‘rtacha vaqt, bounce rate, yangi tashrif buyuruvchilar, arizaga aylanish — oldingi davrga nisbatan.
+- Dinamika grafigi, eng ko‘p ko‘rilgan sahifalar (sahifada o‘rtacha vaqt bilan), manba turlari va manbalar (Google, Yandex, Instagram, Telegram, boshqa saytlar), davlatlar, qurilma/brauzer/OS, kirish va chiqish sahifalari, UTM kampaniyalar, til, kun soatlari.
+- Botlar va tizimga kirgan xodimlar hisobga olinmaydi; IP manzil saqlanmaydi (faqat davlat). 400 kundan eski yozuvlar `site:install`da tozalanadi.
+- **Davlatlar** DB-IP “IP to Country Lite” bazasidan (CC BY 4.0, db-ip.com) aniqlanadi: `site:install` birinchi marta o‘zi yuklaydi, keyin sahifadagi “Davlatlar bazasini yangilash” tugmasi bilan oyiga bir marta yangilash kifoya.
+
 ## SEO
 
 Avtomatik ishlaydi, qo‘shimcha sozlash shart emas:

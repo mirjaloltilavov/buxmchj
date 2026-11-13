@@ -139,6 +139,40 @@
     .dark .bx-credit__dev .seven-logo{color:#fff}
     .bx-credit__dev:hover{color:#6b7280}.bx-credit__dev:hover .seven-logo{opacity:1}
     .bx-credit__dev--login{justify-content:center;width:100%;margin-top:.5rem}
+    /* Sayt faolligi: hozir saytda */
+    .bx-live{display:flex;flex-direction:column;gap:1rem}
+    .bx-live__nums{display:flex;flex-wrap:wrap;align-items:flex-end;gap:2rem}
+    .bx-live__big{display:flex;align-items:center;gap:.6rem}
+    .bx-live__big b{font-size:2.6rem;line-height:1;font-weight:700}
+    .bx-live__big span:last-child{font-size:.9rem;opacity:.65}
+    .bx-live__dot{width:.75rem;height:.75rem;border-radius:50%;background:#1f9d5c;box-shadow:0 0 0 0 rgba(31,157,92,.6);animation:bxPulse 1.8s infinite}
+    @keyframes bxPulse{70%{box-shadow:0 0 0 10px rgba(31,157,92,0)}100%{box-shadow:0 0 0 0 rgba(31,157,92,0)}}
+    .bx-live__sm{display:flex;flex-direction:column}
+    .bx-live__sm b{font-size:1.35rem;line-height:1.2}
+    .bx-live__sm span{font-size:.75rem;opacity:.6}
+    .bx-live__list{display:flex;flex-direction:column;border-top:1px solid rgba(120,120,130,.15)}
+    .bx-live__row{display:grid;grid-template-columns:1.8rem minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:.75rem;align-items:center;padding:.55rem .25rem;border-bottom:1px solid rgba(120,120,130,.1);font-size:.82rem}
+    .bx-live__flag{font-size:1.2rem}
+    .bx-live__page{min-width:0}.bx-live__page b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .bx-live__page small{opacity:.5;font-size:.7rem}
+    .bx-live__meta{opacity:.75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    @media (max-width:900px){.bx-live__row{grid-template-columns:1.8rem minmax(0,1fr) auto}.bx-live__row .bx-live__meta:nth-child(4),.bx-live__row .bx-live__meta:nth-child(5){display:none}}
+    /* Sayt faolligi: reyting ro'yxatlari */
+    .bx-rank{display:flex;flex-direction:column;gap:.15rem;font-size:.85rem}
+    .bx-rank__head,.bx-rank__row{display:flex;align-items:center;gap:.75rem}
+    .bx-rank__head{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;opacity:.5;padding:0 .5rem .35rem}
+    .bx-rank__head > span:first-child{flex:1}
+    .bx-rank__name{flex:1;min-width:0;position:relative;display:flex;align-items:center;gap:.5rem;padding:.45rem .5rem;border-radius:.5rem;overflow:hidden}
+    .bx-rank__bar{position:absolute;inset:0 auto 0 0;background:rgba(245,165,36,.16);border-radius:.5rem;z-index:0}
+    .bx-rank__ic,.bx-rank__l{position:relative;z-index:1}
+    .bx-rank__ic{font-size:1.05rem;line-height:1}
+    .bx-rank__l{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .bx-rank__l small{display:block;font-size:.7rem;opacity:.55;overflow:hidden;text-overflow:ellipsis}
+    .bx-rank__x{width:4.6rem;text-align:right;flex:none;font-variant-numeric:tabular-nums;opacity:.8}
+    .bx-rank__v{width:5.4rem;text-align:right;flex:none;display:flex;justify-content:flex-end;align-items:baseline;gap:.4rem;font-variant-numeric:tabular-nums}
+    .bx-rank__v em{font-style:normal;font-size:.7rem;opacity:.5;width:2.6rem}
+    .bx-rank__empty,.bx-rank__more{font-size:.8rem;opacity:.55;padding:.25rem .5rem}
+    @media (max-width:640px){.bx-rank__x{display:none}}
     /* Sozlamalar: ichki yon menyu */
     .bx-shell{display:grid;grid-template-columns:15.5rem minmax(0,1fr);gap:1.5rem;align-items:start}
     .bx-nav{position:sticky;top:5rem}

@@ -40,6 +40,10 @@ Route::prefix('ru')->name('ru.')->group($pages);
 Route::get('/robots.txt', [\App\Http\Controllers\SeoController::class, 'robots'])->name('robots');
 Route::get('/sitemap.xml', [\App\Http\Controllers\SeoController::class, 'sitemap'])->name('sitemap');
 
+// Sayt faolligi (admin → Mijozlar → Sayt faolligi)
+Route::post('/t/pv', [\App\Http\Controllers\TrackController::class, 'pv'])->middleware('throttle:120,1')->name('track.pv');
+Route::post('/t/ping', [\App\Http\Controllers\TrackController::class, 'ping'])->middleware('throttle:240,1')->name('track.ping');
+
 Route::post('/lead', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('lead.store');
 
 

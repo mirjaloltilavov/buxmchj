@@ -1035,3 +1035,50 @@
   }
 
 })();
+
+/* ===== Sayt faolligi (admin → Mijozlar → Sayt faolligi) =====
+   Har sahifa ko'rish va sahifada faol o'tirilgan vaqt yuboriladi. Tashrif (sessiya) — 30 daqiqa harakatsizlikkacha.
+   Shaxsiy ma'lumot yig'ilmaydi: tasodifiy ID (localStorage), sahifa manzili, manba, ekran o'lchami. */
+(function () {
+  try {
+    var meta = document.querySelector('meta[name="csrf-token"]');
+    if (!meta || !window.fetch || !window.FormData) return;
+    var token = meta.getAttribute('content');
+    var uid = function () {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
+    };
+    var ls = window.localStorage, now = Date.now();
+    var vid = ls.getItem('bx_vid'), isNew = !vid;
+    if (!vid) { vid = uid(); ls.setItem('bx_vid', vid); }
+    var sess = null; try { sess = JSON.parse(ls.getItem('bx_sess') || 'null'); } catch (e) {}
+    if (!sess || !sess.id || now - (sess.t || 0) > 30 * 60 * 1000) sess = { id: uid(), t: now };
+    var touch = function () { sess.t = Date.now(); try { ls.setItem('bx_sess', JSON.stringify(sess)); } catch (e) {} };
+    touch();
+    var q = new URLSearchParams(location.search);
+    var fd = new FormData();
+    fd.append('_token', token); fd.append('vid', vid); fd.append('sid', sess.id); fd.append('new', isNew ? '1' : '0');
+    fd.append('path', location.pathname); fd.append('title', (document.title || '').slice(0, 250));
+    if (document.referrer) fd.append('ref', document.referrer.slice(0, 500));
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) fd.append(k, q.get(k).slice(0, 120)); });
+    fd.append('screen', (screen.width || 0) + 'x' + (screen.height || 0));
+    var pv = null, active = 0, last = Date.now(), sent = -1;
+    var tick = function () { if (document.visibilityState === 'visible') active += (Date.now() - last) / 1000; last = Date.now(); };
+    var ping = function (beacon) {
+      tick();
+      var sec = Math.round(active);
+      if (!pv || sec === sent) return;
+      sent = sec; touch();
+      var f = new FormData(); f.append('_token', token); f.append('pv', pv); f.append('sid', sess.id); f.append('sec', sec);
+      if (beacon && navigator.sendBeacon) navigator.sendBeacon('/t/ping', f);
+      else fetch('/t/ping', { method: 'POST', body: f, credentials: 'same-origin', keepalive: true }).catch(function () {});
+    };
+    fetch('/t/pv', { method: 'POST', body: fd, credentials: 'same-origin', headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.status === 200 ? r.json() : null; })
+      .then(function (j) { if (j && j.pv) pv = j.pv; })
+      .catch(function () {});
+    setInterval(function () { if (document.visibilityState === 'visible') ping(false); }, 30000);
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') ping(true); else last = Date.now(); });
+    window.addEventListener('pagehide', function () { ping(true); });
+  } catch (e) {}
+})();

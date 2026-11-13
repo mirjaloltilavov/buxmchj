@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 class LeadPeriod
 {
     public const OPTIONS = [
-        '7' => 'Oxirgi 7 kun', '30' => 'Oxirgi 30 kun', '90' => 'Oxirgi 90 kun',
+        'today' => 'Bugun', 'yesterday' => 'Kecha', '7' => 'Oxirgi 7 kun', '30' => 'Oxirgi 30 kun', '90' => 'Oxirgi 90 kun',
         'month' => 'Shu oy', 'prev_month' => 'O‘tgan oy', 'year' => 'Shu yil', 'custom' => 'Tanlangan oraliq',
     ];
 
@@ -19,6 +19,8 @@ class LeadPeriod
         $now = now();
 
         return match ($p) {
+            'today' => [$now->copy()->startOfDay(), $now->copy()->endOfDay()],
+            'yesterday' => [$now->copy()->subDay()->startOfDay(), $now->copy()->subDay()->endOfDay()],
             '7', '30', '90' => [$now->copy()->subDays((int) $p - 1)->startOfDay(), $now->copy()->endOfDay()],
             'month' => [$now->copy()->startOfMonth(), $now->copy()->endOfDay()],
             'prev_month' => [$now->copy()->subMonthNoOverflow()->startOfMonth(), $now->copy()->subMonthNoOverflow()->endOfMonth()],

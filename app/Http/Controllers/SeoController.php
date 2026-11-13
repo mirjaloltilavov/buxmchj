@@ -16,6 +16,7 @@ class SeoController extends Controller
             'Disallow: /admin',
             'Disallow: /livewire',
             'Disallow: /lead',
+            'Disallow: /t/',
             'Allow: /',
             '',
             // Yandex: reklama belgilari (utm va h.k.) bilan kelgan manzillarni bitta sahifa deb hisoblaydi
@@ -23,6 +24,7 @@ class SeoController extends Controller
             'Disallow: /admin',
             'Disallow: /livewire',
             'Disallow: /lead',
+            'Disallow: /t/',
             'Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&gclid&fbclid&yclid',
             'Allow: /',
             '',

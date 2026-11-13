@@ -56,6 +56,22 @@ class SiteInstall extends Command
             $this->warn('.env da ADMIN_EMAIL va ADMIN_PASSWORD berilmagan — admin yaratilmadi.');
         }
 
+        // Sayt faolligi: davlatlar bazasi (bir marta) va 400 kundan eski tashriflarni tozalash
+        try {
+            $old = \App\Models\Visit::where('started_at', '<', now()->subDays(400))->delete();
+            if ($old) {
+                $this->line("Eski tashriflar o‘chirildi: {$old}");
+            }
+            if (! \App\Support\Analytics\GeoIp::available()) {
+                $this->line('Davlatlar bazasi yuklanmoqda (DB-IP Lite)...');
+                @ini_set('memory_limit', '512M');
+                [, $msg] = \App\Support\Analytics\GeoIp::update();
+                $this->line($msg);
+            }
+        } catch (\Throwable $e) {
+            $this->warn('Sayt faolligi: '.$e->getMessage());
+        }
+
         $this->info('4/4 Keshlar...');
         foreach (['config:cache', 'route:cache', 'view:cache'] as $cmd) {
             Artisan::call($cmd);
